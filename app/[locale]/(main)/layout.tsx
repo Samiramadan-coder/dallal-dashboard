@@ -2,6 +2,7 @@ import {
   Sidebar,
   SidebarContent,
   SidebarGroup,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarProvider,
@@ -9,8 +10,8 @@ import {
 } from "@/components/ui/sidebar";
 import type { ReactNode } from "react";
 import { getLocale } from "next-intl/server";
-import { getAdminCountries, getCurrentAdmin } from "@/lib/admin";
 import { navigation } from "@/constants/dashboard-layout";
+import { getAdminCountries, getCurrentAdmin } from "@/lib/admin";
 import SidebarLogo from "@/components/dashboard-layout/sidebar-logo";
 import SidebarNavLink from "@/components/dashboard-layout/sidebar-nav-link";
 import DashboardHeader from "@/components/dashboard-layout/dashboard-header";
@@ -31,10 +32,13 @@ export default async function MainLayout({
         collapsible="icon"
         className="border-e border-gray-200 z-50"
       >
-        <SidebarContent className="bg-[#0f4a31]">
+        {/* Logo stays put; only the links scroll */}
+        <SidebarHeader className="gap-0 bg-secondary p-0">
+          <SidebarLogo />
+        </SidebarHeader>
+        <SidebarContent className="bg-secondary">
           <SidebarGroup className="p-0">
-            <SidebarLogo />
-            <SidebarMenu className="p-2">
+            <SidebarMenu className="gap-0.5 px-2.5 py-2">
               {navigation().map((item) => (
                 <SidebarMenuItem key={item.label}>
                   {item.type === "link" ? (

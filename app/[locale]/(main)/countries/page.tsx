@@ -5,6 +5,7 @@ import { Country } from "@/types/countries";
 import { Pagination } from "@/types/shared";
 import CreateEdit from "@/components/countries/create-edit";
 import DataPreview from "@/components/countries/data-preview";
+import PageHeader from "@/components/reusable/page-header";
 
 type SearchParams = {
   page?: number;
@@ -46,14 +47,12 @@ export default function Page({
   searchParams: Promise<SearchParams>;
 }) {
   return (
-    <div className="space-y-6">
-      <div className="flex justify-end">
-        <CreateEdit />
-      </div>
+    <>
+      <PageHeader page="countries" actions={<CreateEdit />} />
 
       <Suspense fallback={<LoaderIcon className="animate-spin" />}>
         <GetCountries searchParams={searchParams} />
       </Suspense>
-    </div>
+    </>
   );
 }

@@ -28,27 +28,36 @@ export default function SidebarNavLink({
   };
 
   return (
-    <SidebarMenuButton
-      asChild
-      isActive={isActive}
-      className="relative rounded-lg h-10 px-3 py-2.5 text-[13px] font-medium text-[#f5f0e4a6] transition-colors hover:bg-secondary/70 hover:text-primary data-[active=true]:bg-secondary/70 data-[active=true]:text-primary"
-    >
-      <Link
-        href={item.href}
-        className="flex items-center gap-3"
-        onClick={handleClick}
+    <>
+      {/* Gold marker on the start edge of the current page */}
+      {isActive && (
+        <span
+          aria-hidden
+          className="absolute start-0 top-1/2 z-10 h-5 w-0.75 -translate-y-1/2 rounded-e-full bg-sidebar-primary"
+        />
+      )}
+      <SidebarMenuButton
+        asChild
+        isActive={isActive}
+        className="h-9 rounded-lg ps-3 pe-2.5 text-[13px] font-medium text-sidebar-foreground/65 transition-colors hover:bg-sidebar-accent hover:text-sidebar-foreground data-[active=true]:bg-sidebar-primary/15 data-[active=true]:font-medium data-[active=true]:text-sidebar-primary data-[active=true]:[&_svg]:stroke-[2.2] [&_svg]:stroke-[1.8]"
       >
-        <div className="flex items-center gap-3">
-          {item.icon}
-          <span>{t(item.label)}</span>
-        </div>
+        <Link
+          href={item.href}
+          className="flex items-center gap-3"
+          onClick={handleClick}
+        >
+          <div className="flex items-center gap-3">
+            {item.icon}
+            <span>{t(item.label)}</span>
+          </div>
 
-        {item.count && (
-          <Badge className="ms-auto bg-amber-100! text-amber-700! text-[10px] w-5 h-5">
-            {item.count}
-          </Badge>
-        )}
-      </Link>
-    </SidebarMenuButton>
+          {item.count && (
+            <Badge className="ms-auto bg-amber-100! text-amber-700! text-[10px] w-5 h-5">
+              {item.count}
+            </Badge>
+          )}
+        </Link>
+      </SidebarMenuButton>
+    </>
   );
 }

@@ -21,13 +21,13 @@ export default function SidebarLogo() {
           <p className="text-[11px] font-bold tracking-widest uppercase text-primary">
             {t("sidebar.brandName")}
           </p>
-          <p className="text-[10px] text-[#f5f0e466]">
+          <p className="text-[10px] text-sidebar-foreground/40">
             {t("sidebar.brandSubtitle")}
           </p>
         </div>
       </div>
 
-      <Separator className="bg-[#f5f0e414]" />
+      <Separator className="bg-sidebar-border" />
     </>
   );
 }

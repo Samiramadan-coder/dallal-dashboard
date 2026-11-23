@@ -1,5 +1,11 @@
+import PageHeader from "@/components/reusable/page-header";
 import PagePlaceholder from "@/components/reusable/page-placeholder";
 
 export default function Page() {
-  return <PagePlaceholder href="/sell-requests" />;
+  return (
+    <>
+      <PageHeader page="sellRequests" />
+      <PagePlaceholder href="/sell-requests" />
+    </>
+  );
 }

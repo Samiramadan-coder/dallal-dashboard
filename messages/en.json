@@ -173,5 +173,113 @@
         "label": "Active"
       }
     }
+  },
+  "pageHeaders": {
+    "help": "How does this page work?",
+    "filters": {
+      "country": "Country",
+      "period": "Period",
+      "allCountries": "All countries",
+      "countryName": "{en}",
+      "lastDays": "Last {days} days"
+    },
+    "pages": {
+      "overview": {
+        "title": "Overview",
+        "subtitle": ""
+      },
+      "analytics": {
+        "title": "Analytics",
+        "subtitle": "Platform-wide insights · auto-refreshed every 6h"
+      },
+      "listings": {
+        "title": "Listings",
+        "subtitle": "Review new listings before buyers see them. Oldest waiting first."
+      },
+      "sellRequests": {
+        "title": "Sell requests",
+        "subtitle": "Approve what sellers post, watch live requests, and step in on disputes."
+      },
+      "market": {
+        "title": "Market",
+        "subtitle": "Individual sellers post here. Check price caps, certificates and anything that belongs with a store."
+      },
+      "stores": {
+        "title": "Stores",
+        "subtitle": "Stores in your countries"
+      },
+      "deals": {
+        "title": "Deals",
+        "subtitle": "Every deal from store reservations, sell requests and market sales in one list."
+      },
+      "conversations": {
+        "title": "Conversations",
+        "subtitle": "Buyer and seller chats. Opening one needs a reason and is written to the audit log."
+      },
+      "reviews": {
+        "title": "Reviews",
+        "subtitle": "Every store review, with signals for fake or abusive ones. Each action needs a reason."
+      },
+      "users": {
+        "title": "Users",
+        "subtitle": "Accounts in your countries"
+      },
+      "verifications": {
+        "title": "Verifications",
+        "subtitle": "Identity checks, store applications and expiring licences"
+      },
+      "reports": {
+        "title": "Reports",
+        "subtitle": "Reports on the same listing, user, message or store are grouped into one case. High priority comes first."
+      },
+      "support": {
+        "title": "Support",
+        "subtitle": "Tickets from the website support form. Gold and Diamond VIP stores come first, and replies are due within 24 hours."
+      },
+      "revenue": {
+        "title": "Revenue",
+        "subtitle": "Money per country and currency, payments, invoices and provider costs"
+      },
+      "subscriptions": {
+        "title": "Subscriptions",
+        "subtitle": "Gold and Diamond VIP plans, trials, renewals and refunds"
+      },
+      "boosts": {
+        "title": "Boosts",
+        "subtitle": "Bumps, featured and pinned listings"
+      },
+      "metalPrices": {
+        "title": "Metal Prices",
+        "subtitle": "Gold, silver and platinum prices for every market, with the guard rails that protect the site"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "subtitle": "Send a broadcast in English and Arabic, schedule it in the country’s time zone, and manage the automatic messages."
+      },
+      "cms": {
+        "title": "CMS",
+        "subtitle": "Static pages and help content, in English and Arabic"
+      },
+      "site": {
+        "title": "Site and marketing",
+        "subtitle": "Homepage, banners, SEO, contact details and message templates"
+      },
+      "countries": {
+        "title": "Countries",
+        "subtitle": "The markets the platform runs in, with their flags and dial codes"
+      },
+      "roles": {
+        "title": "Roles & Permissions",
+        "subtitle": "Decide what each role can see and do. Country access is set per admin account."
+      },
+      "settings": {
+        "title": "Settings",
+        "subtitle": "Platform rules. Only Super Admins can change these, and every save is written to the audit log."
+      },
+      "auditLog": {
+        "title": "Audit Log",
+        "subtitle": "Every sensitive action and settings change by staff, limited to your countries."
+      }
+    }
   }
 }

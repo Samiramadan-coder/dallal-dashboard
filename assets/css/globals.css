@@ -73,14 +73,15 @@
   --chart-4: oklch(0.371 0 0);
   --chart-5: oklch(0.269 0 0);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Brand green sidebar with cream text and gold accents */
+  --sidebar: var(--secondary);
+  --sidebar-foreground: #f5f0e4;
+  --sidebar-primary: #c9a445;
+  --sidebar-primary-foreground: var(--secondary);
+  --sidebar-accent: #f5f0e40f;
+  --sidebar-accent-foreground: #f5f0e4;
+  --sidebar-border: #f5f0e414;
+  --sidebar-ring: #c9a445;
   /* --background: #f8f9fa;
   --foreground: #1a1a14;
   --card: #ffffff;

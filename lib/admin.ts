@@ -1,7 +1,6 @@
 import "server-only";
 
 import { cache } from "react";
-
 import { api } from "@/lib/api/client";
 import type { Country } from "@/types/countries";
 import type { AdminCountry, CurrentAdmin } from "@/types/admin";
@@ -27,6 +26,7 @@ export const getAdminCountries = cache(
     const response = await api.get<{ data: { data: Country[] } }>(
       "/api/v1/admin/countries",
     );
+
     const countries = response.data.data;
 
     if (admin.all_countries) {

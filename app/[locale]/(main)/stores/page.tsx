@@ -1,5 +1,11 @@
+import PageHeader from "@/components/reusable/page-header";
 import PagePlaceholder from "@/components/reusable/page-placeholder";
 
 export default function Page() {
-  return <PagePlaceholder href="/stores" />;
+  return (
+    <>
+      <PageHeader page="stores" />
+      <PagePlaceholder href="/stores" />
+    </>
+  );
 }
