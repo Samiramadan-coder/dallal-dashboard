@@ -209,7 +209,7 @@ export default function CreateRole({
                   <div
                     className={cn(
                       // overflow-y-hidden: checkbox hit areas must not add a second scrollbar
-                      "overflow-hidden rounded-xl border bg-card [&_[data-slot=table-container]]:overflow-y-hidden",
+                      "overflow-hidden rounded-xl border bg-card **:data-[slot=table-container]:overflow-y-hidden",
                       fieldState.invalid
                         ? "border-destructive/60"
                         : "border-border",

@@ -68,7 +68,7 @@ export default function DataPreview({
             </TableCell>
             {/* Trimmed padding keeps the button row as tall as text rows */}
             {hasActions && (
-              <TableCell className="py-[9px]!">
+              <TableCell className="py-2.25!">
                 <div className="flex items-center gap-1">
                   {/* Editing includes turning the country on or off */}
                   {can.edit && (
