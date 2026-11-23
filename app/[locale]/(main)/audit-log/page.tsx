@@ -1,14 +1,21 @@
-import { requirePage } from "@/lib/permissions";
-import PageHeader from "@/components/reusable/page-header";
-import PagePlaceholder from "@/components/reusable/page-placeholder";
+import { getAuditLogs } from "@/lib/audit-log";
+import DataPreview from "@/components/audit-log/data-preview";
 
-export default async function Page() {
-  await requirePage("auditLog");
+type SearchParams = {
+  page?: string;
+};
 
-  return (
-    <>
-      <PageHeader page="auditLog" />
-      <PagePlaceholder href="/audit-log" />
-    </>
+export default async function Page({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>;
+}) {
+  // Access is checked by the layout
+  const { page } = await searchParams;
+
+  const { logs, pagination } = await getAuditLogs(
+    Math.max(1, Number(page) || 1),
   );
+
+  return <DataPreview logs={logs} pagination={pagination} />;
 }

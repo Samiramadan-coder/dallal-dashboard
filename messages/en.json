@@ -440,5 +440,50 @@
     "description": "Your role ({role}) does not include this section. Ask a Super Admin if you need it.",
     "unknownRole": "Unknown",
     "back": "Back to Overview"
+  },
+  "AuditLog": {
+    "title": "Entries",
+    "table": {
+      "when": "When",
+      "admin": "Admin",
+      "action": "Action",
+      "target": "Target",
+      "country": "Country",
+      "ip": "IP"
+    },
+    "allCountries": "All",
+    "empty": "No activity recorded yet.",
+    "subjects": {
+      "admin": "Admin",
+      "role": "Role",
+      "country": "Country",
+      "user": "User",
+      "listing": "Listing",
+      "store": "Store",
+      "verification": "Verification",
+      "report": "Report"
+    },
+    "actions": {
+      "admin": {
+        "created": "Created admin",
+        "updated": "Updated admin",
+        "deleted": "Deleted admin",
+        "access_set": "Changed admin access",
+        "activated": "Activated admin",
+        "deactivated": "Deactivated admin",
+        "two_factor_enabled": "Enabled two-factor auth",
+        "two_factor_disabled": "Disabled two-factor auth"
+      },
+      "role": {
+        "created": "Created role",
+        "updated": "Changed role permissions",
+        "deleted": "Deleted role"
+      },
+      "country": {
+        "created": "Added country",
+        "updated": "Updated country",
+        "deleted": "Deleted country"
+      }
+    }
   }
 }

@@ -438,5 +438,50 @@
     "description": "دورك ({role}) لا يتضمن هذا القسم. اطلب من المدير العام إذا كنت بحاجة إليه.",
     "unknownRole": "غير معروف",
     "back": "العودة إلى النظرة العامة"
+  },
+  "AuditLog": {
+    "title": "سجل",
+    "table": {
+      "when": "التوقيت",
+      "admin": "المشرف",
+      "action": "الإجراء",
+      "target": "الهدف",
+      "country": "الدولة",
+      "ip": "IP"
+    },
+    "allCountries": "الكل",
+    "empty": "لا توجد عمليات مسجّلة بعد.",
+    "subjects": {
+      "admin": "مشرف",
+      "role": "دور",
+      "country": "دولة",
+      "user": "مستخدم",
+      "listing": "إعلان",
+      "store": "متجر",
+      "verification": "توثيق",
+      "report": "بلاغ"
+    },
+    "actions": {
+      "admin": {
+        "created": "إضافة مشرف",
+        "updated": "تعديل مشرف",
+        "deleted": "حذف مشرف",
+        "access_set": "تغيير صلاحيات مشرف",
+        "activated": "تفعيل مشرف",
+        "deactivated": "إيقاف مشرف",
+        "two_factor_enabled": "تفعيل التحقق بخطوتين",
+        "two_factor_disabled": "إيقاف التحقق بخطوتين"
+      },
+      "role": {
+        "created": "إضافة دور",
+        "updated": "تعديل صلاحيات دور",
+        "deleted": "حذف دور"
+      },
+      "country": {
+        "created": "إضافة دولة",
+        "updated": "تعديل دولة",
+        "deleted": "حذف دولة"
+      }
+    }
   }
 }
