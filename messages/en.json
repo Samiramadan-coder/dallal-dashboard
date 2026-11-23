@@ -291,5 +291,12 @@
       "terms": "Terms",
       "related": "Related pages"
     }
+  },
+  "Roles": {
+    "switcher": {
+      "label": "Roles pages",
+      "roles": "Roles",
+      "admins": "Admins"
+    }
   }
 }

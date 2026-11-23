@@ -37,7 +37,7 @@ export default function SidebarNavLink({
       {isActive && (
         <span
           aria-hidden
-          className="absolute start-0 top-1/2 z-10 h-5 w-0.75 -translate-y-1/2 rounded-e-full bg-sidebar-primary"
+          className="absolute inset-s-0 top-1/2 z-10 h-5 w-0.75 -translate-y-1/2 rounded-e-full bg-sidebar-primary"
         />
       )}
       <SidebarMenuButton
