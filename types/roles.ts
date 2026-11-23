@@ -145,6 +145,53 @@ export type AdminsResponse = ApiResponse<{
   meta: Pagination;
 }>;
 
+// Add-admin form
+export const adminSchema = (t: T) =>
+  z.object({
+    name: z.string().trim().min(1, t("Fields.Name.required")),
+    email: z.email(t("Fields.Email.invalid")),
+    password: z
+      .string()
+      .min(1, t("Fields.Password.required"))
+      .min(8, t("Fields.Password.minLength")),
+    roles: z
+      .array(z.string())
+      .min(1, t("Fields.Roles.required")),
+    country_ids: z
+      .array(z.number())
+      .min(1, t("Fields.Countries.required")),
+  });
+
+export type AdminFormValues = z.infer<ReturnType<typeof adminSchema>>;
+
+// POST /api/v1/admin/admins
+export type CreateAdminPayload = Omit<AdminFormValues, "roles"> & {
+  roles: RoleName[];
+};
+
+// Edit-admin form: turn the account on or off. Turning it off needs a
+// reason, which goes to the audit log
+export const adminStatusSchema = (t: T) =>
+  z
+    .object({
+      is_active: z.boolean(),
+      reason: z.string().trim().max(500, t("Fields.Reason.maxLength")),
+    })
+    .refine((value) => value.is_active || value.reason.length > 0, {
+      path: ["reason"],
+      message: t("Fields.Reason.required"),
+    });
+
+export type AdminStatusFormValues = z.infer<
+  ReturnType<typeof adminStatusSchema>
+>;
+
+// PUT /api/v1/admin/admins/{id}
+export type UpdateAdminPayload = {
+  is_active: boolean;
+  reason?: string;
+};
+
 // An admin row, ready to render: countries matched to the country list and
 // role slugs swapped for their labels
 export type AdminRow = Admin & {

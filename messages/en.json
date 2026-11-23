@@ -324,9 +324,70 @@
         "admin": "Admin",
         "email": "Email",
         "role": "Role",
-        "countries": "Countries"
+        "countries": "Countries",
+        "status": "Status",
+        "actions": "Actions"
       },
-      "noCountries": "—"
+      "noCountries": "—",
+      "create": {
+        "button": "Add admin",
+        "title": "Add Admin",
+        "description": "Create a staff account. They sign in with this email and password.",
+        "success": "Admin added.",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password",
+        "Fields": {
+          "Name": {
+            "label": "Full name",
+            "placeholder": "e.g. Nour Saleh",
+            "required": "Name is required"
+          },
+          "Email": {
+            "label": "Email",
+            "placeholder": "name@example.com",
+            "invalid": "Enter a valid email"
+          },
+          "Password": {
+            "label": "Password",
+            "placeholder": "At least 8 characters",
+            "required": "Password is required",
+            "minLength": "Password must be at least 8 characters"
+          },
+          "Roles": {
+            "label": "Roles",
+            "required": "Pick at least one role"
+          },
+          "Countries": {
+            "label": "Countries",
+            "hint": "The admin only sees data from these countries.",
+            "required": "Pick at least one country"
+          }
+        }
+      },
+      "status": {
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "you": "You",
+      "deleted": "Admin deleted.",
+      "edit": {
+        "title": "Edit Admin",
+        "description": "Turn this account on or off. Inactive admins can't sign in.",
+        "success": "Admin updated.",
+        "Fields": {
+          "IsActive": {
+            "label": "Active account",
+            "description": "Turn off to block sign-in without deleting the account."
+          },
+          "Reason": {
+            "label": "Reason",
+            "placeholder": "e.g. Left the team.",
+            "hint": "Saved to the audit log.",
+            "required": "Add a reason when turning an account off",
+            "maxLength": "Keep the reason under 500 characters"
+          }
+        }
+      }
     },
     "roles": {
       "list": "Roles",
