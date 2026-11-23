@@ -3,7 +3,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
 import type { AdminRow } from "@/types/roles";
-import type { Locale, Pagination } from "@/types/shared";
+import type { Pagination } from "@/types/shared";
 
 export default function DataPreview({
   admins,
@@ -12,9 +12,8 @@ export default function DataPreview({
   admins: AdminRow[];
   pagination: Pagination;
 }) {
-  const locale = useLocale() as Locale;
+  const locale = useLocale();
   const t = useTranslations("Roles.admins");
-  const tRoles = useTranslations("layout.header.roles");
 
   const columns: DataTableColumn[] = [
     { label: t("table.admin") },
@@ -22,10 +21,6 @@ export default function DataPreview({
     { label: t("table.role") },
     { label: t("table.countries") },
   ];
-
-  // Falls back to the raw key for roles that have no translation yet
-  const roleLabel = (role: string) =>
-    tRoles.has(role as never) ? tRoles(role as never) : role;
 
   return (
     <DataTable
@@ -37,17 +32,13 @@ export default function DataPreview({
       {admins.map((admin) => (
         <TableRow key={admin.id}>
           <TableCell>
-            <span className="font-semibold text-foreground">
-              {admin.name}
-            </span>
+            <span className="font-semibold text-foreground">{admin.name}</span>
           </TableCell>
 
-          <TableCell>
-            {admin.email}
-          </TableCell>
+          <TableCell>{admin.email}</TableCell>
 
           <TableCell>
-            {admin.roles.map(roleLabel).join(locale === "ar" ? "، " : ", ")}
+            {admin.roleLabels.join(locale === "ar" ? "، " : ", ")}
           </TableCell>
 
           <TableCell>
@@ -71,9 +62,7 @@ export default function DataPreview({
                 ))}
               </div>
             ) : (
-              <span className="text-muted-foreground">
-                {t("noCountries")}
-              </span>
+              <span className="text-muted-foreground">{t("noCountries")}</span>
             )}
           </TableCell>
         </TableRow>

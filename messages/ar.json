@@ -100,7 +100,9 @@
         "moderator": "مشرف",
         "verification_officer": "مسؤول التوثيق",
         "finance": "المالية",
-        "support_agent": "موظف الدعم"
+        "support_agent": "موظف الدعم",
+        "support": "الدعم",
+        "marketing": "التسويق"
       },
       "switchAccount": "تبديل الحساب"
     },
@@ -323,6 +325,50 @@
         "countries": "الدول"
       },
       "noCountries": "—"
+    },
+    "roles": {
+      "list": "الأدوار",
+      "admins": "{count, plural, =0 {لا يوجد مشرفون} one {مشرف واحد} two {مشرفان} few {# مشرفين} many {# مشرفًا} other {# مشرف}}",
+      "systemNote": "أدوار النظام للقراءة فقط.",
+      "section": "القسم",
+      "notAvailable": "غير متاح لهذا القسم",
+      "empty": "لا توجد أدوار بعد.",
+      "save": "حفظ التغييرات",
+      "discard": "تجاهل",
+      "saved": "تم حفظ الصلاحيات.",
+      "unsaved": "تغييرات غير محفوظة",
+      "minOne": "لازم يفضل صلاحية واحدة على الأقل.",
+      "deleted": "تم حذف الدور."
+    },
+    "create": {
+      "button": "إضافة دور",
+      "title": "إضافة دور",
+      "description": "اكتب اسم الدور واختر صلاحياته. تقدر تعدّلها بعدين.",
+      "success": "تمت إضافة الدور.",
+      "Fields": {
+        "LabelEn": {
+          "label": "الاسم (بالإنجليزية)",
+          "placeholder": "e.g. KSA reviewer",
+          "required": "الاسم بالإنجليزية مطلوب"
+        },
+        "LabelAr": {
+          "label": "الاسم (بالعربية)",
+          "placeholder": "مثال: مراجع السعودية",
+          "required": "الاسم بالعربية مطلوب"
+        },
+        "Name": {
+          "label": "مفتاح الدور",
+          "placeholder": "e.g. ksa_reviewer",
+          "hint": "حروف إنجليزية صغيرة وأرقام و _ فقط. يُملأ تلقائيًا من الاسم الإنجليزي.",
+          "required": "مفتاح الدور مطلوب",
+          "format": "يبدأ بحرف، ويحتوي على حروف إنجليزية صغيرة وأرقام و _ فقط"
+        },
+        "Permissions": {
+          "label": "الصلاحيات",
+          "required": "اختر صلاحية واحدة على الأقل",
+          "selected": "{count, plural, zero {لم يتم اختيار شيء} one {صلاحية واحدة} two {صلاحيتان} few {# صلاحيات} many {# صلاحية} other {# صلاحية}}"
+        }
+      }
     }
   }
 }

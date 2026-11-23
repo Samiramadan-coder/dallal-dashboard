@@ -1,3 +1,5 @@
+import type { Permission, RoleName } from "./roles";
+
 // A country the admin manages. The API returns an empty list when
 // `all_countries` is true, so the exact item shape isn't confirmed yet
 export type AdminCountry =
@@ -9,8 +11,8 @@ export type CurrentAdmin = {
   name: string;
   email: string;
   is_active: boolean;
-  roles: string[];
-  permissions: string[];
+  roles: RoleName[];
+  permissions: Permission[];
   countries: AdminCountry[];
   all_countries: boolean;
   two_factor_enabled: boolean;

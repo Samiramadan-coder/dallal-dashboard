@@ -20,14 +20,9 @@ import {
   setPendingAuthToken,
 } from "@/lib/api/auth-token";
 import type { LoginFormData } from "@/types/auth";
+import type { ApiResponse } from "@/types/shared";
 
 const TOKEN_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
-
-type ApiResponse<T> = {
-  success: boolean;
-  message?: string;
-  data: T;
-};
 
 type LoginResponse = ApiResponse<{
   token: string;
@@ -87,7 +82,7 @@ export async function login({
     if (admin.two_factor_enabled) {
       await clearPendingAuthToken();
       await setAuthToken(token, { maxAge: TOKEN_MAX_AGE });
-      return { step: "signed-in", message: response.message };
+      return { step: "signed-in", message: response.message ?? undefined };
     }
 
     await setPendingAuthToken(token);
@@ -100,7 +95,7 @@ export async function login({
 
     return {
       step: "setup",
-      message: setup.message,
+      message: setup.message ?? undefined,
       secret: setup.data.secret,
       otpauthUrl: setup.data.otpauth_url,
     };
@@ -129,7 +124,7 @@ export async function confirmTwoFactorSetup(
     await setAuthToken(pendingToken, { maxAge: TOKEN_MAX_AGE });
     await clearPendingAuthToken();
 
-    return { message: response.message };
+    return { message: response.message ?? undefined };
   });
 }
 
@@ -143,7 +138,7 @@ export async function disableTwoFactor(input: {
       "/api/v1/admin/auth/2fa/disable",
       input,
     );
-    return { message: response.message };
+    return { message: response.message ?? undefined };
   });
 }
 

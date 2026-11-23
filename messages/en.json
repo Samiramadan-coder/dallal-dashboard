@@ -100,7 +100,9 @@
         "moderator": "Moderator",
         "verification_officer": "Verification Officer",
         "finance": "Finance",
-        "support_agent": "Support Agent"
+        "support_agent": "Support Agent",
+        "support": "Support",
+        "marketing": "Marketing"
       },
       "switchAccount": "Switch account"
     },
@@ -325,6 +327,50 @@
         "countries": "Countries"
       },
       "noCountries": "—"
+    },
+    "roles": {
+      "list": "Roles",
+      "admins": "{count, plural, =0 {No admins} one {# admin} other {# admins}}",
+      "systemNote": "System roles are read-only.",
+      "section": "Section",
+      "notAvailable": "Not available for this section",
+      "empty": "No roles yet.",
+      "save": "Save changes",
+      "discard": "Discard",
+      "saved": "Permissions saved.",
+      "unsaved": "Unsaved changes",
+      "minOne": "Keep at least one permission.",
+      "deleted": "Role deleted."
+    },
+    "create": {
+      "button": "Add role",
+      "title": "Add Role",
+      "description": "Name the role and pick what it can do. You can change its permissions later.",
+      "success": "Role added.",
+      "Fields": {
+        "LabelEn": {
+          "label": "Name (English)",
+          "placeholder": "e.g. KSA reviewer",
+          "required": "English name is required"
+        },
+        "LabelAr": {
+          "label": "Name (Arabic)",
+          "placeholder": "مثال: مراجع السعودية",
+          "required": "Arabic name is required"
+        },
+        "Name": {
+          "label": "Role key",
+          "placeholder": "e.g. ksa_reviewer",
+          "hint": "Lowercase letters, numbers and underscores. Filled in from the English name.",
+          "required": "Role key is required",
+          "format": "Start with a letter, then use only lowercase letters, numbers and _"
+        },
+        "Permissions": {
+          "label": "Permissions",
+          "required": "Pick at least one permission",
+          "selected": "{count, plural, one {# selected} other {# selected}}"
+        }
+      }
     }
   }
 }

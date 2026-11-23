@@ -12,13 +12,12 @@ const PAGES = [
 export default function PageSwitcher() {
   const t = useTranslations("Roles.switcher");
   const pathname = usePathname();
-  const normalizedPathname =
-    pathname.replace(/^\/(en|ar)(?=\/|$)/, "").replace(/\/$/, "") || "/";
 
   return (
     <nav aria-label={t("label")} className="flex items-center gap-1.5">
       {PAGES.map((page) => {
-        const isActive = normalizedPathname === page.href;
+        // next-intl's usePathname has no locale prefix
+        const isActive = pathname === page.href;
 
         return (
           <Link

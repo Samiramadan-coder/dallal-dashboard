@@ -10,3 +10,10 @@ export type Pagination = {
   to: number;
   total: number;
 };
+
+// Envelope every Laravel API response comes in
+export type ApiResponse<T> = {
+  success: boolean;
+  message?: string | null;
+  data: T;
+};

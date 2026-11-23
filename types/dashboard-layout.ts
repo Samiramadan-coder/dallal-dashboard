@@ -1,3 +1,4 @@
+import type { Permission } from "./roles";
 import type { ReactNode } from "react";
 
 export type DashboardNavigationItem =
@@ -10,7 +11,7 @@ export type DashboardNavigationItem =
       icon: ReactNode;
       // Shown only if the admin has this permission (or any of the list).
       // Leave it out for pages every admin can open
-      permission?: string | string[];
+      permission?: Permission | Permission[];
       // Count badge turns red: the items need someone to act
       alert?: boolean;
     }

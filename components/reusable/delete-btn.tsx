@@ -55,7 +55,9 @@ export default function DeleteBtn({
         </DialogHeader>
         <DialogFooter className="sm:justify-end">
           <DialogClose asChild>
-            <Button type="button">Close</Button>
+            <Button type="button" variant="outline">
+              {t("Cancel")}
+            </Button>
           </DialogClose>
           <Button type="button" variant="destructive" onClick={handleDelete}>
             {loading ? <Spinner /> : t("Confirmation")}

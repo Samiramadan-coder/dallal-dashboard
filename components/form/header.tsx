@@ -12,14 +12,21 @@ import {
 export default function FormHeader({
   title,
   description,
+  className,
 }: {
   title: string;
   description?: string;
+  className?: string;
 }) {
   const locale = useLocale();
 
   return (
-    <DialogHeader className="flex-row items-start justify-between gap-4 border-b border-border px-5 py-4">
+    <DialogHeader
+      className={cn(
+        "flex-row items-start justify-between gap-4 border-b border-border px-5 py-4",
+        className,
+      )}
+    >
       <div className="space-y-1.5">
         <DialogTitle
           className={cn("text-lg font-bold tracking-wider", {
@@ -29,7 +36,9 @@ export default function FormHeader({
           {title}
         </DialogTitle>
         {description && (
-          <DialogDescription className="text-xs">{description}</DialogDescription>
+          <DialogDescription className="text-xs">
+            {description}
+          </DialogDescription>
         )}
       </div>
       <DialogClose asChild>

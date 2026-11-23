@@ -26,6 +26,7 @@ import {
   Zap,
 } from "lucide-react";
 import type { DashboardNavigationItem } from "@/types/dashboard-layout";
+import type { Permission } from "@/types/roles";
 
 const section = (key: string): DashboardNavigationItem => ({
   label: `sidebar.navigation.sections.${key}`,
@@ -108,7 +109,7 @@ export const navigation = (): DashboardNavigationItem[] => [
 
 export function canSee(
   item: DashboardNavigationItem,
-  permissions: readonly string[],
+  permissions: readonly Permission[],
 ): boolean {
   if (item.type !== "link" || !item.permission) return true;
   const required = Array.isArray(item.permission)
@@ -120,7 +121,7 @@ export function canSee(
 // The sidebar for one admin: links they may open, and only the section
 // labels that still have links under them
 export function navigationFor(
-  permissions: readonly string[],
+  permissions: readonly Permission[],
 ): DashboardNavigationItem[] {
   const links = navigation().filter((item) => canSee(item, permissions));
 
