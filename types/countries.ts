@@ -37,6 +37,8 @@ export type Country = {
   flag: string;
   id: number;
   is_active: boolean;
+  // "live" | "coming_soon" | …
+  status?: string;
   name: {
     en: string;
     ar: string;

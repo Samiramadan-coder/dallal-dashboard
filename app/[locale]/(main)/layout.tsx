@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/sidebar";
 import type { ReactNode } from "react";
 import { getLocale } from "next-intl/server";
+import { getAdminCountries, getCurrentAdmin } from "@/lib/admin";
 import { navigation } from "@/constants/dashboard-layout";
 import SidebarLogo from "@/components/dashboard-layout/sidebar-logo";
 import SidebarNavLink from "@/components/dashboard-layout/sidebar-nav-link";
@@ -20,7 +21,8 @@ export default async function MainLayout({
 }: {
   children: ReactNode;
 }) {
-  const locale = await getLocale();
+  const [locale, admin] = await Promise.all([getLocale(), getCurrentAdmin()]);
+  const countries = await getAdminCountries(admin);
 
   return (
     <SidebarProvider defaultOpen>
@@ -48,7 +50,7 @@ export default async function MainLayout({
       </Sidebar>
 
       <SidebarInset className="min-h-screen min-w-0 flex-1 flex flex-col bg-background">
-        <DashboardHeader />
+        <DashboardHeader admin={admin} countries={countries} />
         <main className="min-w-0 w-full overflow-x-hidden flex-1 p-4 sm:p-6">
           <div className="min-w-0 w-full">{children}</div>
         </main>

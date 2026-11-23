@@ -1,0 +1,39 @@
+import "server-only";
+
+import { cache } from "react";
+
+import { api } from "@/lib/api/client";
+import type { Country } from "@/types/countries";
+import type { AdminCountry, CurrentAdmin } from "@/types/admin";
+
+// The signed-in admin. Cached per request, so layouts and pages can all
+// call it. A 401 redirects to sign-in (see lib/api/client)
+export const getCurrentAdmin = cache(async (): Promise<CurrentAdmin> => {
+  const response = await api.get<{ data: CurrentAdmin }>(
+    "/api/v1/admin/auth/me",
+  );
+  return response.data;
+});
+
+function matches(country: Country, assigned: AdminCountry): boolean {
+  if (typeof assigned === "string") return assigned === country.code;
+  return assigned.id === country.id || assigned.code === country.code;
+}
+
+// The countries the admin works on. `all_countries` admins get every
+// country that is live on the platform
+export const getAdminCountries = cache(
+  async (admin: CurrentAdmin): Promise<Country[]> => {
+    const response = await api.get<{ data: { data: Country[] } }>(
+      "/api/v1/admin/countries",
+    );
+    const countries = response.data.data;
+
+    if (admin.all_countries) {
+      return countries.filter((country) => country.status === "live");
+    }
+    return countries.filter((country) =>
+      admin.countries.some((assigned) => matches(country, assigned)),
+    );
+  },
+);

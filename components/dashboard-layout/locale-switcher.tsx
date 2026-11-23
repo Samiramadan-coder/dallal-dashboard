@@ -1,11 +1,13 @@
 "use client";
 
-import { useLocale } from "next-intl";
+import { Languages } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
+
 import { useRouter, usePathname } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
-import { Globe } from "lucide-react";
 
 export function LocaleSwitcher() {
+  const t = useTranslations("layout.header");
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -14,13 +16,15 @@ export function LocaleSwitcher() {
   return (
     <Button
       variant="ghost"
-      className="text-white bg-[#0f4a31] hover:bg-[#0f4a31] hover:text-white rounded-md"
+      size="sm"
+      className="gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground"
       onClick={() => router.replace(pathname, { locale: nextLocale })}
-      aria-label="switcher"
+      aria-label={t("switchLanguage")}
+      title={t("switchLanguage")}
     >
-      <Globe className="size-4" />
-      <span className="text-xs font-normal">
-        {locale === "ar" ? "En" : "AR"}
+      <Languages className="size-4" aria-hidden />
+      <span lang={nextLocale}>
+        {nextLocale === "ar" ? "العربية" : "English"}
       </span>
     </Button>
   );

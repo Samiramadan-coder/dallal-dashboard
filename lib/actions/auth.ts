@@ -1,6 +1,11 @@
 "use server";
 
+import { unstable_rethrow } from "next/navigation";
+
+import { redirect } from "@/i18n/navigation";
+import { SIGN_IN_PATH } from "@/lib/auth-routes";
 import { api } from "@/lib/api/client";
+import { resolveLocale } from "@/lib/api/locale";
 import { getServerTranslator } from "@/lib/api/messages";
 import {
   ValidationError,
@@ -8,6 +13,7 @@ import {
   type ActionResult,
 } from "@/lib/api/errors";
 import {
+  clearAuthToken,
   clearPendingAuthToken,
   getPendingAuthToken,
   setAuthToken,
@@ -139,4 +145,17 @@ export async function disableTwoFactor(input: {
     );
     return { message: response.message };
   });
+}
+
+// Revokes the token on the API, clears the cookie and goes to sign-in
+export async function logout(): Promise<void> {
+  try {
+    await api.post("/api/v1/admin/auth/logout", {}, { skipAuthRedirect: true });
+  } catch (error) {
+    // Already invalid or the API is down: signing out locally is enough
+    unstable_rethrow(error);
+  }
+
+  await clearAuthToken();
+  redirect({ href: SIGN_IN_PATH, locale: await resolveLocale() });
 }

@@ -79,7 +79,19 @@
   },
   "layout": {
     "header": {
-      "dashboard": "لوحة التحكم"
+      "dashboard": "لوحة التحكم",
+      "yourCountries": "دولك",
+      "switchLanguage": "تغيير اللغة",
+      "accountMenu": "قائمة الحساب",
+      "roles": {
+        "super_admin": "مدير عام",
+        "admin": "مدير",
+        "moderator": "مشرف",
+        "verification_officer": "مسؤول التوثيق",
+        "finance": "المالية",
+        "support_agent": "موظف الدعم"
+      },
+      "switchAccount": "تبديل الحساب"
     },
     "sidebar": {
       "brandName": "دلال هولي",

@@ -79,7 +79,19 @@
   },
   "layout": {
     "header": {
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "yourCountries": "Your countries",
+      "switchLanguage": "Switch language",
+      "accountMenu": "Account menu",
+      "roles": {
+        "super_admin": "Super Admin",
+        "admin": "Admin",
+        "moderator": "Moderator",
+        "verification_officer": "Verification Officer",
+        "finance": "Finance",
+        "support_agent": "Support Agent"
+      },
+      "switchAccount": "Switch account"
     },
     "sidebar": {
       "brandName": "Dallal Hoolee",
