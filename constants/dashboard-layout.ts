@@ -25,10 +25,14 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import type { DashboardNavigationItem } from "@/types/dashboard-layout";
+import type {
+  DashboardNavigationItem,
+  NavigationKey,
+  NavigationSectionKey,
+} from "@/types/dashboard-layout";
 import type { Permission } from "@/types/roles";
 
-const section = (key: string): DashboardNavigationItem => ({
+const section = (key: NavigationSectionKey): DashboardNavigationItem => ({
   label: `sidebar.navigation.sections.${key}`,
   type: "label",
 });
@@ -39,7 +43,7 @@ type LinkOptions = Pick<
 >;
 
 const link = (
-  key: string,
+  key: NavigationKey,
   href: string,
   icon: ComponentType<{ className?: string }>,
   options: LinkOptions = {},

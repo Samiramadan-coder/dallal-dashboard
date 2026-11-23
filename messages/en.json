@@ -433,5 +433,12 @@
         }
       }
     }
+  },
+  "forbidden": {
+    "title": "No access to {section}",
+    "titleGeneric": "No access to this page",
+    "description": "Your role ({role}) does not include this section. Ask a Super Admin if you need it.",
+    "unknownRole": "Unknown",
+    "back": "Back to Overview"
   }
 }

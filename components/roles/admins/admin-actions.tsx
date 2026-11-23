@@ -18,10 +18,18 @@ import {
   adminStatusSchema,
   type AdminRow,
   type AdminStatusFormValues,
+  type Can,
 } from "@/types/roles";
 
-// Edit and delete buttons for one row of the admins table
-export default function AdminActions({ admin }: { admin: AdminRow }) {
+// Edit and delete buttons for one row of the admins table, each shown only
+// with its permission. Turning an account on or off counts as edit
+export default function AdminActions({
+  admin,
+  can,
+}: {
+  admin: AdminRow;
+  can: Can<"admins">;
+}) {
   const t = useTranslations("Roles.admins");
   const tCommon = useTranslations("Common");
   const [deleting, setDeleting] = useState(false);
@@ -41,8 +49,8 @@ export default function AdminActions({ admin }: { admin: AdminRow }) {
 
   return (
     <div className="flex items-center gap-1">
-      <EditAdmin admin={admin} />
-      <DeleteBtn loading={deleting} onDelete={remove} />
+      {can.edit && <EditAdmin admin={admin} />}
+      {can.delete && <DeleteBtn loading={deleting} onDelete={remove} />}
     </div>
   );
 }

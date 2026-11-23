@@ -46,6 +46,14 @@ export type Permission = {
   [M in PermissionModuleName]: `${M}.${PermissionActionOf<M>}`;
 }[PermissionModuleName];
 
+// What the signed-in admin may do in one section, one flag per action the
+// section supports: Can<"users"> is { view, edit, sanction }.
+// UI only (hide or disable buttons): the API still rejects anything else
+export type Can<M extends PermissionModuleName> = Record<
+  PermissionActionOf<M>,
+  boolean
+>;
+
 // One cell of the matrix. `name` and `action` always agree with the section
 export type PermissionItem<
   M extends PermissionModuleName = PermissionModuleName,
@@ -154,12 +162,8 @@ export const adminSchema = (t: T) =>
       .string()
       .min(1, t("Fields.Password.required"))
       .min(8, t("Fields.Password.minLength")),
-    roles: z
-      .array(z.string())
-      .min(1, t("Fields.Roles.required")),
-    country_ids: z
-      .array(z.number())
-      .min(1, t("Fields.Countries.required")),
+    roles: z.array(z.string()).min(1, t("Fields.Roles.required")),
+    country_ids: z.array(z.number()).min(1, t("Fields.Countries.required")),
   });
 
 export type AdminFormValues = z.infer<ReturnType<typeof adminSchema>>;

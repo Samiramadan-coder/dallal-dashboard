@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
-import type { AdminRow } from "@/types/roles";
+import type { AdminRow, Can } from "@/types/roles";
 import type { Pagination } from "@/types/shared";
 import { cn } from "@/lib/utils";
 import AdminActions from "./admin-actions";
@@ -11,14 +11,20 @@ export default function DataPreview({
   admins,
   pagination,
   currentAdminId,
+  can,
 }: {
   admins: AdminRow[];
   pagination: Pagination;
   // The signed-in admin can't deactivate or delete their own account here
   currentAdminId: number;
+  // Hides buttons the admin may not use; the API rejects them anyway
+  can: Can<"admins">;
 }) {
   const locale = useLocale();
   const t = useTranslations("Roles.admins");
+
+  // Nothing allowed: drop the column instead of leaving it empty
+  const hasActions = can.edit || can.delete;
 
   const columns: DataTableColumn[] = [
     { label: t("table.admin") },
@@ -26,7 +32,7 @@ export default function DataPreview({
     { label: t("table.role") },
     { label: t("table.countries") },
     { label: t("table.status") },
-    { label: t("table.actions"), className: "w-24" },
+    ...(hasActions ? [{ label: t("table.actions"), className: "w-24" }] : []),
   ];
 
   return (
@@ -94,13 +100,17 @@ export default function DataPreview({
           </TableCell>
 
           {/* Button row: trimmed padding keeps it as tall as text rows */}
-          <TableCell className="py-[9px]!">
-            {admin.id === currentAdminId ? (
-              <span className="text-xs text-muted-foreground">{t("you")}</span>
-            ) : (
-              <AdminActions admin={admin} />
-            )}
-          </TableCell>
+          {hasActions && (
+            <TableCell className="py-[9px]!">
+              {admin.id === currentAdminId ? (
+                <span className="text-xs text-muted-foreground">
+                  {t("you")}
+                </span>
+              ) : (
+                <AdminActions admin={admin} can={can} />
+              )}
+            </TableCell>
+          )}
         </TableRow>
       ))}
     </DataTable>

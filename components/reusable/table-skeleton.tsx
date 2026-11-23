@@ -25,10 +25,7 @@ export default function TableSkeleton({
           className="flex gap-5 border-b border-border/50 px-4 py-4 last:border-b-0"
         >
           {Array.from({ length: columns }, (_, col) => (
-            <Skeleton
-              key={col}
-              className="h-3 flex-1 bg-muted-foreground/10"
-            />
+            <Skeleton key={col} className="h-3 flex-1 bg-muted-foreground/10" />
           ))}
         </div>
       ))}

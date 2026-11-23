@@ -2,33 +2,11 @@ import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 
 import { cn } from "@/lib/utils";
+import type { NavigationKey } from "@/types/dashboard-layout";
 import PageGuide from "./page-guide";
 
-export type PageHeaderKey =
-  | "overview"
-  | "analytics"
-  | "listings"
-  | "sellRequests"
-  | "market"
-  | "stores"
-  | "deals"
-  | "conversations"
-  | "reviews"
-  | "users"
-  | "verifications"
-  | "reports"
-  | "support"
-  | "revenue"
-  | "subscriptions"
-  | "boosts"
-  | "metalPrices"
-  | "notifications"
-  | "cms"
-  | "site"
-  | "countries"
-  | "roles"
-  | "settings"
-  | "auditLog";
+// Same ids as the sidebar
+export type PageHeaderKey = NavigationKey;
 
 type PageHeaderProps = {
   page: PageHeaderKey;

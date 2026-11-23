@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { deleteRole, updateRole } from "@/lib/actions/roles";
 import DeleteBtn from "@/components/reusable/delete-btn";
-import type { Permission, PermissionModule, Role } from "@/types/roles";
+import type { Can, Permission, PermissionModule, Role } from "@/types/roles";
 import CreateRole from "./create-role";
 import PermissionMatrix from "./permission-matrix";
 
@@ -23,10 +23,12 @@ function sameSet(a: readonly Permission[], b: readonly Permission[]) {
 export default function RolePanel({
   role,
   matrix,
+  can,
   onCreated,
 }: {
   role: Role;
   matrix: PermissionModule[];
+  can: Can<"roles">;
   onCreated: (id: number) => void;
 }) {
   const locale = useLocale();
@@ -37,12 +39,15 @@ export default function RolePanel({
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
+  // System roles are fixed; custom ones need roles.edit
+  const editable = can.edit && !role.is_system;
+
   const value = draft ?? role.permissions;
   const dirty = draft !== null && !sameSet(draft, role.permissions);
   const empty = value.length === 0;
 
   const save = async () => {
-    if (!dirty || empty) return;
+    if (!editable || !dirty || empty) return;
     setSaving(true);
     const result = await updateRole(role.id, { permissions: value });
     setSaving(false);
@@ -122,10 +127,12 @@ export default function RolePanel({
             </>
           ) : (
             <>
-              {!role.is_system && (
+              {can.delete && !role.is_system && (
                 <DeleteBtn loading={deleting} onDelete={remove} />
               )}
-              <CreateRole matrix={matrix} onCreated={onCreated} />
+              {can.create && (
+                <CreateRole matrix={matrix} onCreated={onCreated} />
+              )}
             </>
           )}
         </div>
@@ -134,7 +141,8 @@ export default function RolePanel({
       <PermissionMatrix
         matrix={matrix}
         value={value}
-        onChange={role.is_system || saving ? undefined : setDraft}
+        // Read-only without roles.edit: no onChange, checkboxes disabled
+        onChange={editable && !saving ? setDraft : undefined}
       />
     </section>
   );

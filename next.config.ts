@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
+  experimental: {
+    // Enables forbidden() for pages the admin has no permission for
+    authInterrupts: true,
+  },
   images: {
     remotePatterns: [
       {

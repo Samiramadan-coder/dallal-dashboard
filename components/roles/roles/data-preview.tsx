@@ -5,14 +5,17 @@ import { LockIcon } from "lucide-react";
 import { useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import RolePanel from "./role-panel";
-import type { PermissionModule, Role } from "@/types/roles";
+import type { Can, PermissionModule, Role } from "@/types/roles";
 
 export default function DataPreview({
   roles,
   matrix,
+  can,
 }: {
   roles: Role[];
   matrix: PermissionModule[];
+  // Hides or locks what the admin may not do; the API rejects it anyway
+  can: Can<"roles">;
 }) {
   const locale = useLocale();
   const t = useTranslations("Roles.roles");
@@ -72,6 +75,7 @@ export default function DataPreview({
         key={selected.id}
         role={selected}
         matrix={matrix}
+        can={can}
         onCreated={setSelectedId}
       />
     </div>
