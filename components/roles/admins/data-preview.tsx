@@ -101,7 +101,7 @@ export default function DataPreview({
 
           {/* Button row: trimmed padding keeps it as tall as text rows */}
           {hasActions && (
-            <TableCell className="py-[9px]!">
+            <TableCell className="py-2.25!">
               {admin.id === currentAdminId ? (
                 <span className="text-xs text-muted-foreground">
                   {t("you")}
