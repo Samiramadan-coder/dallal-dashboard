@@ -8,8 +8,6 @@ import {
   SidebarInset,
 } from "@/components/ui/sidebar";
 import type { ReactNode } from "react";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 import { getLocale } from "next-intl/server";
 import { navigation } from "@/constants/dashboard-layout";
 import SidebarLogo from "@/components/dashboard-layout/sidebar-logo";
@@ -23,12 +21,6 @@ export default async function MainLayout({
   children: ReactNode;
 }) {
   const locale = await getLocale();
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-
-  if (!token) {
-    redirect("/login");
-  }
 
   return (
     <SidebarProvider defaultOpen>

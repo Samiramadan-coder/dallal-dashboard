@@ -1,18 +1,9 @@
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-
-export default async function AuthLayout({
+// Signed-in users are redirected away from guest-only pages by proxy.ts
+export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token")?.value;
-
-  if (token) {
-    redirect("/");
-  }
-
   return (
     <div className="min-h-screen flex justify-center items-center px-4">
       {children}

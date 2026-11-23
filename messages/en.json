@@ -1,4 +1,7 @@
 {
+  "Api": {
+    "genericError": "Something went wrong. Please try again."
+  },
   "Common": {
     "English": "English",
     "Arabic": "Arabic",
