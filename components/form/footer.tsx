@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
-import { SheetClose, SheetFooter } from "../ui/sheet";
+import { DialogClose, DialogFooter } from "../ui/dialog";
 import { Spinner } from "../ui/spinner";
 
 export default function FormFooter({
@@ -13,26 +13,24 @@ export default function FormFooter({
   const t = useTranslations("Common");
 
   return (
-    <SheetFooter className="mt-4 border-t border-border bg-white px-4 py-3">
-      <div className="flex items-center justify-end gap-2">
-        <SheetClose asChild>
-          <Button
-            type="button"
-            variant="destructive"
-            className="h-10 flex-1 text-xs font-normal"
-          >
-            {t("Cancel")}
-          </Button>
-        </SheetClose>
+    <DialogFooter className="mx-0 mb-0 flex-row gap-2 rounded-b-xl border-t border-border bg-card px-5 py-3">
+      <DialogClose asChild>
         <Button
-          type="submit"
+          type="button"
+          variant="destructive"
           className="h-10 flex-1 text-xs font-normal"
-          onClick={() => form.current?.requestSubmit()}
-          disabled={loading}
         >
-          {loading ? <Spinner /> : t("Save")}
+          {t("Cancel")}
         </Button>
-      </div>
-    </SheetFooter>
+      </DialogClose>
+      <Button
+        type="submit"
+        className="h-10 flex-1 text-xs font-normal"
+        onClick={() => form.current?.requestSubmit()}
+        disabled={loading}
+      >
+        {loading ? <Spinner /> : t("Save")}
+      </Button>
+    </DialogFooter>
   );
 }

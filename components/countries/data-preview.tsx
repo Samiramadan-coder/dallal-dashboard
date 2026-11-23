@@ -6,7 +6,7 @@ import { useState } from "react";
 import CreateEdit from "./create-edit";
 import EditBtn from "../reusable/edit-btn";
 import { Country } from "@/types/countries";
-import { Pagination } from "@/types/shared";
+import { Locale, Pagination } from "@/types/shared";
 import { useLocale, useTranslations } from "next-intl";
 import DeleteBtn from "../reusable/delete-btn";
 import { deleteCountry } from "@/lib/countries";
@@ -20,7 +20,7 @@ export default function DataPreview({
   countries: Country[];
   pagination: Pagination;
 }) {
-  const locale = useLocale();
+  const locale = useLocale() as Locale;
   const t = useTranslations("Countries");
   const [loadingDelete, setLoadingDelete] = useState(false);
 
@@ -40,48 +40,50 @@ export default function DataPreview({
         pagination={pagination}
       >
         {countries.map((country) => (
-          <TableRow key={country.code} className="border-[#f3f4f6]">
-            <TableCell className="px-4 py-3">
+          <TableRow key={country.id}>
+            <TableCell>
               <div className="flex items-center gap-2">
                 <Image
                   src={country.flag}
-                  alt={`${country.name} flag`}
-                  width={24}
-                  height={24}
+                  alt=""
+                  width={20}
+                  height={14}
+                  className="h-3.5 w-5 rounded-xs object-cover"
                 />
-                <span className="font-semibold text-xs">
+                <span className="font-semibold text-foreground">
                   {country.name[locale]}
                 </span>
               </div>
             </TableCell>
-            <TableCell className="px-4 py-3">
-              <span className="font-semibold text-xs">{country.code}</span>
+            <TableCell>
+              {country.code}
             </TableCell>
-            <TableCell className="px-4 py-3">
-              <span className="font-semibold text-xs">{country.dial_code}</span>
+            <TableCell
+              dir="ltr"
+              className="text-start tabular-nums"
+            >
+              {country.dial_code}
             </TableCell>
-            <TableCell className="px-4 py-3 space-x-2">
-              <CreateEdit country={country} trigger={<EditBtn />} />
-              <DeleteBtn
-                loading={loadingDelete}
-                onDelete={async () => {
-                  setLoadingDelete(true);
-                  const result = await deleteCountry(country.id);
-                  setLoadingDelete(false);
+            {/* Trimmed padding keeps the button row as tall as text rows */}
+            <TableCell className="py-[9px]!">
+              <div className="flex items-center gap-1">
+                <CreateEdit country={country} trigger={<EditBtn />} />
+                <DeleteBtn
+                  loading={loadingDelete}
+                  onDelete={async () => {
+                    setLoadingDelete(true);
+                    const result = await deleteCountry(country.id);
+                    setLoadingDelete(false);
 
-                  if (result.success) {
-                    toast.success(result.message);
-                    return;
-                  }
+                    if (result.success) {
+                      toast.success(result.message);
+                      return;
+                    }
 
-                  if (result.message) {
-                    toast.error(result.message);
-                    return;
-                  }
-
-                  toast.error(t("errorOccurred"));
-                }}
-              />
+                    toast.error(result.message || t("errorOccurred"));
+                  }}
+                />
+              </div>
             </TableCell>
           </TableRow>
         ))}

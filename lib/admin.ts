@@ -19,21 +19,30 @@ function matches(country: Country, assigned: AdminCountry): boolean {
   return assigned.id === country.id || assigned.code === country.code;
 }
 
-// The countries the admin works on. `all_countries` admins get every
-// country that is live on the platform
+// Every country on the platform. Cached per request
+export const getAllCountries = cache(async (): Promise<Country[]> => {
+  const response = await api.get<{ data: { data: Country[] } }>(
+    "/api/v1/admin/countries",
+  );
+  return response.data.data;
+});
+
+// The countries an admin works on, picked from `countries`.
+// `all_countries` admins get every country that is live on the platform
+export function resolveAdminCountries(
+  admin: Pick<CurrentAdmin, "all_countries" | "countries">,
+  countries: Country[],
+): Country[] {
+  if (admin.all_countries) {
+    return countries.filter((country) => country.status === "live");
+  }
+  return countries.filter((country) =>
+    admin.countries.some((assigned) => matches(country, assigned)),
+  );
+}
+
+// The countries the signed-in admin works on
 export const getAdminCountries = cache(
-  async (admin: CurrentAdmin): Promise<Country[]> => {
-    const response = await api.get<{ data: { data: Country[] } }>(
-      "/api/v1/admin/countries",
-    );
-
-    const countries = response.data.data;
-
-    if (admin.all_countries) {
-      return countries.filter((country) => country.status === "live");
-    }
-    return countries.filter((country) =>
-      admin.countries.some((assigned) => matches(country, assigned)),
-    );
-  },
+  async (admin: CurrentAdmin): Promise<Country[]> =>
+    resolveAdminCountries(admin, await getAllCountries()),
 );

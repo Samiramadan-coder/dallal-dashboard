@@ -11,8 +11,14 @@ export default function EditBtn(props: React.ComponentProps<typeof Button>) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button type="button" variant="ghost" className="px-0" {...props}>
-          <Pencil className="text-muted-foreground" />
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          className="text-muted-foreground hover:text-foreground [&_svg]:size-3.5"
+          {...props}
+        >
+          <Pencil />
         </Button>
       </TooltipTrigger>
       <TooltipContent>{t("Edit")}</TooltipContent>

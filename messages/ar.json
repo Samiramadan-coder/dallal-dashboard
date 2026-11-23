@@ -37,7 +37,18 @@
     "Review": "مراجعة",
     "To": "إلى",
     "From": "من",
-    "Of": "من"
+    "Of": "من",
+    "TryAgain": "حاول مرة أخرى",
+    "LoadFailed": "تعذّر تحميل البيانات. تحقّق من الاتصال وحاول مرة أخرى.",
+    "Upload": {
+      "click": "اضغط للرفع",
+      "orDrag": "أو اسحب الصورة وأفلتها هنا",
+      "hint": "PNG أو JPG أو SVG",
+      "replace": "استبدال",
+      "remove": "حذف الصورة",
+      "selected": "الصورة المختارة",
+      "current": "الصورة الحالية"
+    }
   },
   "Auth": {
     "Login": {
@@ -153,7 +164,11 @@
         "label": "الاسم",
         "placeholder": "أدخل اسم الدولة",
         "required": "اسم الدولة مطلوب",
-        "minLength": "يجب أن يكون اسم الدولة 3 أحرف على الأقل"
+        "minLength": "يجب أن يكون اسم الدولة 3 أحرف على الأقل",
+        "labelEn": "الاسم (بالإنجليزية)",
+        "labelAr": "الاسم (بالعربية)",
+        "placeholderEn": "e.g. United Arab Emirates",
+        "placeholderAr": "مثال: الإمارات العربية المتحدة"
       },
       "Code": {
         "label": "الرمز",
@@ -165,12 +180,15 @@
         "label": "العلم",
         "placeholder": "قم بتحميل علم الدولة",
         "fileSize": "يجب أن يكون حجم العلم أقل من 1 ميغابايت",
-        "required": "العلم مطلوب"
+        "required": "العلم مطلوب",
+        "hint": "PNG أو SVG، بحد أقصى 1 ميجابايت"
       },
       "IsActive": {
         "label": "نشط"
       }
-    }
+    },
+    "EditCountry": "تعديل الدولة",
+    "EditCountryDescription": "حدّث بيانات الدولة."
   },
   "pageHeaders": {
     "filters": {
@@ -295,6 +313,16 @@
       "label": "صفحات الأدوار",
       "roles": "الأدوار",
       "admins": "المشرفون"
+    },
+    "admins": {
+      "title": "مشرفين",
+      "table": {
+        "admin": "المشرف",
+        "email": "البريد الإلكتروني",
+        "role": "الدور",
+        "countries": "الدول"
+      },
+      "noCountries": "—"
     }
   }
 }

@@ -37,7 +37,18 @@
     "Review": "Review",
     "To": "to",
     "From": "from",
-    "Of": "of"
+    "Of": "of",
+    "TryAgain": "Try again",
+    "LoadFailed": "We couldn’t load this data. Check your connection and try again.",
+    "Upload": {
+      "click": "Click to upload",
+      "orDrag": "or drag and drop",
+      "hint": "PNG, JPG or SVG",
+      "replace": "Replace",
+      "remove": "Remove image",
+      "selected": "Selected image",
+      "current": "Current image"
+    }
   },
   "Auth": {
     "Login": {
@@ -155,7 +166,11 @@
         "label": "Name",
         "placeholder": "Enter the country name",
         "required": "Country name is required",
-        "minLength": "Country name must be at least 3 characters"
+        "minLength": "Country name must be at least 3 characters",
+        "labelEn": "Name (English)",
+        "labelAr": "Name (Arabic)",
+        "placeholderEn": "e.g. United Arab Emirates",
+        "placeholderAr": "مثال: الإمارات العربية المتحدة"
       },
       "Code": {
         "label": "Code",
@@ -167,12 +182,15 @@
         "label": "Flag",
         "placeholder": "Upload the country flag",
         "fileSize": "Flag must be less than 1MB",
-        "required": "Flag is required"
+        "required": "Flag is required",
+        "hint": "PNG or SVG, up to 1MB"
       },
       "IsActive": {
         "label": "Active"
       }
-    }
+    },
+    "EditCountry": "Edit Country",
+    "EditCountryDescription": "Update the country details."
   },
   "pageHeaders": {
     "filters": {
@@ -297,6 +315,16 @@
       "label": "Roles pages",
       "roles": "Roles",
       "admins": "Admins"
+    },
+    "admins": {
+      "title": "Admins",
+      "table": {
+        "admin": "Admin",
+        "email": "Email",
+        "role": "Role",
+        "countries": "Countries"
+      },
+      "noCountries": "—"
     }
   }
 }

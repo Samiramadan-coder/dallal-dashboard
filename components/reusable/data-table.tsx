@@ -1,8 +1,6 @@
 import {
   Table,
   TableBody,
-  TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -28,6 +26,8 @@ interface DataTableProps {
   pagination?: Pagination;
 }
 
+// Cell padding lives here so every table lines up the same way; rows only
+// style their content
 export function DataTable({
   columns,
   rowsCount,
@@ -37,14 +37,21 @@ export function DataTable({
   pagination,
 }: DataTableProps) {
   const t = useTranslations("Common");
+  const hasPages = pagination !== undefined && pagination.last_page > 1;
 
   return (
-    <div className="w-full min-w-0 border border-border rounded-lg overflow-hidden">
-      <Table className="[&_thead_th:first-child]:w-8 [&_thead_th:first-child]:px-3 [&_tbody_td:first-child]:w-8 [&_tbody_td:first-child]:px-3">
-        <TableHeader>
-          <TableRow className="border-[#f3f4f6]">
+    <div className="w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card">
+      <Table
+        className={cn(
+          "[&_td]:px-4 [&_td]:py-3.5 [&_td]:text-[13px] [&_td]:text-foreground/70 [&_th]:px-4",
+          onCheckboxChange &&
+            "[&_td:first-child]:w-8 [&_td:first-child]:pe-0 [&_th:first-child]:w-8 [&_th:first-child]:pe-0",
+        )}
+      >
+        <TableHeader className="bg-muted/60">
+          <TableRow className="border-border/60 hover:bg-transparent">
             {onCheckboxChange && (
-              <TableHead className="w-8 px-3 py-4">
+              <TableHead>
                 <Checkbox onCheckedChange={onCheckboxChange} />
               </TableHead>
             )}
@@ -53,7 +60,7 @@ export function DataTable({
               <TableHead
                 key={column.label}
                 className={cn(
-                  "px-5 py-3 uppercase text-[10px] font-semibold text-gray-400",
+                  "h-9 text-[10px] font-semibold tracking-wider text-muted-foreground/70 uppercase",
                   column.className,
                 )}
               >
@@ -63,40 +70,33 @@ export function DataTable({
           </TableRow>
         </TableHeader>
 
-        <TableBody className="bg-white">{children}</TableBody>
-
-        <TableFooter className="bg-white border-[#f3f4f6]">
-          <TableRow>
-            <TableCell className="px-4 py-3 text-[12px] text-muted-foreground">
-              {!pagination ? (
-                <p>
-                  {t("Showing")}{" "}
-                  <span className="font-semibold">{rowsCount}</span> {countUnit}
-                </p>
-              ) : (
-                <p>
-                  {t("Showing")}{" "}
-                  <span className="font-semibold">{pagination.from}</span>{" "}
-                  {t("To")}{" "}
-                  <span className="font-semibold">{pagination.to}</span>{" "}
-                  {t("Of")}{" "}
-                  <span className="font-semibold">{pagination.total}</span>{" "}
-                  {countUnit}
-                </p>
-              )}
-            </TableCell>
-
-            <TableCell className="px-4 py-3" colSpan={columns.length}>
-              {pagination && (
-                <PaginationTemplate
-                  currentPage={pagination.current_page}
-                  totalPages={pagination.last_page}
-                />
-              )}
-            </TableCell>
-          </TableRow>
-        </TableFooter>
+        <TableBody className="[&_tr]:border-border/50">{children}</TableBody>
       </Table>
+
+      {hasPages && (
+        <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border/60 px-4 py-3">
+          <p className="text-xs text-muted-foreground">
+            {t("Showing")}{" "}
+            <span className="font-semibold text-foreground">
+              {pagination.from}
+            </span>{" "}
+            {t("To")}{" "}
+            <span className="font-semibold text-foreground">
+              {pagination.to}
+            </span>{" "}
+            {t("Of")}{" "}
+            <span className="font-semibold text-foreground">
+              {pagination.total || rowsCount}
+            </span>{" "}
+            {countUnit}
+          </p>
+
+          <PaginationTemplate
+            currentPage={pagination.current_page}
+            totalPages={pagination.last_page}
+          />
+        </div>
+      )}
     </div>
   );
 }

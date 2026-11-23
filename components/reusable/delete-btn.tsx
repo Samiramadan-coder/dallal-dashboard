@@ -34,8 +34,14 @@ export default function DeleteBtn({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="ghost">
-          <Trash2 className="text-red-400" />
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          aria-label={t("Delete")}
+          className="text-destructive/80 hover:bg-destructive/10 hover:text-destructive [&_svg]:size-3.5"
+        >
+          <Trash2 />
         </Button>
       </DialogTrigger>
 
@@ -44,7 +50,7 @@ export default function DeleteBtn({
           <Button className="hidden" ref={closeBtn}></Button>
         </DialogClose>
         <DialogHeader>
-          <DialogTitle className="text-red-600">{t("Delete")}</DialogTitle>
+          <DialogTitle className="text-destructive">{t("Delete")}</DialogTitle>
           <DialogDescription>{t("DeleteConfirmation")}</DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-end">
