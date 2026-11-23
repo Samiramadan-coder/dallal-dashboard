@@ -1,81 +1,79 @@
 "use client";
 
-import { toast } from "sonner";
-import { http } from "@/lib/http";
-import { saveToken } from "@/lib/actions";
-import Input from "@/components/form/input";
-import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
-import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/ui/spinner";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Card, CardContent } from "@/components/ui/card";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { LoginFormData, loginSchema } from "@/types/auth";
+import {
+  CALLBACK_URL_PARAM,
+  HOME_PATH,
+  localizePath,
+  safeCallbackUrl,
+} from "@/lib/auth-routes";
 
-export default function LoginPage() {
+import { use, useState } from "react";
+import { useLocale } from "next-intl";
+import { useRouter } from "next/navigation";
+import type { LoginFormData } from "@/types/auth";
+import { LoginForm } from "@/components/auth/login-form";
+import { TwoFactorForm } from "@/components/auth/two-factor-form";
+import { confirmTwoFactorSetup, login } from "@/lib/actions/auth";
+
+type Step =
+  | { name: "credentials" }
+  | { name: "verify" }
+  | { name: "setup"; secret: string; otpauthUrl: string };
+
+export default function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const router = useRouter();
-  const t = useTranslations("Auth.Login");
+  const locale = useLocale();
+  const callbackParam = use(searchParams)[CALLBACK_URL_PARAM];
+  const callbackUrl = typeof callbackParam === "string" ? callbackParam : null;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema(t)),
-  });
+  // Kept in memory only: a 2FA account sends them again with the code
+  const [credentials, setCredentials] = useState<LoginFormData>();
+  const [step, setStep] = useState<Step>({ name: "credentials" });
 
-  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
-    try {
-      const { data: loginResponse } = await http.post<{
-        data: { token: string };
-        message: string;
-      }>("/api/v1/admin/auth/login", { ...data, device_name: "web" });
+  const onSignedIn = () => {
+    // callbackUrl already carries the locale prefix, hence next/navigation's
+    // router; safeCallbackUrl blocks external URLs and the login page itself
+    router.replace(
+      safeCallbackUrl(callbackUrl, localizePath(HOME_PATH, locale)),
+    );
+  };
 
-      saveToken(loginResponse.data.token);
-      toast.success(loginResponse.message);
-      router.push("/");
-    } catch (err) {
-      console.error("Login error:", err);
-      toast.error(t("LoginFailed"));
-    }
+  const verifyCode = async (totp: string) => {
+    const result = await login({ ...credentials!, totp });
+    return result.ok ? { ok: true as const, data: result.data } : result;
   };
 
   return (
-    <main>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Card className="w-75 sm:w-120 py-8 ring-0! shadow-sm">
-          <CardContent className="flex flex-col gap-6 px-6">
-            <div>
-              <p className="text-xl font-bold text-center">{t("Title")}</p>
-              <p className="text-sm mt-2 text-center text-muted-foreground">
-                {t("Description")}
-              </p>
-            </div>
-
-            <Input
-              register={register}
-              errors={errors}
-              required
-              name="email"
-              label={t("Email")}
-            />
-
-            <Input
-              register={register}
-              errors={errors}
-              required
-              name="password"
-              label={t("Password")}
-              type="password"
-            />
-
-            <Button type="submit" className="w-full h-11 bg-primary">
-              {isSubmitting ? <Spinner /> : t("Submit")}
-            </Button>
-          </CardContent>
-        </Card>
-      </form>
-    </main>
+    <div className="w-full max-w-95">
+      {step.name === "credentials" || !credentials ? (
+        <LoginForm
+          defaultValues={credentials}
+          onSuccess={(values, next) => {
+            setCredentials(values);
+            if (next.step === "signed-in") onSignedIn();
+            else
+              setStep(
+                next.step === "setup"
+                  ? { name: "setup", ...next }
+                  : { name: "verify" },
+              );
+          }}
+        />
+      ) : (
+        <TwoFactorForm
+          email={credentials.email}
+          setup={step.name === "setup" ? step : undefined}
+          onSubmitCode={
+            step.name === "setup" ? confirmTwoFactorSetup : verifyCode
+          }
+          onBack={() => setStep({ name: "credentials" })}
+          onVerified={onSignedIn}
+        />
+      )}
+    </div>
   );
 }

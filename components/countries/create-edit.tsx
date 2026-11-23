@@ -3,7 +3,8 @@
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef } from "react";
-import Input from "@/components/form/input";
+import { Input } from "@/components/ui/input";
+import { LabeledField, fieldA11yProps } from "@/components/form/labeled-field";
 import Switch from "@/components/form/switch";
 import Footer from "@/components/form/footer";
 import Header from "@/components/form/header";
@@ -144,28 +145,38 @@ export default function CreateEdit({ country, trigger }: CreateEditProps) {
             />
 
             {availableLocales.map((lang) => (
-              <Input<CountryFormValues>
+              <LabeledField
                 required
                 key={lang}
-                type="text"
-                errors={errors}
-                register={register}
-                name={`name.${lang}`}
+                id={`name-${lang}`}
                 label={tLive("Fields.Name.label")}
-                placeholder={tLive("Fields.Name.placeholder")}
-                className={`${activeLocale === lang ? "" : "hidden"}`}
-              />
+                error={errors.name?.[lang]}
+                className={cn({ hidden: activeLocale !== lang })}
+              >
+                <Input
+                  {...register(`name.${lang}`)}
+                  {...fieldA11yProps(`name-${lang}`, errors.name?.[lang])}
+                  type="text"
+                  placeholder={tLive("Fields.Name.placeholder")}
+                  className="h-10 bg-background"
+                />
+              </LabeledField>
             ))}
 
-            <Input<CountryFormValues>
+            <LabeledField
               required
-              type="text"
-              errors={errors}
-              register={register}
-              name={`code`}
+              id="code"
               label={tLive("Fields.Code.label")}
-              placeholder={tLive("Fields.Code.placeholder")}
-            />
+              error={errors.code}
+            >
+              <Input
+                {...register("code")}
+                {...fieldA11yProps("code", errors.code)}
+                type="text"
+                placeholder={tLive("Fields.Code.placeholder")}
+                className="h-10 bg-background"
+              />
+            </LabeledField>
 
             <Switch<CountryFormValues>
               name="is_active"

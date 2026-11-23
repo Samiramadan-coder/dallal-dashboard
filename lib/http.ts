@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { getServerLanguage, getTokenHeaders } from "./actions";
+import { getServerLanguage, getTokenHeaders } from "./actions/session";
 
 type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 

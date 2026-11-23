@@ -41,16 +41,40 @@
   },
   "Auth": {
     "Login": {
-      "Title": "Login",
-      "Description": "Enter your credentials to access your account",
+      "Title": "Sign in",
+      "Description": "Use your Dallal Hoolee admin account.",
       "Email": "Email",
       "Password": "Password",
-      "Submit": "Login",
+      "Submit": "Continue",
       "LoginSuccess": "Login successful",
       "LoginFailed": "Login failed. Please check your credentials and try again.",
       "InvalidEmail": "Invalid email",
       "PasswordIsRequired": "Password is required",
       "passwordMinLength": "Password must be at least 8 characters"
+    },
+    "Panel": {
+      "BrandName": "Dallal Hoolee",
+      "BrandSubtitle": "Admin Panel",
+      "Headline": "The marketplace\nfor gold, diamonds\nand fine jewelry.",
+      "Subheadline": "Moderation, verification, billing and pricing for the UAE and Saudi Arabia, in one place.",
+      "Footer": "Authorized staff only. Activity is logged."
+    },
+    "TwoFactor": {
+      "Back": "Back",
+      "Title": "Enter your code",
+      "Description": "Open your authenticator app and enter the 6-digit code for <email></email>.",
+      "CodeLabel": "Verification code",
+      "Submit": "Verify and sign in",
+      "CodeRequired": "Enter the 6-digit code.",
+      "VerifySuccess": "Signed in successfully",
+      "SessionExpired": "Your sign-in attempt expired. Go back and sign in again.",
+      "SetupTitle": "Set up two-factor authentication",
+      "SetupDescription": "Add <email></email> to an authenticator app such as Google Authenticator, then enter the 6-digit code it shows.",
+      "SetupKey": "Setup key",
+      "CopyKey": "Copy key",
+      "CopyFailed": "Couldn’t copy the key",
+      "OpenInApp": "Open in authenticator app",
+      "OpenInAppHint": "Works only if an authenticator app is installed on this device. Otherwise, copy the key above into the app on your phone."
     }
   },
   "layout": {
@@ -63,11 +87,44 @@
       "toggleExpand": "Expand sidebar",
       "toggleCollapse": "Collapse sidebar",
       "navigation": {
-        "overview": "Overview",
-        "dashboard": "Dashboard",
-        "system": "System",
-        "countries": "Countries"
+        "sections": {
+          "main": "Main",
+          "marketplace": "Marketplace",
+          "people": "People",
+          "revenue": "Revenue",
+          "system": "System"
+        },
+        "links": {
+          "overview": "Overview",
+          "analytics": "Analytics",
+          "listings": "Listings",
+          "sellRequests": "Sell Requests",
+          "market": "Market",
+          "stores": "Stores",
+          "deals": "Deals",
+          "conversations": "Conversations",
+          "reviews": "Reviews",
+          "users": "Users",
+          "verifications": "Verifications",
+          "reports": "Reports",
+          "support": "Support",
+          "revenue": "Revenue",
+          "subscriptions": "Subscriptions",
+          "boosts": "Boosts",
+          "metalPrices": "Metal Prices",
+          "notifications": "Notifications",
+          "cms": "CMS",
+          "site": "Site & Marketing",
+          "countries": "Countries",
+          "roles": "Roles",
+          "settings": "Settings",
+          "auditLog": "Audit Log"
+        }
       }
+    },
+    "placeholder": {
+      "badge": "Under construction",
+      "description": "We’re building this page right now. It will be available here soon."
     }
   },
   "Countries": {
