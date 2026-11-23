@@ -10,7 +10,8 @@ import {
 } from "@/components/ui/sidebar";
 import type { ReactNode } from "react";
 import { getLocale } from "next-intl/server";
-import { navigation } from "@/constants/dashboard-layout";
+import { getSidebarCounts } from "@/lib/sidebar-counts";
+import { navigationFor } from "@/constants/dashboard-layout";
 import { getAdminCountries, getCurrentAdmin } from "@/lib/admin";
 import SidebarLogo from "@/components/dashboard-layout/sidebar-logo";
 import SidebarNavLink from "@/components/dashboard-layout/sidebar-nav-link";
@@ -23,7 +24,11 @@ export default async function MainLayout({
   children: ReactNode;
 }) {
   const [locale, admin] = await Promise.all([getLocale(), getCurrentAdmin()]);
-  const countries = await getAdminCountries(admin);
+
+  const [countries, counts] = await Promise.all([
+    getAdminCountries(admin),
+    getSidebarCounts(),
+  ]);
 
   return (
     <SidebarProvider defaultOpen>
@@ -39,10 +44,10 @@ export default async function MainLayout({
         <SidebarContent className="bg-secondary">
           <SidebarGroup className="p-0">
             <SidebarMenu className="gap-0.5 px-2.5 py-2">
-              {navigation().map((item) => (
+              {navigationFor(admin.permissions).map((item) => (
                 <SidebarMenuItem key={item.label}>
                   {item.type === "link" ? (
-                    <SidebarNavLink item={item} />
+                    <SidebarNavLink item={item} count={counts[item.key]} />
                   ) : (
                     <SidebarNavSection label={item.label} />
                   )}

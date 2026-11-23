@@ -2,17 +2,21 @@
 
 import { SidebarMenuButton, useSidebar } from "../ui/sidebar";
 import { Link, usePathname } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import type { DashboardNavigationLinkItem } from "@/types/dashboard-layout";
-import { Badge } from "../ui/badge";
+import { cn } from "@/lib/utils";
 
 export default function SidebarNavLink({
   item,
+  count,
 }: {
   item: DashboardNavigationLinkItem;
+  // Badge number; nothing shows when it's missing or 0
+  count?: number;
 }) {
   const pathname = usePathname();
   const t = useTranslations("layout");
+  const format = useFormatter();
   const { isMobile, setOpenMobile } = useSidebar();
   const normalizedPathname = pathname.replace(/^\/(en|ar)(?=\/|$)/, "") || "/";
   const isActive =
@@ -46,15 +50,20 @@ export default function SidebarNavLink({
           className="flex items-center gap-3"
           onClick={handleClick}
         >
-          <div className="flex items-center gap-3">
-            {item.icon}
-            <span>{t(item.label)}</span>
-          </div>
+          {item.icon}
+          <span className="flex-1 truncate">{t(item.label)}</span>
 
-          {item.count && (
-            <Badge className="ms-auto bg-amber-100! text-amber-700! text-[10px] w-5 h-5">
-              {item.count}
-            </Badge>
+          {count !== undefined && count > 0 && (
+            <span
+              className={cn(
+                "rounded-full px-1.5 py-0.5 text-[10px] font-bold leading-none tabular-nums group-data-[collapsible=icon]:hidden",
+                item.alert
+                  ? "bg-destructive text-sidebar-foreground"
+                  : "bg-sidebar-primary/15 text-sidebar-primary",
+              )}
+            >
+              {format.number(count)}
+            </span>
           )}
         </Link>
       </SidebarMenuButton>

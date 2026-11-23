@@ -175,7 +175,6 @@
     }
   },
   "pageHeaders": {
-    "help": "How does this page work?",
     "filters": {
       "country": "Country",
       "period": "Period",
@@ -280,6 +279,17 @@
         "title": "Audit Log",
         "subtitle": "Every sensitive action and settings change by staff, limited to your countries."
       }
+    },
+    "guide": {
+      "button": "How does this page work?",
+      "title": "Page guide",
+      "close": "Close panel",
+      "purpose": "Purpose",
+      "whoUses": "Who uses it",
+      "steps": "Steps",
+      "rules": "Important rules",
+      "terms": "Terms",
+      "related": "Related pages"
     }
   }
 }
