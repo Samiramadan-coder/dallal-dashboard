@@ -159,6 +159,7 @@
       "name": "الاسم",
       "code": "الرمز",
       "dialCode": "رمز الاتصال",
+      "cities": "المدن",
       "actions": "الإجراءات"
     },
     "Fields": {
@@ -190,7 +191,48 @@
       }
     },
     "EditCountry": "تعديل الدولة",
-    "EditCountryDescription": "حدّث بيانات الدولة."
+    "EditCountryDescription": "حدّث بيانات الدولة.",
+    "Cities": {
+      "show": "عرض المدن",
+      "hide": "إخفاء المدن",
+      "empty": "لا توجد مدن في هذه الدولة بعد.",
+      "inactive": "غير نشطة",
+      "loadFailed": "تعذر تحميل المدن.",
+      "active": "نشطة",
+      "Table": {
+        "name": "المدينة",
+        "coordinates": "الإحداثيات",
+        "status": "الحالة",
+        "actions": "الإجراءات"
+      },
+      "add": "إضافة مدينة",
+      "addDescription": "أضف مدينة لهذه الدولة وحدد موقعها.",
+      "mapHint": "اكتب الإحداثيات، أو اضغط على الخريطة لتحديدها.",
+      "Fields": {
+        "Name": {
+          "labelEn": "الاسم (بالإنجليزية)",
+          "labelAr": "الاسم (بالعربية)",
+          "placeholderEn": "e.g. Khor Fakkan",
+          "placeholderAr": "مثال: خورفكان",
+          "required": "اسم المدينة مطلوب"
+        },
+        "Lat": {
+          "label": "خط العرض",
+          "required": "خط العرض مطلوب",
+          "invalid": "خط العرض يجب أن يكون بين -90 و 90"
+        },
+        "Lng": {
+          "label": "خط الطول",
+          "required": "خط الطول مطلوب",
+          "invalid": "خط الطول يجب أن يكون بين -180 و 180"
+        },
+        "IsActive": {
+          "label": "نشطة"
+        }
+      },
+      "edit": "تعديل المدينة",
+      "editDescription": "حدّث بيانات المدينة وموقعها."
+    }
   },
   "pageHeaders": {
     "filters": {

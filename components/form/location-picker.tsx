@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 
-type LocationValue = {
+export type LocationValue = {
   latitude: number;
   longitude: number;
 };

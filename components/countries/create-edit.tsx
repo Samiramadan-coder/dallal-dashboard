@@ -7,7 +7,8 @@ import { LabeledField, fieldA11yProps } from "@/components/form/labeled-field";
 import Switch from "@/components/form/switch";
 import Footer from "@/components/form/footer";
 import Header from "@/components/form/header";
-import { postCountry } from "@/lib/countries";
+import { saveCountry } from "@/lib/actions/countries";
+import { toFormData } from "@/lib/api/form-data";
 import AddButton from "@/components/form/add-button";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useTranslations } from "next-intl";
@@ -46,26 +47,28 @@ export default function CreateEdit({ country, trigger }: CreateEditProps) {
   });
 
   const onSubmit: SubmitHandler<CountryFormValues> = async (data) => {
-    const result = await postCountry(data, country?.id);
+    // name → name[en] / name[ar], is_active → 1 / 0
+    const result = await saveCountry(toFormData(data), country?.id);
 
-    if (result.success) {
-      toast.success(result.message);
-      // Keep edited values; start a fresh form after adding
-      if (!isEdit) reset();
-      setOpen(false);
-      return;
-    }
-
-    if (result.errors) {
-      Object.entries(result.errors).forEach(([field, message]) => {
+    if (!result.ok) {
+      // Laravel keys like "name.en" are what setError expects
+      Object.entries(result.fieldErrors ?? {}).forEach(([field, message]) => {
         setError(field as keyof CountryFormValues, {
           type: "server",
           message,
         });
       });
+      toast.error(result.message || tCommon("ErrorOccurred"));
+      return;
     }
 
-    toast.error(result.message || tCommon("ErrorOccurred"));
+    toast.success(
+      result.data.message ||
+        tCommon(isEdit ? "UpdatedSuccessfully" : "CreatedSuccessfully"),
+    );
+    // Keep edited values; start a fresh form after adding
+    if (!isEdit) reset();
+    setOpen(false);
   };
 
   return (

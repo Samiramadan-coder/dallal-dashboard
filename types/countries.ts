@@ -39,8 +39,42 @@ export type Country = {
   is_active: boolean;
   // "live" | "coming_soon" | …
   status?: string;
+  cities_count?: number;
   name: {
     en: string;
     ar: string;
   };
+};
+
+// Valid empty number inputs come through as NaN, which z.number() rejects
+export const citySchema = (t: T) =>
+  z.object({
+    name: z.object({
+      en: z.string().trim().min(1, t("Cities.Fields.Name.required")),
+      ar: z.string().trim().min(1, t("Cities.Fields.Name.required")),
+    }),
+    lat: z
+      .number({ error: t("Cities.Fields.Lat.required") })
+      .min(-90, t("Cities.Fields.Lat.invalid"))
+      .max(90, t("Cities.Fields.Lat.invalid")),
+    lng: z
+      .number({ error: t("Cities.Fields.Lng.required") })
+      .min(-180, t("Cities.Fields.Lng.invalid"))
+      .max(180, t("Cities.Fields.Lng.invalid")),
+    is_active: z.boolean(),
+  });
+
+export type CityFormValues = z.infer<ReturnType<typeof citySchema>>;
+
+export type City = {
+  id: number;
+  country_id: number;
+  name: {
+    en: string;
+    ar: string;
+  };
+  lat: number;
+  lng: number;
+  is_active: boolean;
+  sort: number;
 };

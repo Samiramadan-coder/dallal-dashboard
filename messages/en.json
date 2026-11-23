@@ -161,6 +161,7 @@
       "name": "Name",
       "code": "Code",
       "dialCode": "Dial Code",
+      "cities": "Cities",
       "actions": "Actions"
     },
     "Fields": {
@@ -192,7 +193,48 @@
       }
     },
     "EditCountry": "Edit Country",
-    "EditCountryDescription": "Update the country details."
+    "EditCountryDescription": "Update the country details.",
+    "Cities": {
+      "show": "Show cities",
+      "hide": "Hide cities",
+      "empty": "No cities in this country yet.",
+      "inactive": "Inactive",
+      "loadFailed": "Couldn't load cities.",
+      "active": "Active",
+      "Table": {
+        "name": "City",
+        "coordinates": "Coordinates",
+        "status": "Status",
+        "actions": "Actions"
+      },
+      "add": "Add city",
+      "addDescription": "Add a city to this country and set its location.",
+      "mapHint": "Type the coordinates, or click the map to pick them.",
+      "Fields": {
+        "Name": {
+          "labelEn": "Name (English)",
+          "labelAr": "Name (Arabic)",
+          "placeholderEn": "e.g. Khor Fakkan",
+          "placeholderAr": "مثال: خورفكان",
+          "required": "City name is required"
+        },
+        "Lat": {
+          "label": "Latitude",
+          "required": "Latitude is required",
+          "invalid": "Latitude must be between -90 and 90"
+        },
+        "Lng": {
+          "label": "Longitude",
+          "required": "Longitude is required",
+          "invalid": "Longitude must be between -180 and 180"
+        },
+        "IsActive": {
+          "label": "Active"
+        }
+      },
+      "edit": "Edit city",
+      "editDescription": "Update the city details and location."
+    }
   },
   "pageHeaders": {
     "filters": {
