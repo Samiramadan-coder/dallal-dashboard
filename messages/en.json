@@ -529,6 +529,15 @@
       }
     }
   },
+  "MetalPrices": {
+    "switcher": {
+      "label": "Metal prices pages",
+      "prices": "Prices",
+      "heldForReview": "Held for review",
+      "marginHours": "Margins and hours",
+      "historyLogs": "History and log"
+    }
+  },
   "Cms": {
     "switcher": {
       "label": "CMS pages",

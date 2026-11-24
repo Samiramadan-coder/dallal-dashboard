@@ -6,9 +6,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <div>
       <PageHeader page="metalPrices" />
 
-      <PageSwitcher />
+      <div className="flex flex-col gap-4">
+        <PageSwitcher />
 
-      {children}
+        {children}
+      </div>
     </div>
   );
 }

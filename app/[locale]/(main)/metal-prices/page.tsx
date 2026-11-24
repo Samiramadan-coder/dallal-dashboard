@@ -8,5 +8,5 @@ export default async function Page() {
 
   console.log(prices);
 
-  return <div></div>;
+  return <div>Prices</div>;
 }

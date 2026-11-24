@@ -527,6 +527,15 @@
       }
     }
   },
+  "MetalPrices": {
+    "switcher": {
+      "label": "صفحات أسعار المعادن",
+      "prices": "الأسعار",
+      "heldForReview": "قيد المراجعة",
+      "marginHours": "الهوامش والساعات",
+      "historyLogs": "السجل والتاريخ"
+    }
+  },
   "Cms": {
     "switcher": {
       "label": "صفحات إدارة المحتوى",
