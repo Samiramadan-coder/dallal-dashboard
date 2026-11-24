@@ -31,7 +31,7 @@ export default function PageSwitcher({
     <Tabs value={pathname}>
       <TabsList
         aria-label={t("label")}
-        className="h-auto max-w-full gap-1 overflow-x-auto overflow-y-hidden rounded-xl p-1.5"
+        className="h-auto group-data-horizontal/tabs:h-auto max-w-full gap-1 overflow-x-auto overflow-y-hidden rounded-xl p-1.5"
       >
         {pages.map(({ href, label, icon: Icon }) => (
           <TabsTrigger

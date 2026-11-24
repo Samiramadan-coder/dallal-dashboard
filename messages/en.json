@@ -535,6 +535,95 @@
       "categories": "Categories",
       "listsManagement": "Lists Management",
       "faq": "FAQ"
+    },
+    "categories": {
+      "sections": {
+        "label": "Categories sections",
+        "categoriesAndFields": "Categories and fields",
+        "marketRules": "Individual market rules",
+        "bannedKeywords": "Banned keywords",
+        "luxuryWatchBrands": "Luxury watch brands"
+      },
+      "list": {
+        "active": "Active",
+        "inactive": "Inactive",
+        "fields": "{count, plural, one {# field} other {# fields}}",
+        "toggleFields": "Show fields of {name}",
+        "toggleActive": "{name} active",
+        "audiences": {
+          "merchant": {
+            "title": "Merchant categories",
+            "subtitle": "Only verified stores can post here."
+          },
+          "individual_market": {
+            "title": "Individual market",
+            "subtitle": "Open to individuals and stores."
+          }
+        }
+      },
+      "form": {
+        "loadFailed": "We couldn’t load this category’s details.",
+        "nameEn": "Name (English)",
+        "nameAr": "Name (Arabic)",
+        "icon": "Icon",
+        "iconPlaceholder": "Pick an icon",
+        "icons": {
+          "ring": "Ring",
+          "bar": "Bar",
+          "diamond": "Diamond",
+          "watch": "Watch",
+          "gem": "Gem",
+          "tools": "Tools",
+          "silver": "Silver",
+          "smartwatch": "Smartwatch",
+          "accessory": "Accessory",
+          "antique": "Antique",
+          "beads": "Prayer beads"
+        },
+        "sort": "Sort order",
+        "whoCanPost": "Who can post",
+        "audienceLocked": {
+          "merchant": "Merchants only. Locked for this category.",
+          "individual_market": "Individuals and merchants. Locked for this category."
+        },
+        "pricingMode": "Pricing mode",
+        "pricingModes": {
+          "live": "Live (follows the gold price)",
+          "fixed": "Fixed price"
+        },
+        "listingFields": "Listing fields",
+        "addField": "Add field",
+        "noFields": "No listing fields yet.",
+        "untitledField": "Untitled field",
+        "fieldLabelEn": "Label (English)",
+        "fieldLabelAr": "Label (Arabic)",
+        "fieldType": "Field type",
+        "fieldTypes": {
+          "text": "Text",
+          "number": "Number",
+          "unit_number": "Number with unit",
+          "select": "Select",
+          "bool": "Yes / No",
+          "file": "File"
+        },
+        "moveUp": "Move {name} up",
+        "moveDown": "Move {name} down",
+        "removeField": "Remove {name}",
+        "options": "Options",
+        "addOption": "Add option",
+        "units": "Units",
+        "addUnit": "Add unit",
+        "unitFactor": "Factor",
+        "unitFactorHint": "How many base units one of this unit equals",
+        "choiceEn": "English",
+        "choiceAr": "Arabic",
+        "removeChoice": "Remove {name}",
+        "flags": {
+          "required": "Required",
+          "hidden_from_public": "Hidden from public (e.g. serial numbers)",
+          "filterable": "Filterable"
+        }
+      }
     }
   }
 }

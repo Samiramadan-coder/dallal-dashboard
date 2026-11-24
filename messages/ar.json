@@ -533,6 +533,95 @@
       "categories": "التصنيفات",
       "listsManagement": "إدارة القوائم",
       "faq": "الأسئلة الشائعة"
+    },
+    "categories": {
+      "sections": {
+        "label": "أقسام التصنيفات",
+        "categoriesAndFields": "التصنيفات والحقول",
+        "marketRules": "قواعد كل سوق",
+        "bannedKeywords": "الكلمات المحظورة",
+        "luxuryWatchBrands": "ماركات الساعات الفاخرة"
+      },
+      "list": {
+        "active": "نشط",
+        "inactive": "غير نشط",
+        "fields": "{count, plural, one {حقل واحد} two {حقلان} few {# حقول} many {# حقلًا} other {# حقل}}",
+        "toggleFields": "عرض حقول {name}",
+        "toggleActive": "تفعيل {name}",
+        "audiences": {
+          "merchant": {
+            "title": "تصنيفات التجار",
+            "subtitle": "المتاجر الموثقة فقط يمكنها النشر هنا."
+          },
+          "individual_market": {
+            "title": "سوق الأفراد",
+            "subtitle": "مفتوح للأفراد والمتاجر."
+          }
+        }
+      },
+      "form": {
+        "loadFailed": "تعذر تحميل تفاصيل هذا التصنيف.",
+        "nameEn": "الاسم (إنجليزي)",
+        "nameAr": "الاسم (عربي)",
+        "icon": "الأيقونة",
+        "iconPlaceholder": "اختر أيقونة",
+        "icons": {
+          "ring": "خاتم",
+          "bar": "سبيكة",
+          "diamond": "ألماس",
+          "watch": "ساعة",
+          "gem": "حجر كريم",
+          "tools": "أدوات",
+          "silver": "فضة",
+          "smartwatch": "ساعة ذكية",
+          "accessory": "إكسسوار",
+          "antique": "تحفة",
+          "beads": "مسبحة"
+        },
+        "sort": "الترتيب",
+        "whoCanPost": "من يمكنه النشر",
+        "audienceLocked": {
+          "merchant": "التجار فقط. ثابت لهذا التصنيف.",
+          "individual_market": "الأفراد والتجار. ثابت لهذا التصنيف."
+        },
+        "pricingMode": "طريقة التسعير",
+        "pricingModes": {
+          "live": "مباشر (يتبع سعر الذهب)",
+          "fixed": "سعر ثابت"
+        },
+        "listingFields": "حقول الإعلان",
+        "addField": "إضافة حقل",
+        "noFields": "لا توجد حقول بعد.",
+        "untitledField": "حقل بدون اسم",
+        "fieldLabelEn": "العنوان (إنجليزي)",
+        "fieldLabelAr": "العنوان (عربي)",
+        "fieldType": "نوع الحقل",
+        "fieldTypes": {
+          "text": "نص",
+          "number": "رقم",
+          "unit_number": "رقم بوحدة",
+          "select": "اختيار من قائمة",
+          "bool": "نعم / لا",
+          "file": "ملف"
+        },
+        "moveUp": "تحريك {name} لأعلى",
+        "moveDown": "تحريك {name} لأسفل",
+        "removeField": "حذف {name}",
+        "options": "الخيارات",
+        "addOption": "إضافة خيار",
+        "units": "الوحدات",
+        "addUnit": "إضافة وحدة",
+        "unitFactor": "المعامل",
+        "unitFactorHint": "كم وحدة أساسية تساوي هذه الوحدة",
+        "choiceEn": "إنجليزي",
+        "choiceAr": "عربي",
+        "removeChoice": "حذف {name}",
+        "flags": {
+          "required": "إلزامي",
+          "hidden_from_public": "مخفي عن العامة (مثل الأرقام التسلسلية)",
+          "filterable": "قابل للفلترة"
+        }
+      }
     }
   }
 }

@@ -3,5 +3,5 @@ import { requirePage } from "@/lib/permissions";
 export default async function Page() {
   await requirePage("cms");
 
-  return <>Page</>;
+  return <div>Static Pages</div>;
 }
