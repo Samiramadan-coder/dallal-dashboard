@@ -8,7 +8,5 @@ export default async function Page() {
     getMetalSources(),
   ]);
 
-  return (
-    <DataPreview prices={prices} guardPercent={sources.guard_percent} />
-  );
+  return <DataPreview prices={prices} guardPercent={sources.guard_percent} />;
 }

@@ -10,7 +10,8 @@ function gradeName(metal: Metal, karat: string) {
   return metal === "gold" ? `${karat}K` : karat;
 }
 
-// One metal's grades: feed price, the country margin on top, and the result
+// One metal's grades: feed price, the country margin on top, and the
+// result the site shows. Amounts are already in `unit`
 export default function MetalTable({
   metal,
   prices,
@@ -36,7 +37,9 @@ export default function MetalTable({
     { label: t("table.sitePrice", { unit: t(`units.${unit}`) }) },
   ];
 
-  // The purest grade has no alloy, so its feed price is the metal's own
+  // "Feed price (pure)" is the base price of the purest grade (24K, 999):
+  // it has no alloy, so it is the metal's own price. The API only gives the
+  // world price in USD per ounce, with no exchange rate to convert it
   const pure = prices.reduce((a, b) =>
     Number(b.karat) > Number(a.karat) ? b : a,
   );

@@ -21,27 +21,28 @@ import {
 import type { MetalSource } from "@/types/metal-prices";
 
 // Market and unit live in the URL (?country=AE&unit=tola), so the server
-// page renders the matching prices
+// page renders the matching prices and the view can be shared as a link
 export default function PriceFilters({
   countries,
   country,
   unit,
-  currency,
 }: {
   countries: MetalSource["country"][];
   country: string;
   unit: PriceUnit;
-  currency: string;
 }) {
   const id = useId();
   const format = useFormatter();
-  const t = useTranslations("MetalPrices.prices.filters");
+  const t = useTranslations("MetalPrices.prices");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   // Re-renders every minute so the clock stays current
   const now = useNow({ updateInterval: 60_000 });
 
+  const currency = countries.find((c) => c.code === country)?.currency ?? "";
+
+  // Changes one filter and keeps the other
   const update = (key: "country" | "unit", value: string) => {
     const query = Object.fromEntries(searchParams.entries());
     router.replace({ pathname, query: { ...query, [key]: value } });
@@ -54,7 +55,7 @@ export default function PriceFilters({
           htmlFor={`${id}-market`}
           className="text-xs text-muted-foreground"
         >
-          {t("market")}
+          {t("filters.market")}
         </Label>
         <Select value={country} onValueChange={(v) => update("country", v)}>
           <SelectTrigger id={`${id}-market`} className="h-9 w-52 bg-card">
@@ -72,7 +73,7 @@ export default function PriceFilters({
 
       <div className="flex items-center gap-2">
         <Label htmlFor={`${id}-unit`} className="text-xs text-muted-foreground">
-          {t("unit")}
+          {t("filters.unit")}
         </Label>
         <Select value={unit} onValueChange={(v) => update("unit", v)}>
           <SelectTrigger id={`${id}-unit`} className="h-9 w-36 bg-card">
@@ -89,12 +90,13 @@ export default function PriceFilters({
       </div>
 
       <p className="text-xs text-muted-foreground">
-        {t("note", {
+        {t("filters.note", {
           currency,
           time: format.dateTime(now, {
             hour: "2-digit",
             minute: "2-digit",
             hourCycle: "h23",
+            // undefined (unknown market) falls back to the viewer's zone
             timeZone: MARKET_TIME_ZONES[country],
           }),
         })}

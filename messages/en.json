@@ -582,13 +582,7 @@
       "filters": {
         "market": "Market",
         "unit": "Unit",
-        "note": "Prices in {currency}. Local time {time}",
-        "units": {
-          "gram": "per gram",
-          "tola": "per tola",
-          "ounce": "per ounce",
-          "kilo": "per kilo"
-        }
+        "note": "Prices in {currency}. Local time {time}"
       },
       "manualPrice": {
         "button": "Set manual price",
@@ -618,7 +612,8 @@
             "hint": "In your local time. Leave empty to keep it until you change it."
           }
         }
-      }
+      },
+      "noSources": "No country has a price source yet."
     }
   },
   "Cms": {

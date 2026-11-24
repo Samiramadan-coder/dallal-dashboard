@@ -6,7 +6,9 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
 
-// The live price the held one would replace: change_pct is measured from it
+// The live price the held one would replace. The row only has the new
+// price and its move in percent, so: current = new ÷ (1 + move%).
+// Switch to the API's own field if the held endpoint returns one
 function currentAmount(price: HeldPriceRow): number {
   return price.price_per_gram.amount / (1 + (price.change_pct ?? 0) / 100);
 }
@@ -32,11 +34,7 @@ export default function DataPreview({
   ];
 
   const money = (amount: number, currency: string) =>
-    format.number(amount, {
-      style: "currency",
-      currency,
-      maximumFractionDigits: 3,
-    });
+    format.number(amount, { style: "currency", currency });
 
   return (
     <div className="flex flex-col gap-3">
@@ -88,7 +86,10 @@ export default function DataPreview({
             </TableCell>
 
             <TableCell className="font-semibold text-foreground tabular-nums">
-              {price.price_per_gram.formatted}
+              {money(
+                price.price_per_gram.amount,
+                price.price_per_gram.currency,
+              )}
             </TableCell>
 
             <TableCell

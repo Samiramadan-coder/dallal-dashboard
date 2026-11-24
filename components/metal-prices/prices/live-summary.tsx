@@ -2,10 +2,11 @@ import { Info } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
 import type { GradePrice } from "@/types/metal-prices";
-import type { PriceUnit } from "@/constants/metal-prices";
+import { HEADLINE_GOLD_KARATS, type PriceUnit } from "@/constants/metal-prices";
 
 // The prices a visitor sees first (gold 24K and 22K), and whether the
-// feed is keeping them up to date
+// feed is keeping them up to date. `marketOpen` is one flag for every
+// market: the API has no per-country hours yet
 export default function LiveSummary({
   countryName,
   unit,
@@ -23,7 +24,8 @@ export default function LiveSummary({
   const format = useFormatter();
 
   const headline = prices.filter(
-    (price) => price.metal === "gold" && ["24", "22"].includes(price.karat),
+    (price) =>
+      price.metal === "gold" && HEADLINE_GOLD_KARATS.includes(price.karat),
   );
 
   return (

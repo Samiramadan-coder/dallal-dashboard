@@ -2,20 +2,21 @@ import {
   getCountryPrices,
   getMetalSources,
   isSourceDelayed,
+  toUnit,
 } from "@/lib/metal-prices";
 
-import type { Metal } from "@/types/metal-prices";
+import { getTranslations } from "next-intl/server";
 import { requirePageAccess } from "@/lib/permissions";
-import { PRICE_UNITS, isPriceUnit } from "@/constants/metal-prices";
+import { METALS, isPriceUnit } from "@/constants/metal-prices";
 import MetalTable from "@/components/metal-prices/prices/metal-table";
 import LiveSummary from "@/components/metal-prices/prices/live-summary";
 import PriceFilters from "@/components/metal-prices/prices/price-filters";
 import SetManualPrice from "@/components/metal-prices/prices/set-manual-price";
 
-const METALS: Metal[] = ["gold", "silver", "platinum"];
-
 type SearchParams = {
+  // Country code, e.g. "AE"; the first source when missing or unknown
   country?: string;
+  // A PRICE_UNITS key; grams when missing or unknown
   unit?: string;
 };
 
@@ -24,35 +25,35 @@ export default async function Page({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
-  // The layout already required metal_prices.view; edit adds manual prices
+  // The layout already required metal_prices.view; `can.edit` decides
+  // whether the "Set manual price" buttons show
   const [
     { country, unit: unitParam },
     { sources, market_open, refresh_minutes },
     { can },
+    t,
   ] = await Promise.all([
     searchParams,
     getMetalSources(),
     requirePageAccess("metal_prices"),
+    getTranslations("MetalPrices.prices"),
   ]);
 
   const source =
     sources.find((s) => s.country.code === country?.toUpperCase()) ??
     sources[0];
 
-  if (!source) return null;
+  // No country has a price source yet
+  if (!source) {
+    return <p className="text-sm text-muted-foreground">{t("noSources")}</p>;
+  }
 
   const unit = isPriceUnit(unitParam) ? unitParam : "gram";
-  const grams = PRICE_UNITS[unit];
 
-  // The API prices per gram; scale every amount to the chosen unit
+  // The manual price form works per gram (what the API takes); everything
+  // shown on the page is in the chosen unit
   const perGram = await getCountryPrices(source);
-  const prices = perGram.map((price) => ({
-    ...price,
-    baseAmount: price.baseAmount * grams,
-    siteAmount: price.siteAmount * grams,
-  }));
-
-  const delayed = isSourceDelayed(source, refresh_minutes);
+  const prices = toUnit(perGram, unit);
 
   return (
     <div className="flex flex-col gap-5">
@@ -60,7 +61,6 @@ export default async function Page({
         countries={sources.map((s) => s.country)}
         country={source.country.code}
         unit={unit}
-        currency={source.country.currency}
       />
 
       <LiveSummary
@@ -68,13 +68,14 @@ export default async function Page({
         unit={unit}
         prices={prices}
         marketOpen={market_open}
-        delayed={delayed}
+        delayed={isSourceDelayed(source, refresh_minutes)}
       />
 
       {METALS.map((metal) => {
         const grades = prices.filter((price) => price.metal === metal);
+        if (grades.length === 0) return null;
 
-        return grades.length > 0 ? (
+        return (
           <MetalTable
             key={metal}
             metal={metal}
@@ -83,7 +84,7 @@ export default async function Page({
             action={
               can.edit && (
                 <SetManualPrice
-                  // Remount per country, so the form starts fresh
+                  // A new country is a new form: no values carried over
                   key={source.country.id}
                   countryId={source.country.id}
                   countryName={source.country.name}
@@ -93,7 +94,7 @@ export default async function Page({
               )
             }
           />
-        ) : null;
+        );
       })}
     </div>
   );
