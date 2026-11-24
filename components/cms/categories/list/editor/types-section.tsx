@@ -1,13 +1,13 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import EditType from "./edit-type";
+import CreateType from "./create-type";
+import SectionCard from "./section-card";
+import DeleteAction from "./delete-action";
+import type { Locale } from "@/types/shared";
 import { useLocale, useTranslations } from "next-intl";
 import type { CategoryDetail } from "@/types/categories";
-import type { Locale } from "@/types/shared";
-import { cn } from "@/lib/utils";
-import SectionCard from "./section-card";
-import CreateType from "./create-type";
-import EditType from "./edit-type";
-import DeleteAction from "./delete-action";
 import { deleteCategoryType } from "@/lib/actions/categories";
 
 // The kinds of item a seller picks from in this category (Bar, Coin, …).
@@ -49,7 +49,9 @@ export default function TypesSection({
                 <span
                   className={cn(
                     "truncate text-sm font-medium",
-                    type.is_active ? "text-foreground" : "text-muted-foreground",
+                    type.is_active
+                      ? "text-foreground"
+                      : "text-muted-foreground",
                   )}
                 >
                   {type.name[locale]}
