@@ -17,3 +17,13 @@ export const formatDate = (date: string | Date) =>
     month: "short",
     year: "numeric",
   });
+
+/**
+ * Turns English text into an API key: "Old coin" → "old_coin".
+ */
+export function toKey(text: string): string {
+  return text
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^[^a-z]+|_+$/g, "");
+}

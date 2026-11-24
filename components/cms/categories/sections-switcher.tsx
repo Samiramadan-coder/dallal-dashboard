@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import CategoriesList from "./categories-list";
+import CategoriesList from "./list/categories-list";
 import type { Category } from "@/types/categories";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 

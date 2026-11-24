@@ -1,12 +1,45 @@
+import z from "zod";
+import type { T } from "./shared";
+
 export type Translated = {
   en: string;
   ar: string;
 };
 
-export type CategoryAudience = "merchant" | "individual_market";
+export const AUDIENCES = ["merchant", "individual_market"] as const;
+export type CategoryAudience = (typeof AUDIENCES)[number];
 
 // "live" follows the gold price, "fixed" is set by the seller
-export type PricingMode = "live" | "fixed";
+export const PRICING_MODES = ["live", "fixed"] as const;
+export type PricingMode = (typeof PRICING_MODES)[number];
+
+// Icon keys the API uses for categories
+export const CATEGORY_ICONS = [
+  "ring",
+  "bar",
+  "diamond",
+  "watch",
+  "gem",
+  "tools",
+  "silver",
+  "smartwatch",
+  "accessory",
+  "antique",
+  "beads",
+] as const;
+
+// Category-specific exceptions. Known keys are listed; others may appear
+export type CategoryRules = {
+  // Shown on the category's listings, e.g. "Accessory — not gold"
+  badge?: Translated;
+  // Field keys sellers can't use here, e.g. ["karat"]
+  forbidden_fields?: string[];
+  // Every listing goes to review before it's published
+  always_review?: boolean;
+  // Key of the field whose upload marks the material as certified
+  certified_when?: string;
+  [key: string]: unknown;
+};
 
 export type Category = {
   id: number;
@@ -16,8 +49,7 @@ export type Category = {
   pricing_mode: PricingMode;
   icon: string | null;
   image: string | null;
-  // Category-specific flags (badge, forbidden_fields, always_review, …)
-  rules: Record<string, unknown> | null;
+  rules: CategoryRules | null;
   sort: number;
   is_active: boolean;
   types_count: number;
@@ -56,6 +88,18 @@ export type FieldUnit = {
   factor: number;
 };
 
+// Limits on a field's answer. Known keys are listed; others may appear
+export type FieldValidation = {
+  min?: number;
+  max?: number;
+  // Key of another field this one can't exceed (net weight ≤ gross weight)
+  lte_field?: string;
+  // Allowed file extensions, for "file" fields
+  mimes?: string[];
+  max_files?: number;
+  [key: string]: unknown;
+};
+
 export type CategoryField = {
   id: number;
   category_id: number;
@@ -69,8 +113,7 @@ export type CategoryField = {
   required: boolean;
   filterable: boolean;
   hidden_from_public: boolean;
-  // e.g. { min, max, lte_field } or { mimes, max_files }
-  validation: Record<string, unknown> | null;
+  validation: FieldValidation | null;
   // Shown only when other fields have these values, e.g. { has_stones: true }
   show_if: Record<string, unknown> | null;
   audience: CategoryAudience | null;
@@ -82,4 +125,103 @@ export type CategoryField = {
 export type CategoryDetail = Omit<Category, "types_count" | "fields_count"> & {
   types: CategoryType[];
   fields: CategoryField[];
+};
+
+// --- Forms -----------------------------------------------------------------
+
+const translatedSchema = (t: T) =>
+  z.object({
+    en: z.string().trim().min(1, t("errors.required")),
+    ar: z.string().trim().min(1, t("errors.required")),
+  });
+
+// Keys the API identifies things by: "old_coin", "gross_weight"
+const keySchema = (t: T) =>
+  z
+    .string()
+    .trim()
+    .min(1, t("errors.required"))
+    .regex(/^[a-z][a-z0-9_]*$/, t("errors.keyInvalid"));
+
+// POST /admin/catalog/categories
+export const createCategorySchema = (t: T) =>
+  z.object({
+    key: keySchema(t),
+    name: translatedSchema(t),
+    audience: z.enum(AUDIENCES),
+    pricing_mode: z.enum(PRICING_MODES),
+  });
+
+export type CreateCategoryValues = z.infer<
+  ReturnType<typeof createCategorySchema>
+>;
+
+// PUT /admin/catalog/categories/{id}: the category's own data
+export const categoryDetailsSchema = (t: T) =>
+  z.object({
+    name: translatedSchema(t),
+    icon: z.string().nullable(),
+    // Empty number inputs come through as NaN, which z.number() rejects
+    sort: z
+      .number({ error: t("errors.required") })
+      .int()
+      .min(1, t("errors.sortMin")),
+    pricing_mode: z.enum(PRICING_MODES),
+    // The current image URL, a newly picked file, or "" / null for none
+    image: z
+      .union([
+        z.string(),
+        z
+          .instanceof(Blob)
+          .refine((file) => file.size <= 1024 * 1024, t("errors.imageSize")),
+      ])
+      .nullable(),
+  });
+
+export type CategoryDetailsValues = z.infer<
+  ReturnType<typeof categoryDetailsSchema>
+>;
+
+// POST /admin/catalog/categories/{id}/types
+export const newTypeSchema = (t: T) =>
+  z.object({ key: keySchema(t), name: translatedSchema(t) });
+
+export type NewTypeValues = z.infer<ReturnType<typeof newTypeSchema>>;
+
+// POST /admin/catalog/fields
+export const newFieldSchema = (t: T) =>
+  z.object({
+    key: keySchema(t),
+    label: translatedSchema(t),
+    type: z.enum(FIELD_TYPES),
+    // Always arrays in the form; only the one the type uses is sent
+    options: z.array(
+      z.object({ value: z.string(), label: translatedSchema(t) }),
+    ),
+    units: z.array(
+      z.object({
+        value: z.string(),
+        label: translatedSchema(t),
+        factor: z
+          .number({ error: t("errors.required") })
+          .positive(t("errors.factorPositive")),
+      }),
+    ),
+    required: z.boolean(),
+    filterable: z.boolean(),
+    hidden_from_public: z.boolean(),
+  });
+
+export type NewFieldValues = z.infer<ReturnType<typeof newFieldSchema>>;
+
+export type CreateFieldPayload = {
+  category_id: number;
+  key: string;
+  label: Translated;
+  type: FieldType;
+  required: boolean;
+  filterable: boolean;
+  hidden_from_public: boolean;
+  options?: FieldOption[];
+  units?: FieldUnit[];
 };

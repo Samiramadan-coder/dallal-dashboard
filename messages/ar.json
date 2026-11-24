@@ -47,7 +47,8 @@
       "replace": "استبدال",
       "remove": "حذف الصورة",
       "selected": "الصورة المختارة",
-      "current": "الصورة الحالية"
+      "current": "الصورة الحالية",
+      "choose": "اختر صورة"
     }
   },
   "Auth": {
@@ -545,9 +546,11 @@
       "list": {
         "active": "نشط",
         "inactive": "غير نشط",
-        "fields": "{count, plural, one {حقل واحد} two {حقلان} few {# حقول} many {# حقلًا} other {# حقل}}",
-        "toggleFields": "عرض حقول {name}",
-        "toggleActive": "تفعيل {name}",
+        "summary": "{types, plural, =0 {بدون أنواع} one {نوع واحد} two {نوعان} few {# أنواع} many {# نوعًا} other {# نوع}} · {fields, plural, =0 {بدون حقول} one {حقل واحد} two {حقلان} few {# حقول} many {# حقلًا} other {# حقل}}",
+        "pricing": {
+          "live": "سعر الذهب المباشر",
+          "fixed": "سعر ثابت"
+        },
         "audiences": {
           "merchant": {
             "title": "تصنيفات التجار",
@@ -557,12 +560,51 @@
             "title": "سوق الأفراد",
             "subtitle": "مفتوح للأفراد والمتاجر."
           }
-        }
+        },
+        "empty": "لا توجد تصنيفات هنا بعد.",
+        "addCategory": "إضافة تصنيف",
+        "addCategoryDescription": "افتحه بعد إنشائه لإضافة صورته وأنواعه وحقوله.",
+        "create": {
+          "nameEn": "الاسم (إنجليزي)",
+          "nameAr": "الاسم (عربي)",
+          "key": "المفتاح",
+          "keyHint": "حروف إنجليزية صغيرة وأرقام وشرطة سفلية. يُملأ من الاسم الإنجليزي.",
+          "keyPlaceholder": "مثال: collectible_coins",
+          "audience": "من يمكنه النشر",
+          "pricingMode": "التسعير"
+        },
+        "typesCount": "{count, plural, =0 {بدون أنواع} one {نوع واحد} two {نوعان} few {# أنواع} many {# نوعًا} other {# نوع}}",
+        "fieldsCount": "{count, plural, =0 {بدون حقول} one {حقل واحد} two {حقلان} few {# حقول} many {# حقلًا} other {# حقل}}"
       },
       "form": {
         "loadFailed": "تعذر تحميل تفاصيل هذا التصنيف.",
+        "sections": {
+          "details": {
+            "title": "بيانات التصنيف",
+            "description": "شكل التصنيف أمام البائعين والمشترين، وطريقة تسعيره."
+          },
+          "types": {
+            "title": "الأنواع",
+            "description": "أنواع المنتج التي يختار منها البائع عند النشر، مثل سبيكة أو عملة."
+          },
+          "fields": {
+            "title": "حقول الإعلان",
+            "description": "ما يملؤه البائع عند النشر هنا. الحقول القابلة للفلترة تظهر أيضًا كفلاتر بحث للمشترين."
+          }
+        },
+        "image": "الصورة",
+        "imageHint": "PNG أو JPG أو SVG، حتى 1 ميجابايت",
         "nameEn": "الاسم (إنجليزي)",
         "nameAr": "الاسم (عربي)",
+        "pricingMode": "التسعير",
+        "pricingModes": {
+          "live": "سعر الذهب المباشر",
+          "fixed": "سعر ثابت"
+        },
+        "pricingModeHints": {
+          "live": "السعر يتبع سعر الذهب المباشر.",
+          "fixed": "البائع يحدد سعره بنفسه."
+        },
         "icon": "الأيقونة",
         "iconPlaceholder": "اختر أيقونة",
         "icons": {
@@ -581,21 +623,30 @@
         "sort": "الترتيب",
         "whoCanPost": "من يمكنه النشر",
         "audienceLocked": {
-          "merchant": "التجار فقط. ثابت لهذا التصنيف.",
-          "individual_market": "الأفراد والتجار. ثابت لهذا التصنيف."
+          "merchant": "المتاجر الموثقة فقط. لا يمكن تغييره.",
+          "individual_market": "الأفراد والمتاجر. لا يمكن تغييره."
         },
-        "pricingMode": "طريقة التسعير",
-        "pricingModes": {
-          "live": "مباشر (يتبع سعر الذهب)",
-          "fixed": "سعر ثابت"
+        "key": "المفتاح",
+        "rules": {
+          "title": "قواعد خاصة بهذا التصنيف",
+          "badge": "تظهر على الإعلانات شارة «{text}».",
+          "forbiddenFields": "لا يمكن للبائع تعبئة: {fields}.",
+          "alwaysReview": "كل إعلان يُراجع قبل نشره.",
+          "certifiedWhen": "تُعتبر الخامة مؤكدة عند رفع «{field}»."
         },
-        "listingFields": "حقول الإعلان",
+        "addType": "إضافة نوع",
+        "noTypes": "لا توجد أنواع بعد. أضف نوعًا إذا كان البائع يختار نوع المنتج.",
+        "typeNameEn": "الاسم (إنجليزي)",
+        "typeNameAr": "الاسم (عربي)",
+        "typeKey": "المفتاح",
+        "typeKeyPlaceholder": "مثال: old_coin",
         "addField": "إضافة حقل",
         "noFields": "لا توجد حقول بعد.",
-        "untitledField": "حقل بدون اسم",
         "fieldLabelEn": "العنوان (إنجليزي)",
         "fieldLabelAr": "العنوان (عربي)",
-        "fieldType": "نوع الحقل",
+        "fieldKey": "المفتاح",
+        "fieldKeyPlaceholder": "مثال: era",
+        "fieldType": "نوع الإجابة",
         "fieldTypes": {
           "text": "نص",
           "number": "رقم",
@@ -604,23 +655,64 @@
           "bool": "نعم / لا",
           "file": "ملف"
         },
-        "moveUp": "تحريك {name} لأعلى",
-        "moveDown": "تحريك {name} لأسفل",
-        "removeField": "حذف {name}",
+        "fieldTypeHints": {
+          "text": "يكتب البائع إجابة قصيرة.",
+          "number": "يدخل البائع رقمًا.",
+          "unit_number": "يدخل البائع رقمًا ويختار وحدة، مثل الجرام أو التولة.",
+          "select": "يختار البائع أحد الخيارات التي تضيفها بالأسفل.",
+          "bool": "يجيب البائع بنعم أو لا.",
+          "file": "يرفع البائع ملفًا، مثل شهادة."
+        },
         "options": "الخيارات",
         "addOption": "إضافة خيار",
         "units": "الوحدات",
         "addUnit": "إضافة وحدة",
         "unitFactor": "المعامل",
-        "unitFactorHint": "كم وحدة أساسية تساوي هذه الوحدة",
+        "unitFactorHint": "المعامل: كم وحدة أساسية تساوي هذه الوحدة، مثل 1 تولة = 11.664 جرام.",
         "choiceEn": "إنجليزي",
         "choiceAr": "عربي",
-        "removeChoice": "حذف {name}",
+        "removeChoice": "حذف",
         "flags": {
           "required": "إلزامي",
-          "hidden_from_public": "مخفي عن العامة (مثل الأرقام التسلسلية)",
-          "filterable": "قابل للفلترة"
-        }
+          "filterable": "قابل للفلترة",
+          "hidden_from_public": "مخفي عن المشترين",
+          "hiddenShort": "مخفي عن المشترين"
+        },
+        "flagHints": {
+          "required": "لا يمكن نشر الإعلان بدونه.",
+          "filterable": "يمكن للمشترين فلترة نتائج البحث به.",
+          "hidden_from_public": "يُحفظ للإدارة فقط، مثل الأرقام التسلسلية."
+        },
+        "summary": {
+          "more": "+{count} أخرى",
+          "yes": "نعم",
+          "no": "لا",
+          "shownWhen": "يظهر فقط عندما يكون «{field}» {value}",
+          "min": "على الأقل {value}",
+          "max": "على الأكثر {value}",
+          "lteField": "لا يزيد عن «{field}»",
+          "mimes": "الملفات: {types}",
+          "maxFiles": "{count, plural, one {ملف واحد كحد أقصى} two {ملفان كحد أقصى} few {# ملفات كحد أقصى} many {# ملفًا كحد أقصى} other {# ملف كحد أقصى}}"
+        },
+        "unsaved": "تغييرات غير محفوظة",
+        "discard": "تجاهل",
+        "save": "حفظ التغييرات",
+        "errors": {
+          "required": "مطلوب",
+          "sortMin": "يجب أن يكون 1 أو أكثر",
+          "factorPositive": "يجب أن يكون أكبر من 0",
+          "imageSize": "يجب أن تكون الصورة أقل من 1 ميجابايت",
+          "keyInvalid": "حروف إنجليزية صغيرة وأرقام وشرطة سفلية، ويبدأ بحرف"
+        },
+        "addTypeDescription": "نوع منتج يمكن للبائع اختياره عند النشر في هذا التصنيف.",
+        "typeNamePlaceholderEn": "e.g. Old coin",
+        "typeNamePlaceholderAr": "مثال: عملة قديمة",
+        "addFieldDescription": "سؤال يجيب عليه البائع عند النشر في هذا التصنيف.",
+        "fieldLabelPlaceholderEn": "e.g. Era",
+        "fieldLabelPlaceholderAr": "مثال: الحقبة",
+        "keyHint": "حروف إنجليزية صغيرة وأرقام وشرطة سفلية. يُملأ من الاسم الإنجليزي.",
+        "optionsHint": "الخيارات التي يختار منها البائع.",
+        "flagsTitle": "الإعدادات"
       }
     }
   }

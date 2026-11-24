@@ -47,7 +47,8 @@
       "replace": "Replace",
       "remove": "Remove image",
       "selected": "Selected image",
-      "current": "Current image"
+      "current": "Current image",
+      "choose": "Choose photo"
     }
   },
   "Auth": {
@@ -547,9 +548,11 @@
       "list": {
         "active": "Active",
         "inactive": "Inactive",
-        "fields": "{count, plural, one {# field} other {# fields}}",
-        "toggleFields": "Show fields of {name}",
-        "toggleActive": "{name} active",
+        "summary": "{types, plural, =0 {No types} one {# type} other {# types}} · {fields, plural, =0 {no fields} one {# field} other {# fields}}",
+        "pricing": {
+          "live": "Live gold price",
+          "fixed": "Fixed price"
+        },
         "audiences": {
           "merchant": {
             "title": "Merchant categories",
@@ -559,12 +562,51 @@
             "title": "Individual market",
             "subtitle": "Open to individuals and stores."
           }
-        }
+        },
+        "empty": "No categories here yet.",
+        "addCategory": "Add category",
+        "addCategoryDescription": "Open it after it's created to add its image, types and fields.",
+        "create": {
+          "nameEn": "Name (English)",
+          "nameAr": "Name (Arabic)",
+          "key": "Key",
+          "keyHint": "Lowercase letters, numbers and underscores. Filled in from the English name.",
+          "keyPlaceholder": "e.g. collectible_coins",
+          "audience": "Who can post",
+          "pricingMode": "Pricing"
+        },
+        "typesCount": "{count, plural, =0 {No types} one {# type} other {# types}}",
+        "fieldsCount": "{count, plural, =0 {No fields} one {# field} other {# fields}}"
       },
       "form": {
         "loadFailed": "We couldn’t load this category’s details.",
+        "sections": {
+          "details": {
+            "title": "Category details",
+            "description": "How the category looks to sellers and buyers, and how its prices work."
+          },
+          "types": {
+            "title": "Types",
+            "description": "The kinds of item a seller picks from when posting here, e.g. Bar or Coin."
+          },
+          "fields": {
+            "title": "Listing fields",
+            "description": "What sellers fill in when posting here. Filterable fields also show up as search filters for buyers."
+          }
+        },
+        "image": "Image",
+        "imageHint": "PNG, JPG or SVG, up to 1MB",
         "nameEn": "Name (English)",
         "nameAr": "Name (Arabic)",
+        "pricingMode": "Pricing",
+        "pricingModes": {
+          "live": "Live gold price",
+          "fixed": "Fixed price"
+        },
+        "pricingModeHints": {
+          "live": "The price follows the live gold price.",
+          "fixed": "Sellers set their own price."
+        },
         "icon": "Icon",
         "iconPlaceholder": "Pick an icon",
         "icons": {
@@ -580,49 +622,99 @@
           "antique": "Antique",
           "beads": "Prayer beads"
         },
-        "sort": "Sort order",
+        "sort": "Order",
         "whoCanPost": "Who can post",
         "audienceLocked": {
-          "merchant": "Merchants only. Locked for this category.",
-          "individual_market": "Individuals and merchants. Locked for this category."
+          "merchant": "Verified stores only. Can’t be changed.",
+          "individual_market": "Individuals and stores. Can’t be changed."
         },
-        "pricingMode": "Pricing mode",
-        "pricingModes": {
-          "live": "Live (follows the gold price)",
-          "fixed": "Fixed price"
+        "key": "Key",
+        "rules": {
+          "title": "Special rules for this category",
+          "badge": "Listings show the badge “{text}”.",
+          "forbiddenFields": "Sellers can’t fill in: {fields}.",
+          "alwaysReview": "Every listing is reviewed before it goes live.",
+          "certifiedWhen": "The material counts as certified once “{field}” is uploaded."
         },
-        "listingFields": "Listing fields",
+        "addType": "Add type",
+        "noTypes": "No types yet. Add one if sellers should pick a kind of item.",
+        "typeNameEn": "Name (English)",
+        "typeNameAr": "Name (Arabic)",
+        "typeKey": "Key",
+        "typeKeyPlaceholder": "e.g. old_coin",
         "addField": "Add field",
         "noFields": "No listing fields yet.",
-        "untitledField": "Untitled field",
         "fieldLabelEn": "Label (English)",
         "fieldLabelAr": "Label (Arabic)",
-        "fieldType": "Field type",
+        "fieldKey": "Key",
+        "fieldKeyPlaceholder": "e.g. era",
+        "fieldType": "Answer type",
         "fieldTypes": {
           "text": "Text",
           "number": "Number",
           "unit_number": "Number with unit",
-          "select": "Select",
+          "select": "Pick from a list",
           "bool": "Yes / No",
           "file": "File"
         },
-        "moveUp": "Move {name} up",
-        "moveDown": "Move {name} down",
-        "removeField": "Remove {name}",
+        "fieldTypeHints": {
+          "text": "The seller types a short answer.",
+          "number": "The seller enters a number.",
+          "unit_number": "The seller enters a number and picks a unit, e.g. grams or tola.",
+          "select": "The seller picks one of the options you add below.",
+          "bool": "The seller answers yes or no.",
+          "file": "The seller uploads a file, e.g. a certificate."
+        },
         "options": "Options",
         "addOption": "Add option",
         "units": "Units",
         "addUnit": "Add unit",
         "unitFactor": "Factor",
-        "unitFactorHint": "How many base units one of this unit equals",
+        "unitFactorHint": "Factor: how many base units one of this unit equals, e.g. 1 tola = 11.664 grams.",
         "choiceEn": "English",
         "choiceAr": "Arabic",
-        "removeChoice": "Remove {name}",
+        "removeChoice": "Remove",
         "flags": {
           "required": "Required",
-          "hidden_from_public": "Hidden from public (e.g. serial numbers)",
-          "filterable": "Filterable"
-        }
+          "filterable": "Filterable",
+          "hidden_from_public": "Hidden from buyers",
+          "hiddenShort": "Hidden from buyers"
+        },
+        "flagHints": {
+          "required": "A listing can’t be posted without it.",
+          "filterable": "Buyers can filter search results by it.",
+          "hidden_from_public": "Kept for admins, e.g. serial numbers."
+        },
+        "summary": {
+          "more": "+{count} more",
+          "yes": "Yes",
+          "no": "No",
+          "shownWhen": "Only shown when “{field}” is {value}",
+          "min": "At least {value}",
+          "max": "At most {value}",
+          "lteField": "Can’t be more than “{field}”",
+          "mimes": "Files: {types}",
+          "maxFiles": "{count, plural, one {Up to # file} other {Up to # files}}"
+        },
+        "unsaved": "Unsaved changes",
+        "discard": "Discard",
+        "save": "Save changes",
+        "errors": {
+          "required": "Required",
+          "sortMin": "Must be 1 or more",
+          "factorPositive": "Must be more than 0",
+          "imageSize": "Image must be less than 1MB",
+          "keyInvalid": "Lowercase letters, numbers and underscores, starting with a letter"
+        },
+        "addTypeDescription": "A kind of item sellers can pick when posting in this category.",
+        "typeNamePlaceholderEn": "e.g. Old coin",
+        "typeNamePlaceholderAr": "مثال: عملة قديمة",
+        "addFieldDescription": "A question sellers answer when posting in this category.",
+        "fieldLabelPlaceholderEn": "e.g. Era",
+        "fieldLabelPlaceholderAr": "مثال: الحقبة",
+        "keyHint": "Lowercase letters, numbers and underscores. Filled in from the English name.",
+        "optionsHint": "The choices the seller picks from.",
+        "flagsTitle": "Settings"
       }
     }
   }
