@@ -536,6 +536,19 @@
       "heldForReview": "Held for review",
       "marginHours": "Margins and hours",
       "historyLogs": "History and log"
+    },
+    "heldForReview": {
+      "note": "When the feed moves a price by more than {percent}% at once, it is not published. The site keeps the previous price until you approve or reject the move.",
+      "unit": "held prices",
+      "empty": "Nothing is held. Every price from the feed is live.",
+      "table": {
+        "metal": "Metal",
+        "market": "Market",
+        "currentPrice": "Current price",
+        "incomingPrice": "Incoming price",
+        "move": "Move",
+        "waiting": "Waiting"
+      }
     }
   },
   "Cms": {

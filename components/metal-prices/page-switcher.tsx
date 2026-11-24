@@ -26,12 +26,7 @@ const PAGES: {
   },
 ];
 
-export default function PageSwitcher({
-  // Shown next to the "Held for review" tab; hidden while unknown
-  heldCount,
-}: {
-  heldCount?: number;
-}) {
+export default function PageSwitcher() {
   const t = useTranslations("MetalPrices.switcher");
   const pathname = usePathname();
 
@@ -51,14 +46,7 @@ export default function PageSwitcher({
             asChild
             className="h-11 flex-none gap-2 px-4 text-muted-foreground after:bg-secondary group-data-horizontal/tabs:after:bottom-0 data-active:font-semibold data-active:text-secondary dark:data-active:text-secondary"
           >
-            <Link href={href}>
-              {t(label)}
-              {label === "heldForReview" && heldCount !== undefined && (
-                <span className="min-w-5 rounded-full bg-muted px-1.5 text-center text-xs font-medium text-muted-foreground tabular-nums">
-                  {heldCount}
-                </span>
-              )}
-            </Link>
+            <Link href={href}>{t(label)}</Link>
           </TabsTrigger>
         ))}
       </TabsList>
