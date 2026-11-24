@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 import { Button } from "../ui/button";
-import { useLocale } from "next-intl";
 import {
   DialogClose,
   DialogDescription,
@@ -18,8 +17,6 @@ export default function FormHeader({
   description?: string;
   className?: string;
 }) {
-  const locale = useLocale();
-
   return (
     <DialogHeader
       className={cn(
@@ -29,9 +26,7 @@ export default function FormHeader({
     >
       <div className="space-y-1.5">
         <DialogTitle
-          className={cn("text-lg font-bold tracking-wider", {
-            "font-playfair": locale === "en",
-          })}
+          className="text-lg font-bold tracking-wider"
         >
           {title}
         </DialogTitle>

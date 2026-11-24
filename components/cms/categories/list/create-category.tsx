@@ -1,25 +1,19 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { toast } from "sonner";
-import { Lock, Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Controller,
   useForm,
   useWatch,
   type SubmitHandler,
 } from "react-hook-form";
+
 import {
   PRICING_MODES,
   createCategorySchema,
   type CategoryAudience,
   type CreateCategoryValues,
 } from "@/types/categories";
-import { createCategory } from "@/lib/actions/categories";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+
 import {
   Select,
   SelectContent,
@@ -27,11 +21,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
-import { LabeledField, fieldA11yProps } from "@/components/form/labeled-field";
+
+import { toast } from "sonner";
+import { useRef, useState } from "react";
+import { Lock, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Input } from "@/components/ui/input";
 import Header from "@/components/form/header";
 import Footer from "@/components/form/footer";
+import { Button } from "@/components/ui/button";
 import { useAutoKey } from "./editor/use-auto-key";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { createCategory } from "@/lib/actions/categories";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { LabeledField, fieldA11yProps } from "@/components/form/labeled-field";
 
 // Adds a category to one audience's section. Icon, image, fields and types
 // are set afterwards from the category's row
@@ -75,7 +78,6 @@ export default function CreateCategory({
     const result = await createCategory(data);
 
     if (!result.ok) {
-      // Laravel keys like "name.en" are what setError expects
       Object.entries(result.fieldErrors ?? {}).forEach(([field, message]) => {
         setError(field as keyof CreateCategoryValues, {
           type: "server",

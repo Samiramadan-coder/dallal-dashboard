@@ -1,16 +1,12 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import CategoriesList from "./list/categories-list";
-import type {
-  BannedWord,
-  Category,
-  MarketRule,
-} from "@/types/categories";
 import type { Country } from "@/types/countries";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import CategoriesList from "./list/categories-list";
 import MarketRules from "./market-rules/market-rules";
 import BannedWords from "./banned-words/banned-words";
+import type { BannedWord, Category, MarketRule } from "@/types/categories";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const SECTIONS = [
   "categoriesAndFields",
@@ -50,7 +46,6 @@ export default function SectionsSwitcher({
         ))}
       </TabsList>
 
-      {/* Each section's content goes here */}
       <TabsContent value="categoriesAndFields">
         <CategoriesList categories={categories} />
       </TabsContent>

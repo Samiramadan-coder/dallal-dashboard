@@ -33,7 +33,7 @@ export default function FormFooter({
       </DialogClose>
       <Button
         type="submit"
-        className="h-10 flex-1 text-xs font-normal"
+        className="h-10 flex-1 bg-secondary text-xs font-normal text-primary-foreground hover:bg-secondary/90"
         onClick={() => form.current?.requestSubmit()}
         disabled={loading}
       >

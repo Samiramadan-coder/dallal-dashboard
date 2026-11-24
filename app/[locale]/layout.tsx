@@ -4,18 +4,13 @@ import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import { Toaster } from "@/components/ui/sonner";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { Inter, Cairo, Playfair_Display } from "next/font/google";
+import { Inter, Cairo } from "next/font/google";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { DirectionProvider } from "@/components/ui/direction";
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
   subsets: ["latin"],
 });
 
@@ -52,7 +47,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={dir}
-      className={`${inter.variable} ${playfair.variable} ${CairoFont.variable} h-full antialiased`}
+      className={`${inter.variable} ${CairoFont.variable} h-full antialiased`}
     >
       <NuqsAdapter>
         <NextIntlClientProvider>

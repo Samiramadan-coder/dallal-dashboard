@@ -1,9 +1,9 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { AUDIENCES, type Category } from "@/types/categories";
 import CategoryRow from "./category-row";
+import { useTranslations } from "next-intl";
 import CreateCategory from "./create-category";
+import { AUDIENCES, type Category } from "@/types/categories";
 
 // Categories grouped by who can post in them. Each group can be empty, so a
 // category can always be added to it
@@ -37,6 +37,7 @@ export default function CategoriesList({
                   {t(`audiences.${audience}.subtitle`)}
                 </p>
               </div>
+
               <CreateCategory audience={audience} />
             </header>
 
