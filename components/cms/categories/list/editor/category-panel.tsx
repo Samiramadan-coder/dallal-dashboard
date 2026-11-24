@@ -1,15 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
 import { RotateCw } from "lucide-react";
+import TypesSection from "./types-section";
 import { useTranslations } from "next-intl";
-import { getCategory } from "@/lib/actions/categories";
-import type { CategoryDetail } from "@/types/categories";
+import FieldsSection from "./fields-section";
+import DetailsSection from "./details-section";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import DetailsSection from "./details-section";
-import TypesSection from "./types-section";
-import FieldsSection from "./fields-section";
+import { getCategory } from "@/lib/actions/categories";
+import { useCallback, useEffect, useState } from "react";
+import type { CategoryDetail } from "@/types/categories";
 
 type State =
   | { status: "loading" }

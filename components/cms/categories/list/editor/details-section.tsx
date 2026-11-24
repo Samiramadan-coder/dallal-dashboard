@@ -1,16 +1,12 @@
 "use client";
 
-import { useId } from "react";
-import { toast } from "sonner";
-import { Lock, ShieldCheck } from "lucide-react";
-import { useFormatter, useLocale, useTranslations } from "next-intl";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Controller,
   useForm,
   useWatch,
   type SubmitHandler,
 } from "react-hook-form";
+
 import {
   CATEGORY_ICONS,
   PRICING_MODES,
@@ -18,10 +14,7 @@ import {
   type CategoryDetail,
   type CategoryDetailsValues,
 } from "@/types/categories";
-import type { Locale } from "@/types/shared";
-import { updateCategory } from "@/lib/actions/categories";
-import { toFormData } from "@/lib/api/form-data";
-import { Input } from "@/components/ui/input";
+
 import {
   Select,
   SelectContent,
@@ -29,10 +22,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import { useId } from "react";
+import { toast } from "sonner";
+import SaveBar from "./save-bar";
+import SectionCard from "./section-card";
+import type { Locale } from "@/types/shared";
+import { Input } from "@/components/ui/input";
+import { Lock, ShieldCheck } from "lucide-react";
+import { toFormData } from "@/lib/api/form-data";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { updateCategory } from "@/lib/actions/categories";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
 import CompactImageUploader from "@/components/form/compact-image-uploader";
 import { LabeledField, fieldA11yProps } from "@/components/form/labeled-field";
-import SectionCard from "./section-card";
-import SaveBar from "./save-bar";
 
 function toValues(category: CategoryDetail): CategoryDetailsValues {
   return {
@@ -168,7 +171,10 @@ export default function DetailsSection({
                 </Select>
               )}
             />
-            <p id={`${id}-pricing-hint`} className="text-xs text-muted-foreground">
+            <p
+              id={`${id}-pricing-hint`}
+              className="text-xs text-muted-foreground"
+            >
               {t(`pricingModeHints.${pricingMode}`)}
             </p>
           </LabeledField>
