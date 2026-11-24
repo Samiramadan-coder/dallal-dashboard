@@ -1,13 +1,16 @@
 "use client";
 
+import { ShieldCheck, UserCog, type LucideIcon } from "lucide-react";
+
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const PAGES = [
-  { href: "/roles", label: "roles" },
-  { href: "/roles/admins", label: "admins" },
-] as const;
+const PAGES: { href: string; label: "roles" | "admins"; icon: LucideIcon }[] =
+  [
+    { href: "/roles", label: "roles", icon: ShieldCheck },
+    { href: "/roles/admins", label: "admins", icon: UserCog },
+  ];
 
 export default function PageSwitcher({
   // admins.view: without it the Admins tab would only lead to a 403
@@ -23,27 +26,27 @@ export default function PageSwitcher({
   if (pages.length < 2) return null;
 
   return (
-    <nav aria-label={t("label")} className="flex items-center gap-1.5">
-      {pages.map((page) => {
-        // next-intl's usePathname has no locale prefix
-        const isActive = pathname === page.href;
-
-        return (
-          <Link
-            key={page.href}
-            href={page.href}
-            aria-current={isActive ? "page" : undefined}
-            className={cn(
-              "rounded-full border px-3.5 py-1.5 text-xs font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary/40",
-              isActive
-                ? "border-secondary bg-secondary font-semibold text-primary-foreground"
-                : "border-border bg-card text-muted-foreground hover:bg-muted hover:text-foreground",
-            )}
+    // Controlled by the URL (next-intl's usePathname has no locale prefix):
+    // each trigger is a Link, so navigating is what changes the active tab
+    <Tabs value={pathname}>
+      <TabsList
+        aria-label={t("label")}
+        className="h-auto max-w-full gap-1 overflow-x-auto overflow-y-hidden rounded-xl p-1.5"
+      >
+        {pages.map(({ href, label, icon: Icon }) => (
+          <TabsTrigger
+            key={href}
+            value={href}
+            asChild
+            className="h-9 flex-none gap-2 rounded-lg px-3.5 text-muted-foreground data-active:bg-card data-active:font-semibold data-active:text-secondary dark:data-active:text-secondary"
           >
-            {t(page.label)}
-          </Link>
-        );
-      })}
-    </nav>
+            <Link href={href}>
+              <Icon aria-hidden />
+              {t(label)}
+            </Link>
+          </TabsTrigger>
+        ))}
+      </TabsList>
+    </Tabs>
   );
 }

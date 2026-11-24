@@ -1,17 +1,18 @@
 import "server-only";
 
-import { forbidden } from "next/navigation";
-import { getCurrentAdmin } from "@/lib/admin";
-import { navigation } from "@/constants/dashboard-layout";
-import { PERMISSION_ACTIONS } from "@/constants/permissions";
-import type { CurrentAdmin } from "@/types/admin";
-import type { NavigationKey } from "@/types/dashboard-layout";
 import type {
   Can,
   Permission,
   PermissionActionOf,
   PermissionModuleName,
 } from "@/types/roles";
+
+import { forbidden } from "next/navigation";
+import { getCurrentAdmin } from "@/lib/admin";
+import type { CurrentAdmin } from "@/types/admin";
+import { navigation } from "@/constants/dashboard-layout";
+import { PERMISSION_ACTIONS } from "@/constants/permissions";
+import type { NavigationKey } from "@/types/dashboard-layout";
 
 // The API is the real gate: it rejects anything the admin isn't allowed to
 // do. These checks only decide what the dashboard shows

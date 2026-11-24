@@ -527,5 +527,14 @@
         "deleted": "Deleted country"
       }
     }
+  },
+  "Cms": {
+    "switcher": {
+      "label": "CMS pages",
+      "staticPages": "Static Pages",
+      "categories": "Categories",
+      "listsManagement": "Lists Management",
+      "faq": "FAQ"
+    }
   }
 }
