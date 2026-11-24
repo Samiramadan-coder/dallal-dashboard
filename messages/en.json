@@ -549,6 +549,76 @@
         "move": "Move",
         "waiting": "Waiting"
       }
+    },
+    "prices": {
+      "empty": "No prices from the feed yet.",
+      "feedPrice": "Feed price (pure, {unit}): {price}",
+      "metals": {
+        "gold": "Gold",
+        "silver": "Silver",
+        "platinum": "Platinum"
+      },
+      "summary": {
+        "title": "What the website shows right now",
+        "subtitle": "{country}, {unit}",
+        "marketOpen": "Market open",
+        "marketClosed": "Market closed",
+        "delayed": "Delayed",
+        "delayedHint": "The feed has not updated within its refresh interval",
+        "delayedNote": "The site shows “Prices may be delayed” until the feed updates."
+      },
+      "table": {
+        "grade": "Grade",
+        "basePrice": "Base price",
+        "margin": "Margin",
+        "sitePrice": "Site price {unit}"
+      },
+      "units": {
+        "gram": "per gram",
+        "tola": "per tola",
+        "ounce": "per ounce",
+        "kilo": "per kilo"
+      },
+      "filters": {
+        "market": "Market",
+        "unit": "Unit",
+        "note": "Prices in {currency}. Local time {time}",
+        "units": {
+          "gram": "per gram",
+          "tola": "per tola",
+          "ounce": "per ounce",
+          "kilo": "per kilo"
+        }
+      },
+      "manualPrice": {
+        "button": "Set manual price",
+        "title": "Set manual {metal} price",
+        "description": "{country}. Replaces the feed price for one grade until it expires.",
+        "success": "Manual price saved",
+        "fields": {
+          "grade": {
+            "label": "Grade",
+            "required": "Choose a grade"
+          },
+          "price": {
+            "label": "Price per gram ({currency})",
+            "hint": "Now on the site: {price}",
+            "required": "Enter the price",
+            "positive": "The price must be more than 0"
+          },
+          "reason": {
+            "label": "Reason",
+            "placeholder": "e.g. Dubai Gold & Jewellery Group rate for today",
+            "hint": "Saved to the audit log.",
+            "required": "Add a reason",
+            "maxLength": "Keep the reason under 500 characters"
+          },
+          "expires": {
+            "label": "Expires at",
+            "hint": "In your local time. Leave empty to keep it until you change it."
+          }
+        }
+      }
     }
   },
   "Cms": {

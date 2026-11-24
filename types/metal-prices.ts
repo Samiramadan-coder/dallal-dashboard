@@ -1,5 +1,6 @@
+import z from "zod";
 import type { Country } from "./countries";
-import type { ApiResponse, Pagination } from "./shared";
+import type { ApiResponse, Pagination, T } from "./shared";
 
 export type Metal = "gold" | "silver" | "platinum";
 
@@ -19,8 +20,8 @@ export type MetalPrice = {
     currency: string;
     formatted: string;
   };
-  // Move from the price it replaces, in percent
-  change_pct: number;
+  // Move from the price it replaces, in percent; null for the first one
+  change_pct: number | null;
   spot_usd_oz: number;
   source: string;
   status: PriceStatus;
@@ -59,3 +60,51 @@ export type MetalSourcesResponse = ApiResponse<{
     overrides: unknown[];
   }[];
 }>;
+
+export type MetalSource = MetalSourcesResponse["data"]["sources"][number];
+
+// One grade's live price, split into feed price and margin
+export type GradePrice = {
+  metal: Metal;
+  karat: string;
+  label: string;
+  currency: string;
+  // Feed price before the country margin
+  baseAmount: number;
+  // Percent added on top of the feed price
+  margin: number;
+  // What the site shows
+  siteAmount: number;
+};
+
+// "Set manual price" form: replaces the feed price of one grade until it
+// expires. Valid empty number inputs come through as NaN
+export const manualPriceSchema = (t: T) =>
+  z.object({
+    karat: z.string().min(1, t("fields.grade.required")),
+    price_per_gram: z
+      .number({ error: t("fields.price.required") })
+      .positive(t("fields.price.positive")),
+    reason: z
+      .string()
+      .trim()
+      .min(1, t("fields.reason.required"))
+      .max(500, t("fields.reason.maxLength")),
+    // datetime-local value ("2026-11-25T22:00"); empty for no expiry
+    expires_at: z.string(),
+  });
+
+export type ManualPriceFormValues = z.infer<
+  ReturnType<typeof manualPriceSchema>
+>;
+
+// POST /api/v1/admin/prices/override
+export type ManualPricePayload = {
+  country_id: number;
+  metal: Metal;
+  karat: string;
+  price_per_gram: number;
+  reason: string;
+  // ISO 8601
+  expires_at?: string;
+};

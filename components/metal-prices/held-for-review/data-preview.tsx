@@ -8,7 +8,7 @@ import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
 
 // The live price the held one would replace: change_pct is measured from it
 function currentAmount(price: HeldPriceRow): number {
-  return price.price_per_gram.amount / (1 + price.change_pct / 100);
+  return price.price_per_gram.amount / (1 + (price.change_pct ?? 0) / 100);
 }
 
 export default function DataPreview({
@@ -95,10 +95,12 @@ export default function DataPreview({
               dir="ltr"
               className={cn(
                 "font-semibold tabular-nums",
-                price.change_pct >= 0 ? "text-secondary" : "text-destructive",
+                (price.change_pct ?? 0) >= 0
+                  ? "text-secondary"
+                  : "text-destructive",
               )}
             >
-              {format.number(price.change_pct / 100, {
+              {format.number((price.change_pct ?? 0) / 100, {
                 style: "percent",
                 maximumFractionDigits: 2,
                 signDisplay: "always",
