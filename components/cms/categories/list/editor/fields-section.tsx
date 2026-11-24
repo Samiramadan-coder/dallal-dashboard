@@ -1,16 +1,22 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { toast } from "sonner";
+import { useLocale, useTranslations } from "next-intl";
 import type { CategoryDetail } from "@/types/categories";
+import type { Locale } from "@/types/shared";
+import {
+  deleteCategoryField,
+  reorderCategoryFields,
+} from "@/lib/actions/categories";
+import SortableList from "@/components/reusable/sortable-list";
 import SectionCard from "./section-card";
 import FieldSummary from "./field-summary";
 import CreateField from "./create-field";
 import EditField from "./edit-field";
 import DeleteAction from "./delete-action";
-import { deleteCategoryField } from "@/lib/actions/categories";
 
-// What sellers fill in when posting in this category. Read-only summaries;
-// new fields are added from a dialog
+// What sellers fill in when posting in this category, one per row in the
+// order sellers see them. Drag to reorder; add, edit and delete from dialogs
 export default function FieldsSection({
   category,
   reload,
@@ -20,7 +26,21 @@ export default function FieldsSection({
 }) {
   const t = useTranslations("Cms.categories.form");
   const tList = useTranslations("Cms.categories.list");
+  const tCommon = useTranslations("Common");
+  const locale = useLocale() as Locale;
   const fields = [...category.fields].sort((a, b) => a.sort - b.sort);
+
+  const reorder = async (ids: number[]) => {
+    const result = await reorderCategoryFields(ids);
+    if (!result.ok) {
+      toast.error(result.message || tCommon("ReorderFailed"));
+      return false;
+    }
+    toast.success(result.data.message || tCommon("ReorderedSuccessfully"));
+    // So the saved sort orders come back with the fields
+    await reload();
+    return true;
+  };
 
   return (
     <SectionCard
@@ -34,25 +54,31 @@ export default function FieldsSection({
           {t("noFields")}
         </p>
       ) : (
-        <ul className="grid gap-2 lg:grid-cols-2">
-          {fields.map((field) => (
-            <li key={field.id}>
-              <FieldSummary
-                field={field}
-                allFields={fields}
-                actions={
-                  <>
-                    <EditField field={field} reload={reload} />
-                    <DeleteAction
-                      remove={() => deleteCategoryField(field.id)}
-                      reload={reload}
-                    />
-                  </>
-                }
-              />
-            </li>
-          ))}
-        </ul>
+        <SortableList
+          id={`fields-${category.id}`}
+          items={fields}
+          onReorder={reorder}
+          handleLabel={(field) =>
+            tList("reorder", { name: field.label[locale] })
+          }
+          handleClassName="size-6"
+          renderItem={(field, handle) => (
+            <FieldSummary
+              field={field}
+              allFields={fields}
+              dragHandle={handle}
+              actions={
+                <>
+                  <EditField field={field} reload={reload} />
+                  <DeleteAction
+                    remove={() => deleteCategoryField(field.id)}
+                    reload={reload}
+                  />
+                </>
+              }
+            />
+          )}
+        />
       )}
     </SectionCard>
   );

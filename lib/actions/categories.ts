@@ -167,3 +167,33 @@ export async function deleteCategoryField(
     return { message: response?.message ?? undefined };
   });
 }
+
+// Saves the order of every category, both audiences: ids[0] comes first
+export async function reorderCategories(
+  ids: number[],
+): Promise<ActionResult<{ message?: string }>> {
+  return runAction(async () => {
+    const response = await api.put<ApiResponse<unknown>>(
+      "/api/v1/admin/catalog/categories/order",
+      { ids },
+    );
+
+    updateTag("categories");
+
+    return { message: response.message ?? undefined };
+  });
+}
+
+// Saves the order of one category's listing fields: ids[0] comes first
+export async function reorderCategoryFields(
+  ids: number[],
+): Promise<ActionResult<{ message?: string }>> {
+  return runAction(async () => {
+    const response = await api.put<ApiResponse<unknown>>(
+      "/api/v1/admin/catalog/fields/order",
+      { ids },
+    );
+
+    return { message: response.message ?? undefined };
+  });
+}

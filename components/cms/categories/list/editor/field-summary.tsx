@@ -15,25 +15,36 @@ export default function FieldSummary({
   field,
   allFields,
   actions,
+  dragHandle,
 }: {
   field: CategoryField;
   // The category's fields, to name the ones a condition points at
   allFields: CategoryField[];
   // Edit / delete buttons, shown at the end of the header
   actions?: React.ReactNode;
+  // Shown at the start of the header
+  dragHandle?: React.ReactNode;
 }) {
   const t = useTranslations("Cms.categories.form");
   const locale = useLocale() as Locale;
 
-  const choices = field.type === "select" ? field.options : field.type === "unit_number" ? field.units : null;
+  const choices =
+    field.type === "select"
+      ? field.options
+      : field.type === "unit_number"
+        ? field.units
+        : null;
   const notes = useFieldNotes(field, allFields);
 
   return (
     <div className="flex h-full flex-col gap-2.5 rounded-lg border p-3">
-      <div className="flex flex-wrap items-start justify-between gap-x-3 gap-y-1">
-        <p className="min-w-0 text-sm font-medium text-foreground">
-          {field.label[locale]}
-        </p>
+      <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+        <div className="flex min-w-0 items-center gap-1.5">
+          {dragHandle}
+          <p className="min-w-0 text-sm font-medium text-foreground">
+            {field.label[locale]}
+          </p>
+        </div>
 
         <div className="flex shrink-0 items-center gap-1">
           <span className="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground">
@@ -46,7 +57,10 @@ export default function FieldSummary({
       {(field.required || field.filterable || field.hidden_from_public) && (
         <ul className="flex flex-wrap gap-1.5 text-[11px] font-medium">
           {field.required && (
-            <Flag icon={<Asterisk />} className="bg-destructive/10 text-destructive">
+            <Flag
+              icon={<Asterisk />}
+              className="bg-destructive/10 text-destructive"
+            >
               {t("flags.required")}
             </Flag>
           )}
@@ -133,7 +147,10 @@ function useFieldNotes(
   const valueOf = (key: string, value: unknown): string => {
     if (typeof value === "boolean") return value ? t("yes") : t("no");
     if (Array.isArray(value)) {
-      return format.list(value.map((v) => valueOf(key, v)), { type: "disjunction" });
+      return format.list(
+        value.map((v) => valueOf(key, v)),
+        { type: "disjunction" },
+      );
     }
     const option = byKey(key)?.options?.find((o) => o.value === String(value));
     return option?.label[locale] ?? String(value);
@@ -142,7 +159,9 @@ function useFieldNotes(
   const notes: string[] = [];
 
   for (const [key, value] of Object.entries(field.show_if ?? {})) {
-    notes.push(t("shownWhen", { field: nameOf(key), value: valueOf(key, value) }));
+    notes.push(
+      t("shownWhen", { field: nameOf(key), value: valueOf(key, value) }),
+    );
   }
 
   const rules = field.validation ?? {};

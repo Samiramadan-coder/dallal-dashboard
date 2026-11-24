@@ -575,7 +575,8 @@
         },
         "typesCount": "{count, plural, =0 {بدون أنواع} one {نوع واحد} two {نوعان} few {# أنواع} many {# نوعًا} other {# نوع}}",
         "fieldsCount": "{count, plural, =0 {بدون حقول} one {حقل واحد} two {حقلان} few {# حقول} many {# حقلًا} other {# حقل}}",
-        "toggleActive": "تفعيل {name}"
+        "toggleActive": "تفعيل {name}",
+        "reorder": "اسحب لإعادة ترتيب {name}"
       },
       "form": {
         "loadFailed": "تعذر تحميل تفاصيل هذا التصنيف.",

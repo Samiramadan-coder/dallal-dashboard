@@ -577,7 +577,8 @@
         },
         "typesCount": "{count, plural, =0 {No types} one {# type} other {# types}}",
         "fieldsCount": "{count, plural, =0 {No fields} one {# field} other {# fields}}",
-        "toggleActive": "{name} active"
+        "toggleActive": "{name} active",
+        "reorder": "Drag to reorder {name}"
       },
       "form": {
         "loadFailed": "We couldn’t load this category’s details.",

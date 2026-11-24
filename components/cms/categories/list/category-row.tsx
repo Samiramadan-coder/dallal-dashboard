@@ -62,7 +62,19 @@ function ActiveSwitch({ category }: { category: Category }) {
 }
 
 // One category: a summary line that opens its editor underneath
-export default function CategoryRow({ category }: { category: Category }) {
+export default function CategoryRow({
+  category,
+  position,
+  dragHandle,
+}: {
+  category: Category;
+  // Its place in the list as currently ordered, which runs ahead of
+  // category.sort while a reorder is saving
+  position: number;
+  // Shown before the summary, outside the trigger, so dragging doesn't
+  // open the row
+  dragHandle?: React.ReactNode;
+}) {
   const t = useTranslations("Cms.categories.list");
   const locale = useLocale() as Locale;
   const [hasOpened, setHasOpened] = useState(false);
@@ -73,9 +85,10 @@ export default function CategoryRow({ category }: { category: Category }) {
       className="group/row rounded-xl border bg-card transition-shadow data-[state=open]:shadow-sm"
     >
       <div className="flex items-center">
-        <Collapsible.Trigger className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-s-xl py-3 ps-4 pe-3 text-start transition-colors outline-none hover:bg-muted/40 focus-visible:ring-2 focus-visible:ring-secondary/40 group-data-[state=open]/row:rounded-es-none">
+        {dragHandle}
+        <Collapsible.Trigger className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-md py-3 ps-1 pe-3 text-start transition-colors outline-none hover:bg-muted/40 focus-visible:ring-2 focus-visible:ring-secondary/40 group-data-[state=open]/row:rounded-es-none">
           <span className="w-6 shrink-0 text-xs font-medium text-muted-foreground tabular-nums">
-            {category.sort}
+            {position}
           </span>
 
           <span className="flex min-w-0 flex-1 flex-col gap-0.5">
