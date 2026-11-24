@@ -263,3 +263,32 @@ export const marketRulesSchema = (t: T) =>
   });
 
 export type MarketRulesValues = z.infer<ReturnType<typeof marketRulesSchema>>;
+
+// --- Editing saved types and fields --------------------------------------
+
+// PUT /admin/catalog/types/{id}
+export const editTypeSchema = (t: T) =>
+  z.object({ name: translatedSchema(t), is_active: z.boolean() });
+
+export type EditTypeValues = z.infer<ReturnType<typeof editTypeSchema>>;
+
+// PUT /admin/catalog/fields/{id}
+export const editFieldSchema = (t: T) =>
+  z.object({
+    label: translatedSchema(t),
+    required: z.boolean(),
+    filterable: z.boolean(),
+  });
+
+export type EditFieldValues = z.infer<ReturnType<typeof editFieldSchema>>;
+
+// --- Banned keywords --------------------------------------------------------
+
+// GET /admin/catalog/banned-words. A listing whose title has one goes to
+// review. country_id / category_id narrow it down; null means everywhere
+export type BannedWord = {
+  id: number;
+  word: string;
+  country_id: number | null;
+  category_id: number | null;
+};

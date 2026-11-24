@@ -5,6 +5,9 @@ import type { CategoryDetail } from "@/types/categories";
 import SectionCard from "./section-card";
 import FieldSummary from "./field-summary";
 import CreateField from "./create-field";
+import EditField from "./edit-field";
+import DeleteAction from "./delete-action";
+import { deleteCategoryField } from "@/lib/actions/categories";
 
 // What sellers fill in when posting in this category. Read-only summaries;
 // new fields are added from a dialog
@@ -34,7 +37,19 @@ export default function FieldsSection({
         <ul className="grid gap-2 lg:grid-cols-2">
           {fields.map((field) => (
             <li key={field.id}>
-              <FieldSummary field={field} allFields={fields} />
+              <FieldSummary
+                field={field}
+                allFields={fields}
+                actions={
+                  <>
+                    <EditField field={field} reload={reload} />
+                    <DeleteAction
+                      remove={() => deleteCategoryField(field.id)}
+                      reload={reload}
+                    />
+                  </>
+                }
+              />
             </li>
           ))}
         </ul>

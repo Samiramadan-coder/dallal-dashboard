@@ -14,10 +14,13 @@ const CHOICES_SHOWN = 6;
 export default function FieldSummary({
   field,
   allFields,
+  actions,
 }: {
   field: CategoryField;
   // The category's fields, to name the ones a condition points at
   allFields: CategoryField[];
+  // Edit / delete buttons, shown at the end of the header
+  actions?: React.ReactNode;
 }) {
   const t = useTranslations("Cms.categories.form");
   const locale = useLocale() as Locale;
@@ -32,9 +35,12 @@ export default function FieldSummary({
           {field.label[locale]}
         </p>
 
-        <span className="shrink-0 rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground">
-          {t(`fieldTypes.${field.type}`)}
-        </span>
+        <div className="flex shrink-0 items-center gap-1">
+          <span className="rounded-md bg-muted px-2 py-0.5 text-xs text-muted-foreground">
+            {t(`fieldTypes.${field.type}`)}
+          </span>
+          {actions}
+        </div>
       </div>
 
       {(field.required || field.filterable || field.hidden_from_public) && (

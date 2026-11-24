@@ -6,9 +6,12 @@ import type { Locale } from "@/types/shared";
 import { cn } from "@/lib/utils";
 import SectionCard from "./section-card";
 import CreateType from "./create-type";
+import EditType from "./edit-type";
+import DeleteAction from "./delete-action";
+import { deleteCategoryType } from "@/lib/actions/categories";
 
 // The kinds of item a seller picks from in this category (Bar, Coin, …).
-// Read-only chips; new types are added from a dialog
+// Each can be renamed, turned off or deleted; new ones are added from a dialog
 export default function TypesSection({
   category,
   reload,
@@ -33,20 +36,34 @@ export default function TypesSection({
           {t("noTypes")}
         </p>
       ) : (
-        <ul className="flex flex-wrap gap-2">
+        <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
           {types.map((type) => (
             <li
               key={type.id}
               className={cn(
-                "flex items-center gap-2 rounded-full border px-3 py-1 text-xs",
-                !type.is_active && "border-dashed text-muted-foreground",
+                "flex items-center gap-2 rounded-lg border py-1.5 ps-3 pe-1.5",
+                !type.is_active && "border-dashed",
               )}
             >
-              <span className="font-medium">{type.name[locale]}</span>
-              <code dir="ltr" className="text-muted-foreground">
-                {type.key}
-              </code>
-              {!type.is_active && <span>· {tList("inactive")}</span>}
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span
+                  className={cn(
+                    "truncate text-sm font-medium",
+                    type.is_active ? "text-foreground" : "text-muted-foreground",
+                  )}
+                >
+                  {type.name[locale]}
+                </span>
+                <span className="truncate text-xs text-muted-foreground">
+                  <code dir="ltr">{type.key}</code>
+                  {!type.is_active && <> · {tList("inactive")}</>}
+                </span>
+              </span>
+              <EditType type={type} reload={reload} />
+              <DeleteAction
+                remove={() => deleteCategoryType(type.id)}
+                reload={reload}
+              />
             </li>
           ))}
         </ul>

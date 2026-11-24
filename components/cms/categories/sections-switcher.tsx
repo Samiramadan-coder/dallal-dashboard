@@ -2,10 +2,15 @@
 
 import { useTranslations } from "next-intl";
 import CategoriesList from "./list/categories-list";
-import type { Category, MarketRule } from "@/types/categories";
+import type {
+  BannedWord,
+  Category,
+  MarketRule,
+} from "@/types/categories";
 import type { Country } from "@/types/countries";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import MarketRules from "./market-rules/market-rules";
+import BannedWords from "./banned-words/banned-words";
 
 const SECTIONS = [
   "categoriesAndFields",
@@ -18,10 +23,12 @@ export default function SectionsSwitcher({
   categories,
   countries,
   marketRules,
+  bannedWords,
 }: {
   categories: Category[];
   countries: Country[];
   marketRules: MarketRule[];
+  bannedWords: BannedWord[];
 }) {
   const t = useTranslations("Cms.categories.sections");
 
@@ -56,7 +63,10 @@ export default function SectionsSwitcher({
         />
       </TabsContent>
 
-      <TabsContent value="bannedKeywords">3</TabsContent>
+      <TabsContent value="bannedKeywords">
+        <BannedWords words={bannedWords} countries={countries} />
+      </TabsContent>
+
       <TabsContent value="luxuryWatchBrands">4</TabsContent>
     </Tabs>
   );

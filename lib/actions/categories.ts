@@ -9,6 +9,8 @@ import type {
   CategoryType,
   CreateCategoryValues,
   CreateFieldPayload,
+  EditFieldValues,
+  EditTypeValues,
   Translated,
 } from "@/types/categories";
 import type { ApiResponse } from "@/types/shared";
@@ -103,5 +105,65 @@ export async function createCategory(
     updateTag("categories");
 
     return { message: response.message ?? undefined };
+  });
+}
+
+// Renames a type or turns it on/off
+export async function updateCategoryType(
+  id: number,
+  payload: EditTypeValues,
+): Promise<ActionResult<{ message?: string }>> {
+  return runAction(async () => {
+    const response = await api.put<ApiResponse<unknown>>(
+      `/api/v1/admin/catalog/types/${id}`,
+      payload,
+    );
+
+    return { message: response.message ?? undefined };
+  });
+}
+
+export async function deleteCategoryType(
+  id: number,
+): Promise<ActionResult<{ message?: string }>> {
+  return runAction(async () => {
+    const response = await api.delete<ApiResponse<unknown> | undefined>(
+      `/api/v1/admin/catalog/types/${id}`,
+    );
+
+    // The categories list shows each category's type count
+    updateTag("categories");
+
+    return { message: response?.message ?? undefined };
+  });
+}
+
+// Changes a field's label and whether it's required / filterable
+export async function updateCategoryField(
+  id: number,
+  payload: EditFieldValues,
+): Promise<ActionResult<{ message?: string }>> {
+  return runAction(async () => {
+    const response = await api.put<ApiResponse<unknown>>(
+      `/api/v1/admin/catalog/fields/${id}`,
+      payload,
+    );
+
+    return { message: response.message ?? undefined };
+  });
+}
+
+export async function deleteCategoryField(
+  id: number,
+): Promise<ActionResult<{ message?: string }>> {
+  return runAction(async () => {
+    const response = await api.delete<ApiResponse<unknown> | undefined>(
+      `/api/v1/admin/catalog/fields/${id}`,
+    );
+
+    // The categories list shows each category's field count
+    updateTag("categories");
+
+    return { message: response?.message ?? undefined };
   });
 }

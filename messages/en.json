@@ -714,7 +714,14 @@
         "fieldLabelPlaceholderAr": "مثال: الحقبة",
         "keyHint": "Lowercase letters, numbers and underscores. Filled in from the English name.",
         "optionsHint": "The choices the seller picks from.",
-        "flagsTitle": "Settings"
+        "flagsTitle": "Settings",
+        "editType": "Edit {name}",
+        "editTypeTitle": "Edit type",
+        "typeActive": "Active",
+        "typeActiveHint": "When off, sellers can’t pick this type.",
+        "editField": "Edit {name}",
+        "editFieldTitle": "Edit field",
+        "editFieldDescription": "The key, answer type and options stay as they are."
       },
       "marketRules": {
         "title": "Price caps",
@@ -726,6 +733,32 @@
         "errors": {
           "priceInvalid": "Enter 0 or more, or leave empty"
         }
+      },
+      "bannedWords": {
+        "title": "Banned keywords",
+        "description": "Listings whose title has one of these words go to review.",
+        "languages": {
+          "en": "English",
+          "ar": "Arabic"
+        },
+        "placeholder": "Type a word and press Enter",
+        "tester": {
+          "title": "Test a title",
+          "description": "Check whether a listing with this title would go to review, using the same check as real listings.",
+          "placeholder": "e.g. First copy Rolex Submariner",
+          "empty": "Type a title to test it.",
+          "clean": "No banned words. This title wouldn’t go to review.",
+          "flagged": "{count, plural, one {This title would go to review because of # word:} other {This title would go to review because of # words:}}",
+          "checking": "Checking…",
+          "failed": "We couldn’t check this title. Try again.",
+          "flaggedNoWords": "This title would go to review."
+        },
+        "scope": "Applies in",
+        "allCountries": "All countries",
+        "scopeNote": "These words apply in this country only. Words for all countries apply here too.",
+        "none": "No words yet.",
+        "duplicate": "This word is already in the list.",
+        "remove": "Remove {word}"
       }
     }
   }
