@@ -1,14 +1,12 @@
 import { requirePage } from "@/lib/permissions";
-import PageHeader from "@/components/reusable/page-header";
-import PagePlaceholder from "@/components/reusable/page-placeholder";
+import { api } from "@/lib/api/client";
 
 export default async function Page() {
   await requirePage("metalPrices");
 
-  return (
-    <>
-      <PageHeader page="metalPrices" />
-      <PagePlaceholder href="/metal-prices" />
-    </>
-  );
+  const prices = await api.get("/api/v1/admin/prices");
+
+  console.log(prices);
+
+  return <div></div>;
 }
