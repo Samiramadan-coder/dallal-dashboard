@@ -31,7 +31,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { LabeledField, fieldA11yProps } from "@/components/form/labeled-field";
 import Header from "@/components/form/header";
 import Footer from "@/components/form/footer";
-import { useAutoKey } from "../editor/use-auto-key";
+import { useAutoKey } from "./editor/use-auto-key";
 
 // Adds a category to one audience's section. Icon, image, fields and types
 // are set afterwards from the category's row

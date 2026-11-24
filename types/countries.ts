@@ -39,6 +39,8 @@ export type Country = {
   is_active: boolean;
   // "live" | "coming_soon" | …
   status?: string;
+  // ISO 4217, e.g. "AED"
+  currency?: string;
   cities_count?: number;
   name: {
     en: string;

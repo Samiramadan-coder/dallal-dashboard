@@ -7,7 +7,7 @@ import { useLocale, useTranslations } from "next-intl";
 import type { Category } from "@/types/categories";
 import type { Locale } from "@/types/shared";
 import { cn } from "@/lib/utils";
-import CategoryPanel from "../editor/category-panel";
+import CategoryPanel from "./editor/category-panel";
 
 // One category: a summary line that opens its editor underneath
 export default function CategoryRow({ category }: { category: Category }) {

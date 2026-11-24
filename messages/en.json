@@ -715,6 +715,17 @@
         "keyHint": "Lowercase letters, numbers and underscores. Filled in from the English name.",
         "optionsHint": "The choices the seller picks from.",
         "flagsTitle": "Settings"
+      },
+      "marketRules": {
+        "title": "Price caps",
+        "description": "Highest price an individual seller can ask, per country. Leave empty for no cap.",
+        "noCap": "No cap",
+        "requiresReview": "Review every listing",
+        "noCategories": "There are no individual-market categories yet.",
+        "noCountries": "There are no live countries yet.",
+        "errors": {
+          "priceInvalid": "Enter 0 or more, or leave empty"
+        }
       }
     }
   }

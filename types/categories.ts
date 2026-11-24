@@ -225,3 +225,41 @@ export type CreateFieldPayload = {
   options?: FieldOption[];
   units?: FieldUnit[];
 };
+
+// --- Individual market rules ----------------------------------------------
+
+// GET /admin/catalog/market-rules: one rule per category and country
+export type MarketRule = {
+  id: number;
+  category: { id: number; key: string };
+  country: { id: number; code: string };
+  // Highest price an individual seller may ask; null for no cap
+  max_price_individual: number | null;
+  currency: string;
+  requires_review: boolean;
+};
+
+// Prices are kept as text so an empty input means "no cap"
+export const marketRulesSchema = (t: T) =>
+  z.object({
+    categories: z.array(
+      z.object({
+        category_id: z.number(),
+        countries: z.array(
+          z.object({
+            country_id: z.number(),
+            max_price: z
+              .string()
+              .trim()
+              .refine(
+                (value) => value === "" || Number(value) >= 0,
+                t("errors.priceInvalid"),
+              ),
+            requires_review: z.boolean(),
+          }),
+        ),
+      }),
+    ),
+  });
+
+export type MarketRulesValues = z.infer<ReturnType<typeof marketRulesSchema>>;
