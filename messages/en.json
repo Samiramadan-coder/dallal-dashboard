@@ -14,6 +14,7 @@
     "Delete": "Delete",
     "DeleteConfirmation": "Are you sure you want to delete this item? This action cannot be undone.",
     "Confirmation": "Confirmation",
+    "DeleteTitle": "Delete this item?",
     "Error": "Error",
     "ErrorOccurred": "An error occurred while processing your request. Please try again.",
     "AddPhoto": "Add Photo",

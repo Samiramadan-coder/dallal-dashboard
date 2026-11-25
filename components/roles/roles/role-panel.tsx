@@ -1,16 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { toast } from "sonner";
+import { useState } from "react";
+import CreateRole from "./create-role";
 import { LockIcon } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { deleteRole, updateRole } from "@/lib/actions/roles";
-import DeleteBtn from "@/components/reusable/delete-btn";
-import type { Can, Permission, PermissionModule, Role } from "@/types/roles";
-import CreateRole from "./create-role";
 import PermissionMatrix from "./permission-matrix";
+import { useLocale, useTranslations } from "next-intl";
+import DeleteBtn from "@/components/reusable/delete-btn";
+import { deleteRole, updateRole } from "@/lib/actions/roles";
+import type { Can, Permission, PermissionModule, Role } from "@/types/roles";
 
 function sameSet(a: readonly Permission[], b: readonly Permission[]) {
   if (a.length !== b.length) return false;

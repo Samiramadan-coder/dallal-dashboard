@@ -1,10 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { LockIcon } from "lucide-react";
 import { useState } from "react";
-import { useLocale, useTranslations } from "next-intl";
 import RolePanel from "./role-panel";
+import { LockIcon } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import type { Can, PermissionModule, Role } from "@/types/roles";
 
 export default function DataPreview({
@@ -14,7 +14,6 @@ export default function DataPreview({
 }: {
   roles: Role[];
   matrix: PermissionModule[];
-  // Hides or locks what the admin may not do; the API rejects it anyway
   can: Can<"roles">;
 }) {
   const locale = useLocale();

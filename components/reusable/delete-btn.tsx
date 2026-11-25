@@ -45,22 +45,44 @@ export default function DeleteBtn({
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-md">
+      <DialogContent
+        showCloseButton={false}
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        className="gap-5 p-6 ring-0 sm:max-w-sm"
+      >
         <DialogClose asChild>
           <Button className="hidden" ref={closeBtn}></Button>
         </DialogClose>
-        <DialogHeader>
-          <DialogTitle className="text-destructive">{t("Delete")}</DialogTitle>
-          <DialogDescription>{t("DeleteConfirmation")}</DialogDescription>
+        <DialogHeader className="items-center gap-3 text-center">
+          <div className="flex size-12 items-center justify-center rounded-full bg-destructive/10 ring-8 ring-destructive/5">
+            <Trash2 className="size-5 text-destructive" />
+          </div>
+          <DialogTitle className="mt-1 text-lg font-semibold">
+            {t("DeleteTitle")}
+          </DialogTitle>
+          <DialogDescription className="leading-relaxed">
+            {t("DeleteConfirmation")}
+          </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="sm:justify-end">
+        <DialogFooter className="mx-0 mb-0 grid grid-cols-2 gap-3 rounded-none border-0 bg-transparent p-0">
           <DialogClose asChild>
-            <Button type="button" variant="outline">
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              disabled={loading}
+            >
               {t("Cancel")}
             </Button>
           </DialogClose>
-          <Button type="button" variant="destructive" onClick={handleDelete}>
-            {loading ? <Spinner /> : t("Confirmation")}
+          <Button
+            type="button"
+            size="lg"
+            disabled={loading}
+            onClick={handleDelete}
+            className="bg-destructive text-background hover:bg-destructive/90 focus-visible:ring-destructive/30"
+          >
+            {loading ? <Spinner /> : t("Delete")}
           </Button>
         </DialogFooter>
       </DialogContent>
