@@ -18,7 +18,11 @@ import { api } from "@/lib/api/client";
 import { redirect } from "@/i18n/navigation";
 import { SIGN_IN_PATH } from "@/lib/auth-routes";
 import { resolveLocale } from "@/lib/api/locale";
-import type { LoginFormData } from "@/types/auth";
+import type {
+  ForgotPasswordFormData,
+  LoginFormData,
+  ResetPasswordFormData,
+} from "@/types/auth";
 import type { ApiResponse } from "@/types/shared";
 import { unstable_rethrow } from "next/navigation";
 import { getServerTranslator } from "@/lib/api/messages";
@@ -125,6 +129,34 @@ export async function confirmTwoFactorSetup(
     await setAuthToken(pendingToken, { maxAge: TOKEN_MAX_AGE });
     await clearPendingAuthToken();
 
+    return { message: response.message ?? undefined };
+  });
+}
+
+// Emails a 6-digit reset code to the account
+export async function requestPasswordReset(
+  input: ForgotPasswordFormData,
+): Promise<ActionResult<{ message?: string }>> {
+  return runAction(async () => {
+    const response = await api.post<ApiResponse<null>>(
+      "/api/v1/admin/auth/forgot",
+      input,
+      PUBLIC,
+    );
+    return { message: response.message ?? undefined };
+  });
+}
+
+// Sets a new password with the emailed code. The user signs in afterwards
+export async function resetPassword(
+  input: ResetPasswordFormData & { email: string },
+): Promise<ActionResult<{ message?: string }>> {
+  return runAction(async () => {
+    const response = await api.post<ApiResponse<null>>(
+      "/api/v1/admin/auth/reset",
+      input,
+      PUBLIC,
+    );
     return { message: response.message ?? undefined };
   });
 }

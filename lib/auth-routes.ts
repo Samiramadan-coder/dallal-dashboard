@@ -7,6 +7,7 @@ import { routing } from "@/i18n/routing";
 // `server-only` and request-time APIs. All paths are unprefixed (no locale)
 
 export const SIGN_IN_PATH = "/login";
+export const FORGOT_PASSWORD_PATH = "/forgot-password";
 export const HOME_PATH = "/";
 
 // Pages that need a signed-in user (the route and all of its sub-paths;
@@ -14,7 +15,10 @@ export const HOME_PATH = "/";
 export const PROTECTED_ROUTES: readonly string[] = ["/"];
 
 // Pages a signed-in user is sent away from
-export const GUEST_ONLY_ROUTES: readonly string[] = [SIGN_IN_PATH];
+export const GUEST_ONLY_ROUTES: readonly string[] = [
+  SIGN_IN_PATH,
+  FORGOT_PASSWORD_PATH,
+];
 
 export const CALLBACK_URL_PARAM = "callbackUrl";
 

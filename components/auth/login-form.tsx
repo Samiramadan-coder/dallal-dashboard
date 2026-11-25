@@ -2,6 +2,8 @@
 
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
+import { FORGOT_PASSWORD_PATH } from "@/lib/auth-routes";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
@@ -68,6 +70,14 @@ export function LoginForm({ defaultValues, onSuccess }: LoginFormProps) {
           id="password"
           label={t("Password")}
           error={errors.password}
+          labelAction={
+            <Link
+              href={FORGOT_PASSWORD_PATH}
+              className="text-sm font-medium text-secondary hover:underline"
+            >
+              {t("ForgotPassword")}
+            </Link>
+          }
         >
           <Input
             {...register("password")}
