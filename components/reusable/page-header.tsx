@@ -2,6 +2,13 @@ import type { ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
 
 import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { NavigationKey } from "@/types/dashboard-layout";
 import PageGuide from "./page-guide";
 
@@ -52,7 +59,7 @@ export default async function PageHeader({
 }
 
 // Labelled dropdown for page controls. Not wired up yet
-export async function HeaderSelect({
+export function HeaderSelect({
   label,
   options,
   defaultValue,
@@ -62,18 +69,21 @@ export async function HeaderSelect({
   defaultValue?: string;
 }) {
   return (
+    // The label wraps the trigger button, so it names it for screen readers
     <label className="flex items-center gap-2 text-xs font-semibold text-muted-foreground">
       {label}
-      <select
-        defaultValue={defaultValue}
-        className="h-8 min-w-36 rounded-lg border border-border bg-card px-2.5 text-[13px] font-medium text-foreground outline-none focus-visible:border-secondary focus-visible:ring-3 focus-visible:ring-secondary/20"
-      >
-        {options.map((option) => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <Select defaultValue={defaultValue}>
+        <SelectTrigger className="min-w-36 border-border bg-card text-[13px] font-medium text-foreground focus-visible:border-secondary focus-visible:ring-secondary/20">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem key={option.value} value={option.value}>
+              {option.label}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
     </label>
   );
 }
