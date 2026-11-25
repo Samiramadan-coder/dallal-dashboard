@@ -1,6 +1,7 @@
 "use client";
 
 import { toast } from "sonner";
+import { QRCodeSVG } from "qrcode.react";
 import { useTranslations } from "next-intl";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
@@ -130,8 +131,8 @@ export function TwoFactorForm({
   );
 }
 
-// The key to type into the authenticator app, and a link that opens the app
-// directly on phones
+// A QR code to scan with the authenticator app, the key to type in by hand,
+// and a link that opens the app directly on phones
 function SetupKey({
   secret,
   otpauthUrl,
@@ -154,6 +155,22 @@ function SetupKey({
 
   return (
     <div className="mb-6 rounded-lg border border-border bg-card p-4">
+      <div className="flex flex-col items-center gap-2 border-b border-border pb-4 mb-4">
+        {/* Dark modules on the card color: scannable on the light theme */}
+        <QRCodeSVG
+          value={otpauthUrl}
+          size={176}
+          marginSize={2}
+          fgColor="currentColor"
+          bgColor="transparent"
+          title={t("QrCodeLabel")}
+          className="text-card-foreground"
+        />
+        <p className="text-center text-xs text-muted-foreground">
+          {t("ScanQrCode")}
+        </p>
+      </div>
+
       <p className="text-xs font-medium text-muted-foreground">
         {t("SetupKey")}
       </p>

@@ -82,6 +82,8 @@
       "SessionExpired": "Your sign-in attempt expired. Go back and sign in again.",
       "SetupTitle": "Set up two-factor authentication",
       "SetupDescription": "Add <email></email> to an authenticator app such as Google Authenticator, then enter the 6-digit code it shows.",
+      "QrCodeLabel": "QR code to add the account to an authenticator app",
+      "ScanQrCode": "Scan with your authenticator app, or enter the key by hand.",
       "SetupKey": "Setup key",
       "CopyKey": "Copy key",
       "CopyFailed": "Couldn’t copy the key",

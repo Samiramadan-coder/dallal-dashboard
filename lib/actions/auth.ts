@@ -1,17 +1,11 @@
 "use server";
 
-import { unstable_rethrow } from "next/navigation";
-
-import { redirect } from "@/i18n/navigation";
-import { SIGN_IN_PATH } from "@/lib/auth-routes";
-import { api } from "@/lib/api/client";
-import { resolveLocale } from "@/lib/api/locale";
-import { getServerTranslator } from "@/lib/api/messages";
 import {
   ValidationError,
   runAction,
   type ActionResult,
 } from "@/lib/api/errors";
+
 import {
   clearAuthToken,
   clearPendingAuthToken,
@@ -19,8 +13,15 @@ import {
   setAuthToken,
   setPendingAuthToken,
 } from "@/lib/api/auth-token";
+
+import { api } from "@/lib/api/client";
+import { redirect } from "@/i18n/navigation";
+import { SIGN_IN_PATH } from "@/lib/auth-routes";
+import { resolveLocale } from "@/lib/api/locale";
 import type { LoginFormData } from "@/types/auth";
 import type { ApiResponse } from "@/types/shared";
+import { unstable_rethrow } from "next/navigation";
+import { getServerTranslator } from "@/lib/api/messages";
 
 const TOKEN_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 

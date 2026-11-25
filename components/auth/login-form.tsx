@@ -2,14 +2,13 @@
 
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
-
-import { login, type LoginStep } from "@/lib/actions/auth";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { LoginFormData, loginSchema } from "@/types/auth";
+import { login, type LoginStep } from "@/lib/actions/auth";
 import { LabeledField, fieldA11yProps } from "@/components/form/labeled-field";
 
 type LoginFormProps = {
