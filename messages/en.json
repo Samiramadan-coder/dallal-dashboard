@@ -526,7 +526,8 @@
       "action": "Action",
       "target": "Target",
       "country": "Country",
-      "ip": "IP"
+      "ip": "IP",
+      "details": "Details"
     },
     "allCountries": "All",
     "empty": "No activity recorded yet.",
@@ -538,7 +539,13 @@
       "listing": "Listing",
       "store": "Store",
       "verification": "Verification",
-      "report": "Report"
+      "report": "Report",
+      "category": "Category",
+      "banned_word": "Banned word",
+      "category_type": "Category type",
+      "category_field": "Category field",
+      "market_rule": "Market rule",
+      "metal_price": "Metal price"
     },
     "actions": {
       "admin": {
@@ -560,7 +567,98 @@
         "created": "Added country",
         "updated": "Updated country",
         "deleted": "Deleted country"
+      },
+      "category": {
+        "created": "Added category",
+        "updated": "Updated category",
+        "deleted": "Deleted category"
+      },
+      "banned_word": {
+        "created": "Added banned word",
+        "updated": "Updated banned word",
+        "deleted": "Deleted banned word"
+      },
+      "category_type": {
+        "created": "Added category type",
+        "updated": "Updated category type",
+        "deleted": "Deleted category type"
+      },
+      "category_field": {
+        "created": "Added category field",
+        "updated": "Updated category field",
+        "deleted": "Deleted category field"
+      },
+      "market_rule": {
+        "created": "Added market rule",
+        "updated": "Updated market rule",
+        "deleted": "Deleted market rule"
+      },
+      "metal_price": {
+        "overridden": "Set manual price"
       }
+    },
+    "filters": {
+      "admin": "Admin",
+      "allAdmins": "All admins",
+      "subject": "Target",
+      "allSubjects": "All targets",
+      "action": "Action",
+      "allActions": "All actions",
+      "country": "Country",
+      "allCountries": "All countries",
+      "from": "From",
+      "to": "To",
+      "clear": "Clear filters"
+    },
+    "emptyFiltered": "No activity matches these filters.",
+    "details": {
+      "open": "View details",
+      "close": "Close",
+      "time": "Time",
+      "admin": "Admin",
+      "system": "System",
+      "subject": "Target",
+      "country": "Country",
+      "allCountries": "All countries",
+      "ip": "IP address",
+      "reason": "Reason",
+      "changes": "Changes",
+      "createdValues": "Values when created",
+      "deletedValues": "Values before deletion",
+      "before": "Before",
+      "after": "After",
+      "added": "Added",
+      "removed": "Removed",
+      "empty": "Empty",
+      "yes": "Yes",
+      "no": "No",
+      "noData": "No data was recorded for this action.",
+      "noChanges": "No field changed.",
+      "showUnchanged": "Show unchanged fields ({count})",
+      "hideUnchanged": "Hide unchanged fields"
+    },
+    "fields": {
+      "id": "ID",
+      "name": "Name",
+      "email": "Email",
+      "is_active": "Active",
+      "roles": "Roles",
+      "country_ids": "Countries",
+      "permissions": "Permissions",
+      "label": "Name",
+      "created_at": "Created",
+      "updated_at": "Last updated",
+      "word": "Word",
+      "key": "Key",
+      "sort": "Sort order",
+      "category_id": "Category",
+      "country_id": "Country",
+      "price_per_gram": "Price per gram",
+      "expires_at": "Expires at"
+    },
+    "languages": {
+      "ar": "Arabic",
+      "en": "English"
     }
   },
   "MetalPrices": {

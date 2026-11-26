@@ -524,7 +524,8 @@
       "action": "الإجراء",
       "target": "الهدف",
       "country": "الدولة",
-      "ip": "IP"
+      "ip": "IP",
+      "details": "التفاصيل"
     },
     "allCountries": "الكل",
     "empty": "لا توجد عمليات مسجّلة بعد.",
@@ -536,7 +537,13 @@
       "listing": "إعلان",
       "store": "متجر",
       "verification": "توثيق",
-      "report": "بلاغ"
+      "report": "بلاغ",
+      "category": "فئة",
+      "banned_word": "كلمة محظورة",
+      "category_type": "نوع فئة",
+      "category_field": "حقل فئة",
+      "market_rule": "قاعدة سوق",
+      "metal_price": "سعر معدن"
     },
     "actions": {
       "admin": {
@@ -558,7 +565,98 @@
         "created": "إضافة دولة",
         "updated": "تعديل دولة",
         "deleted": "حذف دولة"
+      },
+      "category": {
+        "created": "إضافة فئة",
+        "updated": "تعديل فئة",
+        "deleted": "حذف فئة"
+      },
+      "banned_word": {
+        "created": "إضافة كلمة محظورة",
+        "updated": "تعديل كلمة محظورة",
+        "deleted": "حذف كلمة محظورة"
+      },
+      "category_type": {
+        "created": "إضافة نوع فئة",
+        "updated": "تعديل نوع فئة",
+        "deleted": "حذف نوع فئة"
+      },
+      "category_field": {
+        "created": "إضافة حقل فئة",
+        "updated": "تعديل حقل فئة",
+        "deleted": "حذف حقل فئة"
+      },
+      "market_rule": {
+        "created": "إضافة قاعدة سوق",
+        "updated": "تعديل قاعدة سوق",
+        "deleted": "حذف قاعدة سوق"
+      },
+      "metal_price": {
+        "overridden": "تحديد سعر يدوي"
       }
+    },
+    "filters": {
+      "admin": "المشرف",
+      "allAdmins": "كل المشرفين",
+      "subject": "الهدف",
+      "allSubjects": "كل الأهداف",
+      "action": "الإجراء",
+      "allActions": "كل الإجراءات",
+      "country": "الدولة",
+      "allCountries": "كل الدول",
+      "from": "من",
+      "to": "إلى",
+      "clear": "مسح الفلاتر"
+    },
+    "emptyFiltered": "لا توجد عمليات تطابق الفلاتر.",
+    "details": {
+      "open": "عرض التفاصيل",
+      "close": "إغلاق",
+      "time": "التوقيت",
+      "admin": "المشرف",
+      "system": "النظام",
+      "subject": "الهدف",
+      "country": "الدولة",
+      "allCountries": "كل الدول",
+      "ip": "عنوان IP",
+      "reason": "السبب",
+      "changes": "التغييرات",
+      "createdValues": "البيانات عند الإنشاء",
+      "deletedValues": "البيانات قبل الحذف",
+      "before": "قبل",
+      "after": "بعد",
+      "added": "أُضيف",
+      "removed": "أُزيل",
+      "empty": "فارغ",
+      "yes": "نعم",
+      "no": "لا",
+      "noData": "لا توجد بيانات مسجّلة لهذه العملية.",
+      "noChanges": "لم يتغيّر أي حقل.",
+      "showUnchanged": "إظهار الحقول التي لم تتغيّر ({count})",
+      "hideUnchanged": "إخفاء الحقول التي لم تتغيّر"
+    },
+    "fields": {
+      "id": "المعرّف",
+      "name": "الاسم",
+      "email": "البريد الإلكتروني",
+      "is_active": "مفعّل",
+      "roles": "الأدوار",
+      "country_ids": "الدول",
+      "permissions": "الصلاحيات",
+      "label": "الاسم",
+      "created_at": "تاريخ الإنشاء",
+      "updated_at": "آخر تعديل",
+      "word": "الكلمة",
+      "key": "المفتاح",
+      "sort": "الترتيب",
+      "category_id": "الفئة",
+      "country_id": "الدولة",
+      "price_per_gram": "السعر للجرام",
+      "expires_at": "ينتهي في"
+    },
+    "languages": {
+      "ar": "عربي",
+      "en": "إنجليزي"
     }
   },
   "MetalPrices": {

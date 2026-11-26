@@ -34,3 +34,23 @@ export type AuditLogsResponse = ApiResponse<{
 export type AuditLogRow = AuditLog & {
   country: Country | null;
 };
+
+// Filters GET /api/v1/admin/audit-logs takes. All optional; the page reads
+// them from the URL (?admin_id=1&action=role.updated&from=2026-11-01)
+export type AuditLogFilters = {
+  admin_id?: number;
+  // A full action ("role.updated"); the API matches it partially
+  action?: string;
+  subject_type?: string;
+  subject_id?: number;
+  country_id?: number;
+  // YYYY-MM-DD, both days included
+  from?: string;
+  to?: string;
+};
+
+// An admin to pick in the "Admin" filter
+export type AuditLogAdminOption = {
+  id: number;
+  name: string;
+};

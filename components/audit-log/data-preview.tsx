@@ -4,39 +4,23 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
 import type { AuditLogRow } from "@/types/audit-log";
 import type { Locale, Pagination } from "@/types/shared";
-
-// "two_factor_enabled" → "Two factor enabled", for actions without a label
-function humanize(slug: string): string {
-  const text = slug.replace(/[._-]+/g, " ").trim();
-  return text.charAt(0).toUpperCase() + text.slice(1);
-}
-
-// The record's name from its snapshot: a localized label, or a plain name
-function subjectName(log: AuditLogRow, locale: Locale): string | null {
-  const snapshot = log.after ?? log.before;
-  if (!snapshot) return null;
-
-  const label = snapshot.label;
-  if (label && typeof label === "object") {
-    const localized = (label as Record<string, unknown>)[locale];
-    if (typeof localized === "string" && localized) return localized;
-  }
-
-  return typeof snapshot.name === "string" && snapshot.name
-    ? snapshot.name
-    : null;
-}
+import AuditLogDetailsDrawer from "./details-drawer";
+import { subjectName, useAuditLabels } from "./use-audit-labels";
 
 export default function DataPreview({
   logs,
   pagination,
+  filtered,
 }: {
   logs: AuditLogRow[];
   pagination: Pagination;
+  // Some filter is on: the empty state says nothing matched
+  filtered: boolean;
 }) {
   const locale = useLocale() as Locale;
   const format = useFormatter();
   const t = useTranslations("AuditLog");
+  const { actionLabel, subjectLabel } = useAuditLabels();
 
   const columns: DataTableColumn[] = [
     { label: t("table.when") },
@@ -45,17 +29,8 @@ export default function DataPreview({
     { label: t("table.target") },
     { label: t("table.country") },
     { label: t("table.ip") },
+    { label: t("table.details"), className: "w-12 text-center" },
   ];
-
-  const actionLabel = (action: string) => {
-    const key = `actions.${action}`;
-    return t.has(key) ? t(key) : humanize(action);
-  };
-
-  const subjectLabel = (type: string) => {
-    const key = `subjects.${type}`;
-    return t.has(key) ? t(key) : humanize(type);
-  };
 
   return (
     <DataTable
@@ -70,7 +45,7 @@ export default function DataPreview({
             colSpan={columns.length}
             className="py-10! text-center text-muted-foreground"
           >
-            {t("empty")}
+            {filtered ? t("emptyFiltered") : t("empty")}
           </TableCell>
         </TableRow>
       )}
@@ -151,6 +126,10 @@ export default function DataPreview({
             </TableCell>
 
             <TableCell className="font-mono text-xs">{log.ip ?? "—"}</TableCell>
+
+            <TableCell className="text-center">
+              <AuditLogDetailsDrawer log={log} />
+            </TableCell>
           </TableRow>
         );
       })}
