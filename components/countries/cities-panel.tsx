@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { RotateCw } from "lucide-react";
+import { MapPinIcon, RotateCw } from "lucide-react";
+import EmptyState from "../reusable/empty-state";
 import { useLocale, useTranslations } from "next-intl";
 import { City } from "@/types/countries";
 import { Locale } from "@/types/shared";
@@ -138,7 +139,12 @@ export default function CitiesPanel({
       )}
 
       {state.status === "ready" && cities.length === 0 ? (
-        <p className="text-xs text-muted-foreground">{t("empty")}</p>
+        <EmptyState
+          framed
+          size="compact"
+          icon={MapPinIcon}
+          title={t("empty")}
+        />
       ) : (
         <div className="overflow-hidden rounded-lg border border-border bg-card">
           <Table className="[&_td]:py-2.5!">

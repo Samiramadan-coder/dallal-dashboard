@@ -64,7 +64,13 @@
       "closed": "Closed",
       "delayed": "Delayed"
     },
-    "moreInfo": "More info"
+    "moreInfo": "More info",
+    "empty": {
+      "title": "No data yet",
+      "filteredTitle": "No matching results",
+      "filteredDescription": "Try other filters, or clear them to see everything.",
+      "clearFilters": "Clear filters"
+    }
   },
   "Auth": {
     "Login": {
@@ -285,6 +291,10 @@
       },
       "edit": "Edit city",
       "editDescription": "Update the city details and location."
+    },
+    "empty": {
+      "title": "No countries yet",
+      "description": "Countries you add here appear on the site once they go live."
     }
   },
   "pageHeaders": {
@@ -486,6 +496,10 @@
             "maxLength": "Keep the reason under 500 characters"
           }
         }
+      },
+      "empty": {
+        "title": "No admins yet",
+        "description": "Admins you add here can sign in to the dashboard."
       }
     },
     "roles": {

@@ -1,6 +1,7 @@
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -27,6 +28,8 @@ interface DataTableProps {
   children: React.ReactNode;
   onCheckboxChange?: (checked: boolean) => void;
   pagination?: Pagination;
+  // Shown across the whole table when rowsCount is 0, usually an EmptyState
+  empty?: React.ReactNode;
 }
 
 // Cell padding lives here so every table lines up the same way; rows only
@@ -38,6 +41,7 @@ export function DataTable({
   children,
   onCheckboxChange,
   pagination,
+  empty,
 }: DataTableProps) {
   const t = useTranslations("Common");
   const hasPages = pagination !== undefined && pagination.last_page > 1;
@@ -83,7 +87,21 @@ export function DataTable({
           </TableRow>
         </TableHeader>
 
-        <TableBody className="[&_tr]:border-border/50">{children}</TableBody>
+        <TableBody className="[&_tr]:border-border/50">
+          {rowsCount === 0 && empty ? (
+            <TableRow className="hover:bg-transparent">
+              <TableCell
+                colSpan={columns.length + (onCheckboxChange ? 1 : 0)}
+                // Overrides the table's cell padding and text style
+                className="p-0! whitespace-normal"
+              >
+                {empty}
+              </TableCell>
+            </TableRow>
+          ) : (
+            children
+          )}
+        </TableBody>
       </Table>
 
       {hasPages && (

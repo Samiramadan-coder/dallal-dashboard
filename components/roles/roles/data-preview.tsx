@@ -3,7 +3,8 @@
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import RolePanel from "./role-panel";
-import { LockIcon } from "lucide-react";
+import { LockIcon, ShieldIcon } from "lucide-react";
+import EmptyState from "@/components/reusable/empty-state";
 import { useLocale, useTranslations } from "next-intl";
 import type { Can, PermissionModule, Role } from "@/types/roles";
 
@@ -22,11 +23,7 @@ export default function DataPreview({
   const selected = roles.find((role) => role.id === selectedId) ?? roles[0];
 
   if (!selected) {
-    return (
-      <p className="rounded-xl border border-border bg-card px-5 py-10 text-center text-sm text-muted-foreground">
-        {t("empty")}
-      </p>
-    );
+    return <EmptyState framed icon={ShieldIcon} title={t("empty")} />;
   }
 
   return (

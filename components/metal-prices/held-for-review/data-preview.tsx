@@ -5,6 +5,8 @@ import type { HeldPriceRow } from "@/types/metal-prices";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
+import EmptyState from "@/components/reusable/empty-state";
+import { CircleCheckIcon } from "lucide-react";
 
 // The live price the held one would replace. The row only has the new
 // price and its move in percent, so: current = new ÷ (1 + move%).
@@ -46,18 +48,8 @@ export default function DataPreview({
         columns={columns}
         countUnit={t("unit")}
         rowsCount={prices.length}
+        empty={<EmptyState icon={CircleCheckIcon} title={t("empty")} />}
       >
-        {prices.length === 0 && (
-          <TableRow className="hover:bg-transparent">
-            <TableCell
-              colSpan={columns.length}
-              className="py-10! text-center text-muted-foreground"
-            >
-              {t("empty")}
-            </TableCell>
-          </TableRow>
-        )}
-
         {prices.map((price) => (
           <TableRow key={price.id}>
             <TableCell className="font-semibold text-foreground">

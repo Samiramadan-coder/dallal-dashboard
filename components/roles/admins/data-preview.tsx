@@ -5,6 +5,8 @@ import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
 import type { Country } from "@/types/countries";
 import type { AdminRow, Can, Role } from "@/types/roles";
 import type { Pagination } from "@/types/shared";
+import { UsersIcon } from "lucide-react";
+import EmptyState from "@/components/reusable/empty-state";
 import StatusBadge from "@/components/reusable/status-badge";
 import AdminActions from "./admin-actions";
 
@@ -47,6 +49,13 @@ export default function DataPreview({
       countUnit={t("title")}
       rowsCount={pagination.total}
       pagination={pagination}
+      empty={
+        <EmptyState
+          icon={UsersIcon}
+          title={t("empty.title")}
+          description={t("empty.description")}
+        />
+      }
     >
       {admins.map((admin) => (
         <TableRow key={admin.id}>

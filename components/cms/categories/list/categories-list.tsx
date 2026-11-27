@@ -5,7 +5,9 @@ import { useLocale, useTranslations } from "next-intl";
 import { AUDIENCES, type Category } from "@/types/categories";
 import type { Locale } from "@/types/shared";
 import { reorderCategories } from "@/lib/actions/categories";
+import { FolderOpenIcon } from "lucide-react";
 import SortableList from "@/components/reusable/sortable-list";
+import EmptyState from "@/components/reusable/empty-state";
 import CategoryRow from "./category-row";
 import CreateCategory from "./create-category";
 
@@ -73,9 +75,12 @@ export default function CategoriesList({
             </header>
 
             {items.length === 0 ? (
-              <p className="rounded-xl border border-dashed px-4 py-6 text-center text-xs text-muted-foreground">
-                {t("empty")}
-              </p>
+              <EmptyState
+                framed
+                size="compact"
+                icon={FolderOpenIcon}
+                title={t("empty")}
+              />
             ) : (
               // One list per audience, so a category can't be dragged into
               // the other one

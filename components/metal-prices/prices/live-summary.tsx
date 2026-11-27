@@ -1,5 +1,7 @@
 import { useFormatter, useTranslations } from "next-intl";
 
+import { CoinsIcon } from "lucide-react";
+import EmptyState from "@/components/reusable/empty-state";
 import InfoTip from "@/components/reusable/info-tip";
 import StatusBadge from "@/components/reusable/status-badge";
 
@@ -80,7 +82,12 @@ export default function LiveSummary({
           ))}
         </div>
       ) : (
-        <p className="text-xs text-muted-foreground">{t("empty")}</p>
+        <EmptyState
+          framed
+          size="compact"
+          icon={CoinsIcon}
+          title={t("empty")}
+        />
       )}
 
       {delayed && (

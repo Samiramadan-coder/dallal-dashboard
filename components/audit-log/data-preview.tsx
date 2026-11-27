@@ -2,6 +2,8 @@ import Image from "next/image";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
+import EmptyState from "@/components/reusable/empty-state";
+import { ScrollTextIcon } from "lucide-react";
 import type { AuditLogRow } from "@/types/audit-log";
 import type { Locale, Pagination } from "@/types/shared";
 import AuditLogDetailsDrawer from "./details-drawer";
@@ -38,18 +40,14 @@ export default function DataPreview({
       countUnit={t("title")}
       rowsCount={pagination.total}
       pagination={pagination}
+      empty={
+        filtered ? (
+          <EmptyState variant="filtered" title={t("emptyFiltered")} />
+        ) : (
+          <EmptyState icon={ScrollTextIcon} title={t("empty")} />
+        )
+      }
     >
-      {logs.length === 0 && (
-        <TableRow className="hover:bg-transparent">
-          <TableCell
-            colSpan={columns.length}
-            className="py-10! text-center text-muted-foreground"
-          >
-            {filtered ? t("emptyFiltered") : t("empty")}
-          </TableCell>
-        </TableRow>
-      )}
-
       {logs.map((log) => {
         const name = subjectName(log, locale);
 

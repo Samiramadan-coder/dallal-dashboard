@@ -3,7 +3,8 @@
 import Image from "next/image";
 import { toast } from "sonner";
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, GlobeIcon } from "lucide-react";
+import EmptyState from "../reusable/empty-state";
 import CreateEdit from "./create-edit";
 import CitiesPanel from "./cities-panel";
 import EditBtn from "../reusable/edit-btn";
@@ -47,6 +48,13 @@ export default function DataPreview({
       countUnit={t("Title")}
       rowsCount={pagination.total}
       pagination={pagination}
+      empty={
+        <EmptyState
+          icon={GlobeIcon}
+          title={t("empty.title")}
+          description={t("empty.description")}
+        />
+      }
     >
       {countries.map((country) => (
         <CountryRow

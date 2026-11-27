@@ -5,7 +5,9 @@ import {
   toUnit,
 } from "@/lib/metal-prices";
 
+import { CoinsIcon } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import EmptyState from "@/components/reusable/empty-state";
 import { requirePageAccess } from "@/lib/permissions";
 import { METALS, isPriceUnit } from "@/constants/metal-prices";
 import MetalTable from "@/components/metal-prices/prices/metal-table";
@@ -45,7 +47,7 @@ export default async function Page({
 
   // No country has a price source yet
   if (!source) {
-    return <p className="text-sm text-muted-foreground">{t("noSources")}</p>;
+    return <EmptyState framed icon={CoinsIcon} title={t("noSources")} />;
   }
 
   const unit = isPriceUnit(unitParam) ? unitParam : "gram";
