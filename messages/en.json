@@ -63,7 +63,8 @@
       "open": "Open",
       "closed": "Closed",
       "delayed": "Delayed"
-    }
+    },
+    "moreInfo": "More info"
   },
   "Auth": {
     "Login": {

@@ -11,10 +11,13 @@ import { Checkbox } from "../ui/checkbox";
 import { useTranslations } from "next-intl";
 import { Pagination } from "@/types/shared";
 import PaginationTemplate from "./pagination-template";
+import InfoTip from "./info-tip";
 
 export type DataTableColumn = {
   label: string;
   className?: string;
+  // Explanation behind an ⓘ after the title (see reusable/info-tip)
+  tip?: string;
 };
 
 interface DataTableProps {
@@ -64,7 +67,17 @@ export function DataTable({
                   column.className,
                 )}
               >
-                {column.label}
+                {column.tip ? (
+                  <span className="inline-flex items-center gap-1">
+                    {column.label}
+                    <InfoTip
+                      content={column.tip}
+                      className="size-3.5 [&_svg]:size-3"
+                    />
+                  </span>
+                ) : (
+                  column.label
+                )}
               </TableHead>
             ))}
           </TableRow>

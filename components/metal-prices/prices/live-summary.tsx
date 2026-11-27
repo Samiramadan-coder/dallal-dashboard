@@ -1,6 +1,6 @@
-import { Info } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
+import InfoTip from "@/components/reusable/info-tip";
 import StatusBadge from "@/components/reusable/status-badge";
 
 import type { GradePrice } from "@/types/metal-prices";
@@ -54,7 +54,10 @@ export default function LiveSummary({
 
         {delayed && (
           <StatusBadge status="delayed" label={t("summary.delayed")}>
-            <Info aria-label={t("summary.delayedHint")} />
+            <InfoTip
+              content={t("summary.delayedHint")}
+              className="size-3.5 text-current hover:text-current focus-visible:text-current"
+            />
           </StatusBadge>
         )}
       </div>

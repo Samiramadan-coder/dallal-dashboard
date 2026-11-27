@@ -2,6 +2,7 @@ import type { FieldError as FormFieldError } from "react-hook-form";
 
 import { cn } from "@/lib/utils";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
+import InfoTip from "@/components/reusable/info-tip";
 
 type LabeledFieldProps = {
   // The control's id; the label points at it
@@ -12,6 +13,8 @@ type LabeledFieldProps = {
   required?: boolean;
   // Shown at the end of the label row, e.g. a "Forgot password?" link
   labelAction?: React.ReactNode;
+  // Explanation behind an ⓘ next to the label (see reusable/info-tip)
+  tip?: React.ReactNode;
   className?: string;
   labelClassName?: string;
   errorClassName?: string;
@@ -40,12 +43,13 @@ export function LabeledField({
   error,
   required = false,
   labelAction,
+  tip,
   className,
   labelClassName,
   errorClassName,
   children,
 }: LabeledFieldProps) {
-  const labelElement = (
+  const labelText = (
     <FieldLabel
       htmlFor={id}
       className={cn("text-sm leading-snug font-medium", labelClassName)}
@@ -57,6 +61,16 @@ export function LabeledField({
         </span>
       )}
     </FieldLabel>
+  );
+
+  // The ⓘ is a button, so it sits beside the <label>, not inside it
+  const labelElement = tip ? (
+    <div className="flex items-center gap-1.5">
+      {labelText}
+      <InfoTip content={tip} />
+    </div>
+  ) : (
+    labelText
   );
 
   return (
