@@ -1,19 +1,15 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import { Eye, Minus, Plus, X } from "lucide-react";
+import { Minus, Plus } from "lucide-react";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
 
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import DetailsDrawer, {
+  DrawerDetail as Detail,
+  DrawerDetails,
+  DrawerSection as Section,
+} from "@/components/reusable/details-drawer";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import type { AuditLogRow } from "@/types/audit-log";
@@ -23,34 +19,6 @@ import { subjectName, useAuditLabels } from "./use-audit-labels";
 
 // "2026-11-25 19:09:59" (Laravel, UTC) or ISO 8601
 const DATE_TIME = /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/;
-
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <section className="flex flex-col gap-2.5">
-      <h3 className="text-[11px] font-bold tracking-wide text-muted-foreground uppercase">
-        {title}
-      </h3>
-      {children}
-    </section>
-  );
-}
-
-function Detail({
-  label,
-  className,
-  children,
-}: {
-  label: string;
-  className?: string;
-  children: ReactNode;
-}) {
-  return (
-    <div className={cn("flex min-w-0 flex-col gap-0.5", className)}>
-      <dt className="text-[11px] text-muted-foreground">{label}</dt>
-      <dd className="text-[13px] text-foreground">{children}</dd>
-    </div>
-  );
-}
 
 // The "view details" button in an audit row and the drawer it opens: who did
 // what, when and why, and what changed field by field
@@ -159,153 +127,118 @@ export default function AuditLogDetailsDrawer({ log }: { log: AuditLogRow }) {
   );
 
   return (
-    <Sheet onOpenChange={(open) => !open && setShowUnchanged(false)}>
-      <SheetTrigger asChild>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-sm"
-          aria-label={t("open")}
-          title={t("open")}
-          className="text-muted-foreground hover:text-foreground [&_svg]:size-3.5"
-        >
-          <Eye />
-        </Button>
-      </SheetTrigger>
+    <DetailsDrawer
+      size="lg"
+      onOpenChange={(open) => !open && setShowUnchanged(false)}
+      title={actionLabel(log.action)}
+      description={
+        <span className="font-mono">
+          {log.action} · #{log.id}
+        </span>
+      }
+    >
+      <DrawerDetails>
+        <Detail label={t("time")}>
+          {format.dateTime(new Date(log.created_at), {
+            day: "numeric",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+          })}
+        </Detail>
 
-      <SheetContent
-        side={locale === "ar" ? "left" : "right"}
-        showCloseButton={false}
-        className="gap-0 bg-card data-[side=left]:sm:max-w-140 data-[side=right]:sm:max-w-140"
-      >
-        <SheetHeader className="flex-row items-start justify-between gap-3 border-b border-border px-5 py-4">
-          <div className="min-w-0">
-            <SheetTitle className="text-[15px] font-bold text-foreground">
-              {actionLabel(log.action)}
-            </SheetTitle>
-            <SheetDescription className="mt-0.5 font-mono text-[11px] text-muted-foreground">
-              {log.action} · #{log.id}
-            </SheetDescription>
-          </div>
-          <SheetClose
-            className="rounded-lg p-1.5 text-muted-foreground transition-colors hover:bg-muted"
-            aria-label={t("close")}
-          >
-            <X className="size-4" />
-          </SheetClose>
-        </SheetHeader>
-
-        <div className="flex flex-1 flex-col gap-6 overflow-y-auto px-5 py-4">
-          <dl className="grid grid-cols-2 gap-x-4 gap-y-3">
-            <Detail label={t("time")}>
-              {format.dateTime(new Date(log.created_at), {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                second: "2-digit",
-              })}
-            </Detail>
-
-            <Detail label={t("admin")}>
-              {log.admin ? (
-                <span className="flex flex-col">
-                  <span className="font-semibold">{log.admin.name}</span>
-                  <span className="text-[11px] text-muted-foreground">
-                    {log.admin.email}
-                  </span>
-                </span>
-              ) : (
-                t("system")
-              )}
-            </Detail>
-
-            <Detail label={t("subject")}>
-              <span className="flex flex-col">
-                <span className="font-mono text-xs text-secondary">
-                  {subjectLabel(log.subject_type)}
-                  {log.subject_id !== null && ` #${log.subject_id}`}
-                </span>
-                {name && (
-                  <span className="text-[11px] text-muted-foreground">
-                    {name}
-                  </span>
-                )}
+        <Detail label={t("admin")}>
+          {log.admin ? (
+            <span className="flex flex-col">
+              <span className="font-semibold">{log.admin.name}</span>
+              <span className="text-[11px] text-muted-foreground">
+                {log.admin.email}
               </span>
-            </Detail>
-
-            <Detail label={t("country")}>
-              {log.country ? (
-                <span className="flex items-center gap-1.5">
-                  <Image
-                    src={log.country.flag}
-                    alt=""
-                    width={20}
-                    height={14}
-                    className="h-3.5 w-5 rounded-xs object-cover"
-                  />
-                  {log.country.name[locale]}
-                </span>
-              ) : (
-                t("allCountries")
-              )}
-            </Detail>
-
-            <Detail label={t("ip")}>
-              <span className="font-mono text-xs">{log.ip ?? "—"}</span>
-            </Detail>
-          </dl>
-
-          {log.reason && (
-            <Section title={t("reason")}>
-              <p className="rounded-lg bg-primary/12 px-3 py-2 text-[13px] leading-relaxed text-pretty text-foreground">
-                {log.reason}
-              </p>
-            </Section>
+            </span>
+          ) : (
+            t("system")
           )}
+        </Detail>
 
-          <Section
-            title={
-              created
-                ? t("createdValues")
-                : deleted
-                  ? t("deletedValues")
-                  : t("changes")
-            }
-          >
-            {fields.length === 0 ? (
-              <p className="text-xs text-muted-foreground">{t("noData")}</p>
-            ) : (
-              <>
-                {changed.length === 0 && !showUnchanged && (
-                  <p className="text-xs text-muted-foreground">
-                    {t("noChanges")}
-                  </p>
-                )}
-
-                <dl className="grid grid-cols-2 gap-x-4 gap-y-3">
-                  {shown.map(renderField)}
-                </dl>
-
-                {unchanged.length > 0 && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="self-start text-xs text-secondary"
-                    onClick={() => setShowUnchanged((value) => !value)}
-                  >
-                    {showUnchanged
-                      ? t("hideUnchanged")
-                      : t("showUnchanged", { count: unchanged.length })}
-                  </Button>
-                )}
-              </>
+        <Detail label={t("subject")}>
+          <span className="flex flex-col">
+            <span className="font-mono text-xs text-secondary">
+              {subjectLabel(log.subject_type)}
+              {log.subject_id !== null && ` #${log.subject_id}`}
+            </span>
+            {name && (
+              <span className="text-[11px] text-muted-foreground">{name}</span>
             )}
-          </Section>
-        </div>
-      </SheetContent>
-    </Sheet>
+          </span>
+        </Detail>
+
+        <Detail label={t("country")}>
+          {log.country ? (
+            <span className="flex items-center gap-1.5">
+              <Image
+                src={log.country.flag}
+                alt=""
+                width={20}
+                height={14}
+                className="h-3.5 w-5 rounded-xs object-cover"
+              />
+              {log.country.name[locale]}
+            </span>
+          ) : (
+            t("allCountries")
+          )}
+        </Detail>
+
+        <Detail label={t("ip")}>
+          <span className="font-mono text-xs">{log.ip ?? "—"}</span>
+        </Detail>
+      </DrawerDetails>
+
+      {log.reason && (
+        <Section title={t("reason")}>
+          <p className="rounded-lg bg-primary/12 px-3 py-2 text-[13px] leading-relaxed text-pretty text-foreground">
+            {log.reason}
+          </p>
+        </Section>
+      )}
+
+      <Section
+        title={
+          created
+            ? t("createdValues")
+            : deleted
+              ? t("deletedValues")
+              : t("changes")
+        }
+      >
+        {fields.length === 0 ? (
+          <p className="text-xs text-muted-foreground">{t("noData")}</p>
+        ) : (
+          <>
+            {changed.length === 0 && !showUnchanged && (
+              <p className="text-xs text-muted-foreground">{t("noChanges")}</p>
+            )}
+
+            <DrawerDetails>{shown.map(renderField)}</DrawerDetails>
+
+            {unchanged.length > 0 && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="self-start text-xs text-secondary"
+                onClick={() => setShowUnchanged((value) => !value)}
+              >
+                {showUnchanged
+                  ? t("hideUnchanged")
+                  : t("showUnchanged", { count: unchanged.length })}
+              </Button>
+            )}
+          </>
+        )}
+      </Section>
+    </DetailsDrawer>
   );
 }

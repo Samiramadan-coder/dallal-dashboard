@@ -77,6 +77,10 @@
       "placeholder": "Why are you doing this?",
       "hint": "Saved to the audit log.",
       "required": "Add a reason before you continue"
+    },
+    "drawer": {
+      "open": "View details",
+      "close": "Close"
     }
   },
   "Auth": {
@@ -656,8 +660,6 @@
     },
     "emptyFiltered": "No activity matches these filters.",
     "details": {
-      "open": "View details",
-      "close": "Close",
       "time": "Time",
       "admin": "Admin",
       "system": "System",
