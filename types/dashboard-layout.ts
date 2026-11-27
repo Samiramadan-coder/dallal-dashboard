@@ -50,6 +50,7 @@ export type DashboardNavigationItem =
     }
   | {
       type: "label";
+      key: NavigationSectionKey;
       label: string;
     };
 
@@ -57,6 +58,13 @@ export type DashboardNavigationLinkItem = Extract<
   DashboardNavigationItem,
   { type: "link" }
 >;
+
+// A sidebar section with the links under it; the sidebar renders these
+export type DashboardNavigationGroup = {
+  key: NavigationSectionKey;
+  label: string;
+  links: DashboardNavigationLinkItem[];
+};
 
 // Badge numbers by link key. Missing or 0 shows no badge
 export type SidebarCounts = Partial<Record<NavigationKey, number>>;

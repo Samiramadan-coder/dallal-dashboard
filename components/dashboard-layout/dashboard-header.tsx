@@ -8,15 +8,18 @@ import type { Country } from "@/types/countries";
 import { SidebarTrigger } from "../ui/sidebar";
 import AccountMenu from "./account-menu";
 import { LocaleSwitcher } from "./locale-switcher";
+import NotificationsBell from "./notifications-bell";
 
 type DashboardHeaderProps = {
   admin: CurrentAdmin;
   countries: Country[];
+  notificationsCount?: number;
 };
 
 export default function DashboardHeader({
   admin,
   countries,
+  notificationsCount,
 }: DashboardHeaderProps) {
   const t = useTranslations("layout");
   const locale = useLocale();
@@ -58,6 +61,9 @@ export default function DashboardHeader({
       </div>
 
       <div className="flex shrink-0 items-center gap-1">
+        {admin.permissions.includes("notifications.view") && (
+          <NotificationsBell count={notificationsCount} />
+        )}
         <LocaleSwitcher />
         <AccountMenu admin={admin} />
       </div>

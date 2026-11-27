@@ -40,6 +40,8 @@ export default async function Page({
         admins={admins}
         pagination={pagination}
         currentAdminId={me.id}
+        roles={roles}
+        countries={countries}
         can={can}
       />
     </div>

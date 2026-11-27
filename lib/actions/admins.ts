@@ -25,7 +25,8 @@ export async function createAdmin(
   });
 }
 
-// Turns an admin account on or off, with the reason for the audit log
+// Turns an admin account on or off, with the reason for the audit log, and
+// replaces their roles and countries when those are sent
 export async function updateAdmin(
   id: number,
   payload: UpdateAdminPayload,
@@ -37,6 +38,8 @@ export async function updateAdmin(
     );
 
     updateTag("admins");
+    // Role cards show how many admins each role has
+    if (payload.roles) updateTag("roles");
 
     return { message: response.message ?? undefined };
   });

@@ -129,6 +129,8 @@
       "yourCountries": "دولك",
       "switchLanguage": "تغيير اللغة",
       "accountMenu": "قائمة الحساب",
+      "notifications": "الإشعارات",
+      "notificationsUnread": "{count} إشعارات غير مقروءة",
       "roles": {
         "super_admin": "مدير عام",
         "admin": "مدير",
@@ -447,9 +449,19 @@
       "deleted": "تم حذف المشرف.",
       "edit": {
         "title": "تعديل المشرف",
-        "description": "فعّل الحساب أو أوقفه. المشرف غير النشط لا يستطيع تسجيل الدخول.",
+        "description": "عدّل أدوار المشرف ودوله، أو فعّل الحساب أو أوقفه.",
         "success": "تم تحديث المشرف.",
         "Fields": {
+          "Roles": {
+            "label": "الأدوار",
+            "required": "اختر دورًا واحدًا على الأقل"
+          },
+          "Countries": {
+            "label": "الدول",
+            "hint": "يرى المشرف بيانات هذه الدول فقط.",
+            "allCountriesHint": "هذا المشرف يرى كل الدول حاليًا. تغيير الاختيار يقصره على الدول المحددة.",
+            "required": "اختر دولة واحدة على الأقل"
+          },
           "IsActive": {
             "label": "حساب نشط",
             "description": "أوقفه لمنع تسجيل الدخول بدون حذف الحساب."
@@ -554,7 +566,8 @@
         "activated": "تفعيل مشرف",
         "deactivated": "إيقاف مشرف",
         "two_factor_enabled": "تفعيل التحقق بخطوتين",
-        "two_factor_disabled": "إيقاف التحقق بخطوتين"
+        "two_factor_disabled": "إيقاف التحقق بخطوتين",
+        "access_changed": "تعديل أدوار أو دول مشرف"
       },
       "role": {
         "created": "إضافة دور",

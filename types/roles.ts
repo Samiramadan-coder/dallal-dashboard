@@ -173,11 +173,13 @@ export type CreateAdminPayload = Omit<AdminFormValues, "roles"> & {
   roles: RoleName[];
 };
 
-// Edit-admin form: turn the account on or off. Turning it off needs a
-// reason, which goes to the audit log
-export const adminStatusSchema = (t: T) =>
+// Edit-admin form: roles, countries, and turning the account on or off.
+// Turning it off needs a reason, which goes to the audit log
+export const adminEditSchema = (t: T) =>
   z
     .object({
+      roles: z.array(z.string()).min(1, t("Fields.Roles.required")),
+      country_ids: z.array(z.number()).min(1, t("Fields.Countries.required")),
       is_active: z.boolean(),
       reason: z.string().trim().max(500, t("Fields.Reason.maxLength")),
     })
@@ -186,14 +188,16 @@ export const adminStatusSchema = (t: T) =>
       message: t("Fields.Reason.required"),
     });
 
-export type AdminStatusFormValues = z.infer<
-  ReturnType<typeof adminStatusSchema>
->;
+export type AdminEditFormValues = z.infer<ReturnType<typeof adminEditSchema>>;
 
-// PUT /api/v1/admin/admins/{id}
+// PUT /api/v1/admin/admins/{id}. Roles and countries are optional: left
+// out, the admin keeps theirs; sent, they replace them (audit:
+// admin.access_changed)
 export type UpdateAdminPayload = {
   is_active: boolean;
   reason?: string;
+  roles?: RoleName[];
+  country_ids?: number[];
 };
 
 // An admin row, ready to render: countries matched to the country list and

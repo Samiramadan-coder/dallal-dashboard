@@ -2,7 +2,8 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
-import type { AdminRow, Can } from "@/types/roles";
+import type { Country } from "@/types/countries";
+import type { AdminRow, Can, Role } from "@/types/roles";
 import type { Pagination } from "@/types/shared";
 import { cn } from "@/lib/utils";
 import AdminActions from "./admin-actions";
@@ -11,12 +12,17 @@ export default function DataPreview({
   admins,
   pagination,
   currentAdminId,
+  roles,
+  countries,
   can,
 }: {
   admins: AdminRow[];
   pagination: Pagination;
   // The signed-in admin can't deactivate or delete their own account here
   currentAdminId: number;
+  // Options for the edit dialog
+  roles: Role[];
+  countries: Country[];
   // Hides buttons the admin may not use; the API rejects them anyway
   can: Can<"admins">;
 }) {
@@ -107,7 +113,12 @@ export default function DataPreview({
                   {t("you")}
                 </span>
               ) : (
-                <AdminActions admin={admin} can={can} />
+                <AdminActions
+                  admin={admin}
+                  roles={roles}
+                  countries={countries}
+                  can={can}
+                />
               )}
             </TableCell>
           )}

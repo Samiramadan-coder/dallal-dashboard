@@ -9,8 +9,5 @@ export default async function Page() {
     getRoles(),
   ]);
 
-  console.log("Roles", roles);
-  console.log("Matrix", matrix);
-
   return <DataPreview roles={roles} matrix={matrix} can={can} />;
 }

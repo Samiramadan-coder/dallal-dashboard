@@ -26,6 +26,7 @@ import {
   Zap,
 } from "lucide-react";
 import type {
+  DashboardNavigationGroup,
   DashboardNavigationItem,
   NavigationKey,
   NavigationSectionKey,
@@ -33,8 +34,9 @@ import type {
 import type { Permission } from "@/types/roles";
 
 const section = (key: NavigationSectionKey): DashboardNavigationItem => ({
-  label: `sidebar.navigation.sections.${key}`,
   type: "label",
+  key,
+  label: `sidebar.navigation.sections.${key}`,
 });
 
 type LinkOptions = Pick<
@@ -122,16 +124,20 @@ export function canSee(
   return required.some((permission) => permissions.includes(permission));
 }
 
-// The sidebar for one admin: links they may open, and only the section
-// labels that still have links under them
-export function navigationFor(
+// The sidebar for one admin: each section with the links they may open.
+// Sections left with no links are dropped
+export function navigationGroupsFor(
   permissions: readonly Permission[],
-): DashboardNavigationItem[] {
-  const links = navigation().filter((item) => canSee(item, permissions));
+): DashboardNavigationGroup[] {
+  const groups: DashboardNavigationGroup[] = [];
 
-  return links.filter((item, index) => {
-    if (item.type === "link") return true;
-    const next = links[index + 1];
-    return next !== undefined && next.type === "link";
-  });
+  for (const item of navigation()) {
+    if (item.type === "label") {
+      groups.push({ key: item.key, label: item.label, links: [] });
+    } else if (canSee(item, permissions)) {
+      groups.at(-1)?.links.push(item);
+    }
+  }
+
+  return groups.filter((group) => group.links.length > 0);
 }

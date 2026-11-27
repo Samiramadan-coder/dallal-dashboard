@@ -7,6 +7,7 @@ export const AUDIT_ACTIONS = {
     "updated",
     "deleted",
     "access_set",
+    "access_changed",
     "activated",
     "deactivated",
     "two_factor_enabled",

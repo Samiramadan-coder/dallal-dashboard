@@ -129,6 +129,8 @@
       "yourCountries": "Your countries",
       "switchLanguage": "Switch language",
       "accountMenu": "Account menu",
+      "notifications": "Notifications",
+      "notificationsUnread": "{count} unread notifications",
       "roles": {
         "super_admin": "Super Admin",
         "admin": "Admin",
@@ -449,9 +451,19 @@
       "deleted": "Admin deleted.",
       "edit": {
         "title": "Edit Admin",
-        "description": "Turn this account on or off. Inactive admins can't sign in.",
+        "description": "Change the admin’s roles and countries, or turn the account on or off.",
         "success": "Admin updated.",
         "Fields": {
+          "Roles": {
+            "label": "Roles",
+            "required": "Pick at least one role"
+          },
+          "Countries": {
+            "label": "Countries",
+            "hint": "The admin only sees data from these countries.",
+            "allCountriesHint": "This admin currently sees every country. Changing the selection limits them to the ones ticked.",
+            "required": "Pick at least one country"
+          },
           "IsActive": {
             "label": "Active account",
             "description": "Turn off to block sign-in without deleting the account."
@@ -556,7 +568,8 @@
         "activated": "Activated admin",
         "deactivated": "Deactivated admin",
         "two_factor_enabled": "Enabled two-factor auth",
-        "two_factor_disabled": "Disabled two-factor auth"
+        "two_factor_disabled": "Disabled two-factor auth",
+        "access_changed": "Changed admin roles or countries"
       },
       "role": {
         "created": "Created role",
