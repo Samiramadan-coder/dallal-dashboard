@@ -125,10 +125,13 @@ export async function updateCategoryType(
 
 export async function deleteCategoryType(
   id: number,
+  // Why it was deleted, for the audit log
+  reason: string,
 ): Promise<ActionResult<{ message?: string }>> {
   return runAction(async () => {
     const response = await api.delete<ApiResponse<unknown> | undefined>(
       `/api/v1/admin/catalog/types/${id}`,
+      { reason },
     );
 
     // The categories list shows each category's type count
@@ -155,10 +158,13 @@ export async function updateCategoryField(
 
 export async function deleteCategoryField(
   id: number,
+  // Why it was deleted, for the audit log
+  reason: string,
 ): Promise<ActionResult<{ message?: string }>> {
   return runAction(async () => {
     const response = await api.delete<ApiResponse<unknown> | undefined>(
       `/api/v1/admin/catalog/fields/${id}`,
+      { reason },
     );
 
     // The categories list shows each category's field count

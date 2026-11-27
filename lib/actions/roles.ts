@@ -46,10 +46,13 @@ export async function updateRole(
 // Deletes a custom role. System roles can't be deleted
 export async function deleteRole(
   id: number,
+  // Why it was deleted, for the audit log
+  reason: string,
 ): Promise<ActionResult<{ message?: string }>> {
   return runAction(async () => {
     const response = await api.delete<ApiResponse<unknown> | undefined>(
       `/api/v1/admin/roles/${id}`,
+      { reason },
     );
 
     updateTag("roles");

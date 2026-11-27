@@ -31,10 +31,13 @@ export async function saveCountry(
 
 export async function deleteCountry(
   id: number,
+  // Why it was deleted, for the audit log
+  reason: string,
 ): Promise<ActionResult<{ message?: string }>> {
   return runAction(async () => {
     const response = await api.delete<ApiResponse<unknown> | undefined>(
       `/api/v1/admin/countries/${id}`,
+      { reason },
     );
 
     updateTag("countries");

@@ -80,7 +80,6 @@ function CountryRow({
   const locale = useLocale() as Locale;
   const t = useTranslations("Countries");
   const tCommon = useTranslations("Common");
-  const [loadingDelete, setLoadingDelete] = useState(false);
   const [expanded, setExpanded] = useState(false);
   // Keeps the panel mounted after the first open, so closing and reopening
   // doesn't refetch (and later keeps cities added or deleted in place)
@@ -146,15 +145,12 @@ function CountryRow({
               )}
               {can.delete && (
                 <DeleteBtn
-                  loading={loadingDelete}
-                  onDelete={async () => {
-                    setLoadingDelete(true);
-                    const result = await deleteCountry(country.id);
-                    setLoadingDelete(false);
+                  onDelete={async (reason) => {
+                    const result = await deleteCountry(country.id, reason);
 
                     if (!result.ok) {
                       toast.error(result.message || t("errorOccurred"));
-                      return;
+                      return false;
                     }
 
                     toast.success(

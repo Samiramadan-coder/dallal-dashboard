@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import type { ActionResult } from "@/lib/api/errors";
@@ -12,28 +11,23 @@ export default function DeleteAction({
   remove,
   reload,
 }: {
-  remove: () => Promise<ActionResult<{ message?: string }>>;
+  remove: (reason: string) => Promise<ActionResult<{ message?: string }>>;
   reload: () => Promise<boolean>;
 }) {
   const tCommon = useTranslations("Common");
-  const [loading, setLoading] = useState(false);
 
   return (
     <DeleteBtn
-      loading={loading}
-      onDelete={async () => {
-        setLoading(true);
-        const result = await remove();
+      onDelete={async (reason) => {
+        const result = await remove(reason);
 
         if (!result.ok) {
-          setLoading(false);
           toast.error(result.message || tCommon("DeleteFailed"));
-          return;
+          return false;
         }
 
         toast.success(result.data.message || tCommon("DeletedSuccessfully"));
         await reload();
-        setLoading(false);
       }}
     />
   );

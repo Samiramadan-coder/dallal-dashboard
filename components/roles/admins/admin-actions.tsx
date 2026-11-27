@@ -50,16 +50,12 @@ export default function AdminActions({
 }) {
   const t = useTranslations("Roles.admins");
   const tCommon = useTranslations("Common");
-  const [deleting, setDeleting] = useState(false);
-
-  const remove = async () => {
-    setDeleting(true);
-    const result = await deleteAdmin(admin.id);
-    setDeleting(false);
+  const remove = async (reason: string) => {
+    const result = await deleteAdmin(admin.id, reason);
 
     if (!result.ok) {
       toast.error(result.message || tCommon("ErrorOccurred"));
-      return;
+      return false;
     }
 
     toast.success(result.data.message || t("deleted"));
@@ -70,7 +66,7 @@ export default function AdminActions({
       {can.edit && (
         <EditAdmin admin={admin} roles={roles} countries={countries} />
       )}
-      {can.delete && <DeleteBtn loading={deleting} onDelete={remove} />}
+      {can.delete && <DeleteBtn onDelete={remove} />}
     </div>
   );
 }

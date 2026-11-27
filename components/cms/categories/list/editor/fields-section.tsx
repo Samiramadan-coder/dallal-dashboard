@@ -71,7 +71,7 @@ export default function FieldsSection({
                 <>
                   <EditField field={field} reload={reload} />
                   <DeleteAction
-                    remove={() => deleteCategoryField(field.id)}
+                    remove={(reason) => deleteCategoryField(field.id, reason)}
                     reload={reload}
                   />
                 </>

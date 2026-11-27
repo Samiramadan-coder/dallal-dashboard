@@ -70,6 +70,13 @@
       "filteredTitle": "No matching results",
       "filteredDescription": "Try other filters, or clear them to see everything.",
       "clearFilters": "Clear filters"
+    },
+    "Confirm": "Confirm",
+    "reason": {
+      "label": "Reason",
+      "placeholder": "Why are you doing this?",
+      "hint": "Saved to the audit log.",
+      "required": "Add a reason before you continue"
     }
   },
   "Auth": {

@@ -48,10 +48,13 @@ export async function updateAdmin(
 // Deletes an admin account
 export async function deleteAdmin(
   id: number,
+  // Why it was deleted, for the audit log
+  reason: string,
 ): Promise<ActionResult<{ message?: string }>> {
   return runAction(async () => {
     const response = await api.delete<ApiResponse<unknown> | undefined>(
       `/api/v1/admin/admins/${id}`,
+      { reason },
     );
 
     updateTag("admins");

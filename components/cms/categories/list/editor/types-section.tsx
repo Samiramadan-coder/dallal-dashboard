@@ -63,7 +63,7 @@ export default function TypesSection({
               </span>
               <EditType type={type} reload={reload} />
               <DeleteAction
-                remove={() => deleteCategoryType(type.id)}
+                remove={(reason) => deleteCategoryType(type.id, reason)}
                 reload={reload}
               />
             </li>

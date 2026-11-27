@@ -37,7 +37,6 @@ export default function RolePanel({
   // null = no edits; the table shows what the server has
   const [draft, setDraft] = useState<Permission[] | null>(null);
   const [saving, setSaving] = useState(false);
-  const [deleting, setDeleting] = useState(false);
 
   // System roles are fixed; custom ones need roles.edit
   const editable = can.edit && !role.is_system;
@@ -62,14 +61,12 @@ export default function RolePanel({
   };
 
   // The page then falls back to the first role
-  const remove = async () => {
-    setDeleting(true);
-    const result = await deleteRole(role.id);
-    setDeleting(false);
+  const remove = async (reason: string) => {
+    const result = await deleteRole(role.id, reason);
 
     if (!result.ok) {
       toast.error(result.message || tCommon("ErrorOccurred"));
-      return;
+      return false;
     }
 
     toast.success(result.data.message || t("deleted"));
@@ -128,7 +125,7 @@ export default function RolePanel({
           ) : (
             <>
               {can.delete && !role.is_system && (
-                <DeleteBtn loading={deleting} onDelete={remove} />
+                <DeleteBtn onDelete={remove} />
               )}
               {can.create && (
                 <CreateRole matrix={matrix} onCreated={onCreated} />
