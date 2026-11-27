@@ -22,7 +22,16 @@ const DATE_TIME = /^\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}/;
 
 // The "view details" button in an audit row and the drawer it opens: who did
 // what, when and why, and what changed field by field
-export default function AuditLogDetailsDrawer({ log }: { log: AuditLogRow }) {
+export default function AuditLogDetailsDrawer({
+  log,
+  open,
+  onOpenChange,
+}: {
+  log: AuditLogRow;
+  // Opened by the audit table (row click or its ⋯ menu)
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   const locale = useLocale() as Locale;
   const format = useFormatter();
   const t = useTranslations("AuditLog.details");
@@ -129,7 +138,12 @@ export default function AuditLogDetailsDrawer({ log }: { log: AuditLogRow }) {
   return (
     <DetailsDrawer
       size="lg"
-      onOpenChange={(open) => !open && setShowUnchanged(false)}
+      trigger={null}
+      open={open}
+      onOpenChange={(next) => {
+        if (!next) setShowUnchanged(false);
+        onOpenChange(next);
+      }}
       title={actionLabel(log.action)}
       description={
         <span className="font-mono">

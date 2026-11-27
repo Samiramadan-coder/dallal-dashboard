@@ -5,10 +5,7 @@
   "Common": {
     "English": "English",
     "Arabic": "Arabic",
-    "Showing": "Showing",
-    "Previous": "Previous",
     "Edit": "Edit",
-    "Next": "Next",
     "Save": "Save",
     "Cancel": "Cancel",
     "Delete": "Delete",
@@ -36,9 +33,6 @@
     "ImageAddFailed": "Failed to add image. Please try again.",
     "NotFound": "Not Found",
     "Review": "Review",
-    "To": "to",
-    "From": "from",
-    "Of": "of",
     "TryAgain": "Try again",
     "LoadFailed": "We couldn’t load this data. Check your connection and try again.",
     "Upload": {
@@ -221,7 +215,6 @@
     }
   },
   "Countries": {
-    "Title": "Countries",
     "AddCountry": "Add Country",
     "AddCountryDescription": "Fill in the details to add a new country.",
     "errorOccurred": "An error occurred. Please try again.",
@@ -230,7 +223,8 @@
       "code": "Code",
       "dialCode": "Dial Code",
       "cities": "Cities",
-      "actions": "Actions"
+      "actions": "Actions",
+      "status": "Status"
     },
     "Fields": {
       "Name": {
@@ -306,7 +300,8 @@
     "empty": {
       "title": "No countries yet",
       "description": "Countries you add here appear on the site once they go live."
-    }
+    },
+    "deleteDescription": "{name} and its cities will be removed from the platform. This can’t be undone."
   },
   "pageHeaders": {
     "filters": {
@@ -433,14 +428,15 @@
       "admins": "Admins"
     },
     "admins": {
-      "title": "Admins",
       "table": {
         "admin": "Admin",
         "email": "Email",
         "role": "Role",
         "countries": "Countries",
         "status": "Status",
-        "actions": "Actions"
+        "actions": "Actions",
+        "lastLogin": "Last sign-in",
+        "twoFactor": "Two-factor"
       },
       "noCountries": "—",
       "create": {
@@ -511,7 +507,20 @@
       "empty": {
         "title": "No admins yet",
         "description": "Admins you add here can sign in to the dashboard."
-      }
+      },
+      "never": "Never",
+      "twoFactorOn": "On",
+      "twoFactorOff": "Off",
+      "tabs": {
+        "all": "All",
+        "active": "Active",
+        "inactive": "Inactive"
+      },
+      "searchPlaceholder": "Search by name or email",
+      "clearSearch": "Clear search",
+      "copyEmails": "Copy emails",
+      "emailsCopied": "{count, plural, one {# email copied} other {# emails copied}}",
+      "deleteDescription": "{name} will lose access to the dashboard. This can’t be undone."
     },
     "roles": {
       "list": "Roles",
@@ -566,15 +575,13 @@
     "back": "Back to Overview"
   },
   "AuditLog": {
-    "title": "Entries",
     "table": {
       "when": "When",
       "admin": "Admin",
       "action": "Action",
       "target": "Target",
       "country": "Country",
-      "ip": "IP",
-      "details": "Details"
+      "ip": "IP"
     },
     "allCountries": "All",
     "empty": "No activity recorded yet.",
@@ -654,9 +661,8 @@
       "allActions": "All actions",
       "country": "Country",
       "allCountries": "All countries",
-      "from": "From",
-      "to": "To",
-      "clear": "Clear filters"
+      "clear": "Clear filters",
+      "dates": "Dates"
     },
     "emptyFiltered": "No activity matches these filters.",
     "details": {
@@ -717,7 +723,6 @@
     },
     "heldForReview": {
       "note": "When the feed moves a price by more than {percent}% at once, it is not published. The site keeps the previous price until you approve or reject the move.",
-      "unit": "held prices",
       "empty": "Nothing is held. Every price from the feed is live.",
       "table": {
         "metal": "Metal",
@@ -1027,6 +1032,40 @@
         "duplicate": "This word is already in the list.",
         "remove": "Remove {word}"
       }
+    }
+  },
+  "DataTable": {
+    "noResults": "No results.",
+    "selected": "{count, plural, one {# selected} other {# selected}}",
+    "clearSelection": "Clear selection",
+    "selectAll": "Select all rows on this page",
+    "selectRow": "Select row",
+    "actions": "Actions",
+    "rowActions": "Row actions",
+    "tableSettings": "Table settings",
+    "density": "Density",
+    "comfortable": "Comfortable",
+    "compact": "Compact",
+    "columns": "Columns",
+    "showing": "Showing <strong>{from}–{to}</strong> of <strong>{total}</strong>",
+    "rowsPerPage": "Rows per page",
+    "pagination": "Pagination",
+    "goToPage": "Page {page}",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "export": "Export",
+    "exportFailed": "The export failed. Please try again."
+  },
+  "DateRangeFilter": {
+    "from": "From",
+    "to": "To",
+    "clear": "Clear dates",
+    "presets": {
+      "today": "Today",
+      "last7": "Last 7 days",
+      "last30": "Last 30 days",
+      "next7": "Next 7 days",
+      "next30": "Next 30 days"
     }
   }
 }

@@ -41,8 +41,11 @@ export default function ConfirmDialog({
   tone = "default",
   requireReason = true,
   onConfirm,
+  open: controlledOpen,
+  onOpenChange,
 }: {
-  trigger: React.ReactNode;
+  // Omit when the dialog is opened through `open` (e.g. from a row menu)
+  trigger?: React.ReactNode;
   title: string;
   description?: string;
   // Defaults to "Confirm"
@@ -53,12 +56,19 @@ export default function ConfirmDialog({
   // Off only for actions the audit log doesn't need a reason for
   requireReason?: boolean;
   onConfirm: (reason: string) => Promise<boolean | void>;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }) {
   const t = useTranslations("Common");
   const id = useId();
   const reasonId = `${id}-reason`;
 
-  const [open, setOpen] = useState(false);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const open = controlledOpen ?? uncontrolledOpen;
+  const setOpen = (next: boolean) => {
+    if (controlledOpen === undefined) setUncontrolledOpen(next);
+    onOpenChange?.(next);
+  };
   const [reason, setReason] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
@@ -98,7 +108,7 @@ export default function ConfirmDialog({
 
   return (
     <Dialog open={open} onOpenChange={changeOpen}>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
+      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
 
       <DialogContent
         showCloseButton={false}

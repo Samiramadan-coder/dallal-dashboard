@@ -5,10 +5,7 @@
   "Common": {
     "English": "الإنجليزية",
     "Arabic": "العربية",
-    "Showing": "عرض",
-    "Previous": "السابق",
     "Edit": "تعديل",
-    "Next": "التالي",
     "Save": "حفظ",
     "Cancel": "إلغاء",
     "Delete": "حذف",
@@ -36,9 +33,6 @@
     "ImageAddFailed": "فشل في إضافة الصورة. يرجى المحاولة مرة أخرى.",
     "NotFound": "غير موجود",
     "Review": "مراجعة",
-    "To": "إلى",
-    "From": "من",
-    "Of": "من",
     "TryAgain": "حاول مرة أخرى",
     "LoadFailed": "تعذّر تحميل البيانات. تحقّق من الاتصال وحاول مرة أخرى.",
     "Upload": {
@@ -221,14 +215,14 @@
     }
   },
   "Countries": {
-    "Title": "الدول",
     "errorOccurred": "حدث خطأ. يرجى المحاولة مرة أخرى.",
     "Table": {
       "name": "الاسم",
       "code": "الرمز",
       "dialCode": "رمز الاتصال",
       "cities": "المدن",
-      "actions": "الإجراءات"
+      "actions": "الإجراءات",
+      "status": "الحالة"
     },
     "Fields": {
       "Name": {
@@ -304,7 +298,8 @@
     "empty": {
       "title": "لا توجد دول بعد",
       "description": "الدول التي تضيفها هنا تظهر في الموقع بعد تفعيلها."
-    }
+    },
+    "deleteDescription": "ستُحذف {name} ومدنها من المنصة. لا يمكن التراجع عن هذا الإجراء."
   },
   "pageHeaders": {
     "filters": {
@@ -431,14 +426,15 @@
       "admins": "المشرفون"
     },
     "admins": {
-      "title": "مشرفين",
       "table": {
         "admin": "المشرف",
         "email": "البريد الإلكتروني",
         "role": "الدور",
         "countries": "الدول",
         "status": "الحالة",
-        "actions": "الإجراءات"
+        "actions": "الإجراءات",
+        "lastLogin": "آخر دخول",
+        "twoFactor": "التحقق بخطوتين"
       },
       "noCountries": "—",
       "create": {
@@ -509,7 +505,20 @@
       "empty": {
         "title": "لا يوجد مشرفون بعد",
         "description": "المشرفون الذين تضيفهم هنا يمكنهم الدخول إلى لوحة التحكم."
-      }
+      },
+      "never": "لم يدخل بعد",
+      "twoFactorOn": "مفعّل",
+      "twoFactorOff": "غير مفعّل",
+      "tabs": {
+        "all": "الكل",
+        "active": "نشط",
+        "inactive": "غير نشط"
+      },
+      "searchPlaceholder": "ابحث بالاسم أو البريد",
+      "clearSearch": "مسح البحث",
+      "copyEmails": "نسخ البريد الإلكتروني",
+      "emailsCopied": "{count, plural, one {تم نسخ بريد واحد} two {تم نسخ بريدين} few {تم نسخ # عناوين} many {تم نسخ # عنوانًا} other {تم نسخ # عنوان}}",
+      "deleteDescription": "سيفقد {name} الوصول إلى لوحة التحكم. لا يمكن التراجع عن هذا الإجراء."
     },
     "roles": {
       "list": "الأدوار",
@@ -564,15 +573,13 @@
     "back": "العودة إلى النظرة العامة"
   },
   "AuditLog": {
-    "title": "سجل",
     "table": {
       "when": "التوقيت",
       "admin": "المشرف",
       "action": "الإجراء",
       "target": "الهدف",
       "country": "الدولة",
-      "ip": "IP",
-      "details": "التفاصيل"
+      "ip": "IP"
     },
     "allCountries": "الكل",
     "empty": "لا توجد عمليات مسجّلة بعد.",
@@ -652,9 +659,8 @@
       "allActions": "كل الإجراءات",
       "country": "الدولة",
       "allCountries": "كل الدول",
-      "from": "من",
-      "to": "إلى",
-      "clear": "مسح الفلاتر"
+      "clear": "مسح الفلاتر",
+      "dates": "التاريخ"
     },
     "emptyFiltered": "لا توجد عمليات تطابق الفلاتر.",
     "details": {
@@ -715,7 +721,6 @@
     },
     "heldForReview": {
       "note": "عندما يحرّك المصدر السعر بأكثر من {percent}% مرة واحدة، لا يُنشر. يحتفظ الموقع بالسعر السابق حتى توافق على التغيير أو ترفضه.",
-      "unit": "أسعار معلّقة",
       "empty": "لا يوجد شيء معلّق. كل أسعار المصدر منشورة.",
       "table": {
         "metal": "المعدن",
@@ -1025,6 +1030,40 @@
         "duplicate": "هذه الكلمة موجودة بالفعل.",
         "remove": "حذف {word}"
       }
+    }
+  },
+  "DataTable": {
+    "noResults": "لا توجد نتائج.",
+    "selected": "{count, plural, one {عنصر واحد محدد} two {عنصران محددان} few {# عناصر محددة} many {# عنصرًا محددًا} other {# عنصر محدد}}",
+    "clearSelection": "إلغاء التحديد",
+    "selectAll": "تحديد كل صفوف هذه الصفحة",
+    "selectRow": "تحديد الصف",
+    "actions": "الإجراءات",
+    "rowActions": "إجراءات الصف",
+    "tableSettings": "إعدادات الجدول",
+    "density": "الكثافة",
+    "comfortable": "مريحة",
+    "compact": "مضغوطة",
+    "columns": "الأعمدة",
+    "showing": "عرض <strong>{from}–{to}</strong> من <strong>{total}</strong>",
+    "rowsPerPage": "عدد الصفوف",
+    "pagination": "التنقل بين الصفحات",
+    "goToPage": "الصفحة {page}",
+    "previousPage": "الصفحة السابقة",
+    "nextPage": "الصفحة التالية",
+    "export": "تصدير",
+    "exportFailed": "تعذّر التصدير. حاول مرة أخرى."
+  },
+  "DateRangeFilter": {
+    "from": "من",
+    "to": "إلى",
+    "clear": "مسح التواريخ",
+    "presets": {
+      "today": "اليوم",
+      "last7": "آخر 7 أيام",
+      "last30": "آخر 30 يومًا",
+      "next7": "الأيام السبعة القادمة",
+      "next30": "الثلاثون يومًا القادمة"
     }
   }
 }

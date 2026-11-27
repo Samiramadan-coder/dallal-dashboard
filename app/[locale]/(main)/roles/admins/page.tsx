@@ -1,13 +1,15 @@
+import type { SearchParams } from "nuqs/server";
 import { getLocale } from "next-intl/server";
+
 import { getAllCountries } from "@/lib/admin";
 import { getAdmins, getRoles } from "@/lib/roles";
 import { requirePageAccess } from "@/lib/permissions";
 import CreateAdmin from "@/components/roles/admins/create-admin";
-import DataPreview from "@/components/roles/admins/data-preview";
-
-type SearchParams = {
-  page?: string;
-};
+import AdminsTable from "@/components/roles/admins/admins-table";
+import {
+  adminsApiQuery,
+  loadAdminsSearchParams,
+} from "@/components/roles/admins/search-params";
 
 export default async function Page({
   searchParams,
@@ -18,12 +20,15 @@ export default async function Page({
   // `admin` is the signed-in one, cached since the layout fetched it
   const { admin: me, can } = await requirePageAccess("admins");
 
-  const [{ page }, locale] = await Promise.all([searchParams, getLocale()]);
+  const [params, locale] = await Promise.all([
+    loadAdminsSearchParams(searchParams),
+    getLocale(),
+  ]);
 
   // getRoles and getAllCountries are cached per request, so getAdmins
   // reuses these results instead of fetching again
   const [{ admins, pagination }, { roles }, countries] = await Promise.all([
-    getAdmins(Math.max(1, Number(page) || 1), locale),
+    getAdmins(adminsApiQuery(params), locale),
     getRoles(),
     getAllCountries(),
   ]);
@@ -36,9 +41,9 @@ export default async function Page({
         </div>
       )}
 
-      <DataPreview
+      <AdminsTable
         admins={admins}
-        pagination={pagination}
+        meta={pagination}
         currentAdminId={me.id}
         roles={roles}
         countries={countries}

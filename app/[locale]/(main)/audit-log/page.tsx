@@ -1,24 +1,16 @@
-import {
-  getAuditLogAdmins,
-  getAuditLogs,
-  parseAuditLogFilters,
-} from "@/lib/audit-log";
+import type { SearchParams } from "nuqs/server";
 
+import { getAuditLogAdmins, getAuditLogs } from "@/lib/audit-log";
 import { hasPermission } from "@/lib/permissions";
 import { getAllCountries, getCurrentAdmin } from "@/lib/admin";
 import DataPreview from "@/components/audit-log/data-preview";
 import AuditLogFilters from "@/components/audit-log/filters";
-
-type SearchParams = {
-  page?: string;
-  admin_id?: string;
-  action?: string;
-  subject_type?: string;
-  subject_id?: string;
-  country_id?: string;
-  from?: string;
-  to?: string;
-};
+import {
+  auditLogApiQuery,
+  auditLogFilters,
+  hasAuditLogFilters,
+  loadAuditLogSearchParams,
+} from "@/components/audit-log/search-params";
 
 export default async function Page({
   searchParams,
@@ -26,8 +18,7 @@ export default async function Page({
   searchParams: Promise<SearchParams>;
 }) {
   // Access is checked by the layout
-  const { page, ...params } = await searchParams;
-  const filters = parseAuditLogFilters(params);
+  const params = await loadAuditLogSearchParams(searchParams);
 
   // The admins list needs its own permission; without it the "Admin"
   // filter is hidden. Cached since the layout fetched it
@@ -35,23 +26,17 @@ export default async function Page({
   const canListAdmins = hasPermission(me.permissions, "admins.view");
 
   const [{ logs, pagination }, admins, countries] = await Promise.all([
-    getAuditLogs(Math.max(1, Number(page) || 1), filters),
+    getAuditLogs(auditLogApiQuery(params)),
     canListAdmins ? getAuditLogAdmins() : null,
     getAllCountries(),
   ]);
 
   return (
-    <div className="flex flex-col gap-3">
-      <AuditLogFilters
-        filters={filters}
-        admins={admins}
-        countries={countries}
-      />
-      <DataPreview
-        logs={logs}
-        pagination={pagination}
-        filtered={Object.values(filters).some((value) => value !== undefined)}
-      />
-    </div>
+    <DataPreview
+      logs={logs}
+      meta={pagination}
+      filtered={hasAuditLogFilters(auditLogFilters(params))}
+      toolbar={<AuditLogFilters admins={admins} countries={countries} />}
+    />
   );
 }

@@ -29,12 +29,3 @@ export function isAuditSubject(value: string): value is AuditSubject {
   return Object.hasOwn(AUDIT_ACTIONS, value);
 }
 
-// The filter keys kept in the URL, in the order the API takes them
-export const AUDIT_FILTER_KEYS = [
-  "admin_id",
-  "subject_type",
-  "action",
-  "country_id",
-  "from",
-  "to",
-] as const;

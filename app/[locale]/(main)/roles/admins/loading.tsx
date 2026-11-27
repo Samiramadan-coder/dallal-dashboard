@@ -1,5 +1,5 @@
-import TableSkeleton from "@/components/reusable/table-skeleton";
+import TableSkeleton from "@/components/common/data-table/table-skeleton";
 
 export default function Loading() {
-  return <TableSkeleton columns={6} />;
+  return <TableSkeleton tabs />;
 }

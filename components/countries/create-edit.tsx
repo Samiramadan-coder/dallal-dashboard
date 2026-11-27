@@ -19,14 +19,28 @@ import { Country, CountryFormValues, countrySchema } from "@/types/countries";
 
 type CreateEditProps = {
   country?: Country;
-  trigger?: React.ReactNode;
+  // Defaults to the "Add country" button; null for a dialog opened only
+  // through `open` (e.g. from the countries table's row menu)
+  trigger?: React.ReactNode | null;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
-export default function CreateEdit({ country, trigger }: CreateEditProps) {
+export default function CreateEdit({
+  country,
+  trigger,
+  open: controlledOpen,
+  onOpenChange,
+}: CreateEditProps) {
   const t = useTranslations("Countries");
   const tCommon = useTranslations("Common");
   const form = useRef<HTMLFormElement>(null);
-  const [open, setOpen] = useState(false);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(false);
+  const open = controlledOpen ?? uncontrolledOpen;
+  const setOpen = (next: boolean) => {
+    if (controlledOpen === undefined) setUncontrolledOpen(next);
+    onOpenChange?.(next);
+  };
   const isEdit = Boolean(country);
 
   const {
@@ -73,7 +87,7 @@ export default function CreateEdit({ country, trigger }: CreateEditProps) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {trigger ? (
+      {trigger === null ? null : trigger ? (
         <DialogTrigger asChild>{trigger}</DialogTrigger>
       ) : (
         <AddButton label={t("AddCountry")} />

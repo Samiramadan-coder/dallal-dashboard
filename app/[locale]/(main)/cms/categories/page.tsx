@@ -10,7 +10,7 @@ export default async function Page() {
     await Promise.all([
       getCategories(),
       getMarketRules(),
-      getCountries(1),
+      getCountries({ page: 1 }),
       getBannedWords(),
     ]);
 

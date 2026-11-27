@@ -1,7 +1,7 @@
 import "server-only";
 
 import { cache } from "react";
-import { api } from "@/lib/api/client";
+import { api, type QueryParams } from "@/lib/api/client";
 import { getAllCountries, resolveAdminCountries } from "@/lib/admin";
 import type { AdminRow, AdminsResponse, RolesResponse } from "@/types/roles";
 import type { Locale } from "@/types/shared";
@@ -24,11 +24,12 @@ function humanize(slug: string): string {
     .join(" ");
 }
 
-// One page of admins, with countries and role labels resolved
-export async function getAdmins(page: number, locale: Locale) {
+// One page of admins, with countries and role labels resolved. `query` is
+// the table's filters, page and sort (see components/roles/admins/search-params)
+export async function getAdmins(query: QueryParams, locale: Locale) {
   const [response, countries, { roles }] = await Promise.all([
     api.get<AdminsResponse>("/api/v1/admin/admins", {
-      query: { page },
+      query,
       next: { tags: ["admins"] },
     }),
     getAllCountries(),

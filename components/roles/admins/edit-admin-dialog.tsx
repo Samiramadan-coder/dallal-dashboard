@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useLocale, useTranslations } from "next-intl";
@@ -8,20 +8,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm, type SubmitHandler } from "react-hook-form";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Header from "@/components/form/header";
 import Footer from "@/components/form/footer";
 import { LabeledField, fieldA11yProps } from "@/components/form/labeled-field";
-import EditBtn from "@/components/reusable/edit-btn";
-import DeleteBtn from "@/components/reusable/delete-btn";
-import { deleteAdmin, updateAdmin } from "@/lib/actions/admins";
+import { updateAdmin } from "@/lib/actions/admins";
 import type { Country } from "@/types/countries";
 import type { Locale } from "@/types/shared";
 import {
   adminEditSchema,
   type AdminEditFormValues,
   type AdminRow,
-  type Can,
   type Role,
   type UpdateAdminPayload,
 } from "@/types/roles";
@@ -34,57 +31,26 @@ function sameSet<V>(a: readonly V[], b: readonly V[]): boolean {
   return a.length === b.length && a.every((item) => b.includes(item));
 }
 
-// Edit and delete buttons for one row of the admins table, each shown only
-// with its permission. Changing roles, countries or turning the account on
-// or off all count as edit
-export default function AdminActions({
+// Edit dialog for one admin: roles, countries, and turning the account on
+// or off. Controlled by the admins table's row menu; mount it with a fresh
+// `key` per opening, so the form starts from the row's current values
+export function EditAdminDialog({
   admin,
   roles,
   countries,
-  can,
+  open,
+  onOpenChange,
 }: {
   admin: AdminRow;
   roles: Role[];
   countries: Country[];
-  can: Can<"admins">;
-}) {
-  const t = useTranslations("Roles.admins");
-  const tCommon = useTranslations("Common");
-  const remove = async (reason: string) => {
-    const result = await deleteAdmin(admin.id, reason);
-
-    if (!result.ok) {
-      toast.error(result.message || tCommon("ErrorOccurred"));
-      return false;
-    }
-
-    toast.success(result.data.message || t("deleted"));
-  };
-
-  return (
-    <div className="flex items-center gap-1">
-      {can.edit && (
-        <EditAdmin admin={admin} roles={roles} countries={countries} />
-      )}
-      {can.delete && <DeleteBtn onDelete={remove} />}
-    </div>
-  );
-}
-
-function EditAdmin({
-  admin,
-  roles,
-  countries,
-}: {
-  admin: AdminRow;
-  roles: Role[];
-  countries: Country[];
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }) {
   const locale = useLocale() as Locale;
   const t = useTranslations("Roles.admins.edit");
   const tCommon = useTranslations("Common");
   const form = useRef<HTMLFormElement>(null);
-  const [open, setOpen] = useState(false);
 
   // An `all_countries` admin starts with every country ticked
   const defaults: AdminEditFormValues = {
@@ -97,7 +63,6 @@ function EditAdmin({
   const {
     control,
     register,
-    reset,
     setError,
     handleSubmit,
     formState: { errors, isSubmitting },
@@ -105,12 +70,6 @@ function EditAdmin({
     resolver: zodResolver(adminEditSchema((key) => t(key as never))),
     defaultValues: defaults,
   });
-
-  const onOpenChange = (next: boolean) => {
-    setOpen(next);
-    // Start from the row's current state every time it opens
-    if (next) reset(defaults);
-  };
 
   const onSubmit: SubmitHandler<AdminEditFormValues> = async (values) => {
     const reason = values.reason.trim();
@@ -143,14 +102,11 @@ function EditAdmin({
     }
 
     toast.success(result.data.message || t("success"));
-    setOpen(false);
+    onOpenChange(false);
   };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>
-        <EditBtn />
-      </DialogTrigger>
 
       <DialogContent
         showCloseButton={false}
