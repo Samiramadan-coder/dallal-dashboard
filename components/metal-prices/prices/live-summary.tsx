@@ -1,6 +1,8 @@
 import { Info } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
+import StatusBadge from "@/components/reusable/status-badge";
+
 import type { GradePrice } from "@/types/metal-prices";
 import { HEADLINE_GOLD_KARATS, type PriceUnit } from "@/constants/metal-prices";
 
@@ -43,21 +45,17 @@ export default function LiveSummary({
       </div>
 
       <div className="flex flex-wrap items-center gap-2">
-        <span
-          className={
-            marketOpen
-              ? "rounded-full bg-secondary/10 px-2.5 py-0.5 text-[11px] font-semibold text-secondary"
-              : "rounded-full bg-muted px-2.5 py-0.5 text-[11px] font-semibold text-muted-foreground"
+        <StatusBadge
+          status={marketOpen ? "open" : "closed"}
+          label={
+            marketOpen ? t("summary.marketOpen") : t("summary.marketClosed")
           }
-        >
-          {marketOpen ? t("summary.marketOpen") : t("summary.marketClosed")}
-        </span>
+        />
 
         {delayed && (
-          <span className="inline-flex items-center gap-1 rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-semibold text-primary">
-            {t("summary.delayed")}
-            <Info className="size-3" aria-label={t("summary.delayedHint")} />
-          </span>
+          <StatusBadge status="delayed" label={t("summary.delayed")}>
+            <Info aria-label={t("summary.delayedHint")} />
+          </StatusBadge>
         )}
       </div>
 

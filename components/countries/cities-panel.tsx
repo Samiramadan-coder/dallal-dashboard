@@ -10,6 +10,7 @@ import { getCountryCities, updateCity } from "@/lib/actions/cities";
 import CreateEditCity from "./create-edit-city";
 import type { LocationValue } from "../form/location-picker";
 import EditBtn from "../reusable/edit-btn";
+import StatusBadge from "../reusable/status-badge";
 import { Button } from "../ui/button";
 import { Switch } from "../ui/switch";
 import { Skeleton } from "../ui/skeleton";
@@ -21,7 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
-import { cn } from "@/lib/utils";
 
 type State =
   | { status: "loading" }
@@ -253,23 +253,10 @@ function CityRow({
             <span className="text-xs text-muted-foreground">{statusLabel}</span>
           </div>
         ) : (
-          <span
-            className={cn(
-              "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium",
-              city.is_active
-                ? "bg-secondary/10 text-secondary"
-                : "bg-muted text-muted-foreground",
-            )}
-          >
-            <span
-              aria-hidden
-              className={cn(
-                "size-1.5 rounded-full",
-                city.is_active ? "bg-secondary" : "bg-muted-foreground/60",
-              )}
-            />
-            {statusLabel}
-          </span>
+          <StatusBadge
+            status={city.is_active ? "active" : "inactive"}
+            label={statusLabel}
+          />
         )}
       </TableCell>
       {canEdit && (

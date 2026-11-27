@@ -50,6 +50,19 @@
       "selected": "الصورة المختارة",
       "current": "الصورة الحالية",
       "choose": "اختر صورة"
+    },
+    "status": {
+      "active": "نشط",
+      "inactive": "غير نشط",
+      "live": "مباشر",
+      "coming_soon": "قريبًا",
+      "published": "منشور",
+      "pending": "قيد المراجعة",
+      "rejected": "مرفوض",
+      "superseded": "مستبدل",
+      "open": "مفتوح",
+      "closed": "مغلق",
+      "delayed": "متأخر"
     }
   },
   "Auth": {
@@ -440,10 +453,6 @@
             "required": "اختر دولة واحدة على الأقل"
           }
         }
-      },
-      "status": {
-        "active": "نشط",
-        "inactive": "غير نشط"
       },
       "you": "أنت",
       "deleted": "تم حذف المشرف.",

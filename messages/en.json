@@ -50,6 +50,19 @@
       "selected": "Selected image",
       "current": "Current image",
       "choose": "Choose photo"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "live": "Live",
+      "coming_soon": "Coming soon",
+      "published": "Published",
+      "pending": "Pending",
+      "rejected": "Rejected",
+      "superseded": "Superseded",
+      "open": "Open",
+      "closed": "Closed",
+      "delayed": "Delayed"
     }
   },
   "Auth": {
@@ -442,10 +455,6 @@
             "required": "Pick at least one country"
           }
         }
-      },
-      "status": {
-        "active": "Active",
-        "inactive": "Inactive"
       },
       "you": "You",
       "deleted": "Admin deleted.",

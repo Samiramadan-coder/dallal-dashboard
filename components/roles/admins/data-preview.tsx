@@ -5,7 +5,7 @@ import { DataTable, DataTableColumn } from "@/components/reusable/data-table";
 import type { Country } from "@/types/countries";
 import type { AdminRow, Can, Role } from "@/types/roles";
 import type { Pagination } from "@/types/shared";
-import { cn } from "@/lib/utils";
+import StatusBadge from "@/components/reusable/status-badge";
 import AdminActions from "./admin-actions";
 
 export default function DataPreview({
@@ -86,23 +86,7 @@ export default function DataPreview({
           </TableCell>
 
           <TableCell>
-            <span
-              className={cn(
-                "inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[11px] font-medium",
-                admin.is_active
-                  ? "bg-secondary/10 text-secondary"
-                  : "bg-muted text-muted-foreground",
-              )}
-            >
-              <span
-                aria-hidden
-                className={cn(
-                  "size-1.5 rounded-full",
-                  admin.is_active ? "bg-secondary" : "bg-muted-foreground/60",
-                )}
-              />
-              {admin.is_active ? t("status.active") : t("status.inactive")}
-            </span>
+            <StatusBadge status={admin.is_active ? "active" : "inactive"} />
           </TableCell>
 
           {/* Button row: trimmed padding keeps it as tall as text rows */}
