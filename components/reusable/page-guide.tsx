@@ -3,6 +3,7 @@
 import type { ReactNode } from "react";
 import { ArrowUpRight, Info, X } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
+import { dynamicMessages } from "@/lib/dynamic-messages";
 
 import { Link } from "@/i18n/navigation";
 import { pageGuides } from "@/constants/page-guides";
@@ -38,7 +39,8 @@ export default function PageGuide({
   title: string;
 }) {
   const t = useTranslations("pageHeaders.guide");
-  const tRoles = useTranslations("layout.header.roles");
+  // Role names come from the API
+  const tRoles = dynamicMessages(useTranslations("layout.header.roles"));
   const locale = useLocale();
   const guide = pageGuides[page];
 

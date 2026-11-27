@@ -1,3 +1,4 @@
+import type { MessageKeys, Messages, NestedKeyOf } from "next-intl";
 import type { Permission } from "./roles";
 import type { ReactNode } from "react";
 
@@ -34,12 +35,19 @@ export type NavigationKey =
 export type NavigationSectionKey =
   "main" | "marketplace" | "people" | "revenue" | "system";
 
+// A message key under "layout" (e.g. "sidebar.navigation.links.users"), so a
+// link without a translation fails the build
+export type LayoutMessageKey = MessageKeys<
+  Messages["layout"],
+  NestedKeyOf<Messages["layout"]>
+>;
+
 export type DashboardNavigationItem =
   | {
       type: "link";
       // Stable id, used for counts (see lib/sidebar-counts)
       key: NavigationKey;
-      label: string;
+      label: LayoutMessageKey;
       href: string;
       icon: ReactNode;
       // Shown only if the admin has this permission (or any of the list).
@@ -51,7 +59,7 @@ export type DashboardNavigationItem =
   | {
       type: "label";
       key: NavigationSectionKey;
-      label: string;
+      label: LayoutMessageKey;
     };
 
 export type DashboardNavigationLinkItem = Extract<
@@ -62,7 +70,7 @@ export type DashboardNavigationLinkItem = Extract<
 // A sidebar section with the links under it; the sidebar renders these
 export type DashboardNavigationGroup = {
   key: NavigationSectionKey;
-  label: string;
+  label: LayoutMessageKey;
   links: DashboardNavigationLinkItem[];
 };
 

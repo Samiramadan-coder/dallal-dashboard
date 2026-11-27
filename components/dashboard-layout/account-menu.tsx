@@ -2,6 +2,7 @@
 
 import { useTransition } from "react";
 import { useTranslations } from "next-intl";
+import { dynamicMessages } from "@/lib/dynamic-messages";
 import { ChevronDown, Repeat } from "lucide-react";
 
 import { logout } from "@/lib/actions/auth";
@@ -24,12 +25,14 @@ function humanize(slug: string): string {
 
 export default function AccountMenu({ admin }: { admin: CurrentAdmin }) {
   const t = useTranslations("layout.header");
+  // Role names come from the API
+  const tRoles = dynamicMessages(useTranslations("layout.header.roles"));
   const [isSigningOut, startSignOut] = useTransition();
 
   const role = admin.roles[0];
   const roleLabel = role
-    ? t.has(`roles.${role}`)
-      ? t(`roles.${role}`)
+    ? tRoles.has(role)
+      ? tRoles(role)
       : humanize(role)
     : null;
 

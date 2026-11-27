@@ -49,7 +49,7 @@ export function ResetPasswordForm({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ResetPasswordFormData>({
-    resolver: zodResolver(resetPasswordSchema(t)),
+    resolver: zodResolver(resetPasswordSchema((key) => t(key as never))),
     defaultValues: { code: "", password: "", password_confirmation: "" },
   });
 

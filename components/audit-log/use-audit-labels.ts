@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { dynamicMessages } from "@/lib/dynamic-messages";
 import type { AuditLogRow } from "@/types/audit-log";
 import type { Locale } from "@/types/shared";
 
@@ -28,7 +29,8 @@ export function subjectName(log: AuditLogRow, locale: Locale): string | null {
 // snapshot field ("country_ids"), from messages → AuditLog, humanized when
 // there's no translation
 export function useAuditLabels() {
-  const t = useTranslations("AuditLog");
+  // Actions, subjects and fields come from the API's records
+  const t = dynamicMessages(useTranslations("AuditLog"));
 
   // t.has() is also true for a group of messages, which t() can't render
   const label = (group: string, slug: string) => {

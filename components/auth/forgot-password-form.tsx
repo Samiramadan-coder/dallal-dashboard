@@ -36,7 +36,7 @@ export function ForgotPasswordForm({
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<ForgotPasswordFormData>({
-    resolver: zodResolver(forgotPasswordSchema(t)),
+    resolver: zodResolver(forgotPasswordSchema((key) => t(key as never))),
     defaultValues: { email: defaultEmail ?? "" },
   });
 

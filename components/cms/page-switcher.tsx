@@ -12,7 +12,11 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const PAGES: { href: string; label: string; icon: LucideIcon }[] = [
+const PAGES: {
+  href: string;
+  label: "staticPages" | "categories" | "listsManagement" | "faq";
+  icon: LucideIcon;
+}[] = [
   {
     href: "/cms",
     label: "staticPages",

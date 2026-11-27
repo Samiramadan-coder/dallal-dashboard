@@ -28,7 +28,7 @@ export function LoginForm({ defaultValues, onSuccess }: LoginFormProps) {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema(t)),
+    resolver: zodResolver(loginSchema((key) => t(key as never))),
     defaultValues: defaultValues ?? { email: "", password: "" },
   });
 

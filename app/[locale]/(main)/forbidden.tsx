@@ -1,5 +1,6 @@
 import { ShieldOff } from "lucide-react";
 import { getFormatter, getTranslations } from "next-intl/server";
+import { dynamicMessages } from "@/lib/dynamic-messages";
 
 import { Link } from "@/i18n/navigation";
 import { getCurrentAdmin } from "@/lib/admin";
@@ -7,13 +8,15 @@ import ForbiddenSection from "@/components/reusable/forbidden-section";
 
 // Shown when a page calls forbidden() (see lib/permissions), with a 403
 export default async function Forbidden() {
-  const [t, tRoles, format, admin] = await Promise.all([
+  const [t, rolesT, format, admin] = await Promise.all([
     getTranslations("forbidden"),
     getTranslations("layout.header.roles"),
     getFormatter(),
     getCurrentAdmin(),
   ]);
 
+  // Role names come from the API
+  const tRoles = dynamicMessages(rolesT);
   const roles = format.list(
     admin.roles.map((role) => (tRoles.has(role) ? tRoles(role) : role)),
   );

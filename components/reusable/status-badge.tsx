@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { useTranslations } from "next-intl";
+import { dynamicMessages } from "@/lib/dynamic-messages";
 
 import { cn } from "@/lib/utils";
 import {
@@ -41,7 +42,8 @@ export default function StatusBadge({
   className?: string;
   children?: ReactNode;
 }) {
-  const t = useTranslations("Common.status");
+  // `status` is whatever the API sent, known or not
+  const t = dynamicMessages(useTranslations("Common.status"));
 
   const tone: StatusTone =
     STATUS_TONES[status as KnownStatus] ?? "neutral";

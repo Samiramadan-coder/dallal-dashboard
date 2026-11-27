@@ -34,6 +34,7 @@ import { toFormData } from "@/lib/api/form-data";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { updateCategory } from "@/lib/actions/categories";
 import { useFormatter, useLocale, useTranslations } from "next-intl";
+import { dynamicMessages } from "@/lib/dynamic-messages";
 import CompactImageUploader from "@/components/form/compact-image-uploader";
 import { LabeledField, fieldA11yProps } from "@/components/form/labeled-field";
 
@@ -56,6 +57,8 @@ export default function DetailsSection({
 }) {
   const t = useTranslations("Cms.categories.form");
   const tCommon = useTranslations("Common");
+  // Icon names come from the API's category list
+  const tIcons = dynamicMessages(useTranslations("Cms.categories.form.icons"));
   const id = useId();
 
   const {
@@ -204,7 +207,7 @@ export default function DetailsSection({
                       ]),
                     ].map((icon) => (
                       <SelectItem key={icon} value={icon}>
-                        {t.has(`icons.${icon}`) ? t(`icons.${icon}`) : icon}
+                        {tIcons.has(icon) ? tIcons(icon) : icon}
                       </SelectItem>
                     ))}
                   </SelectContent>
