@@ -50,6 +50,13 @@ function forwardRequestHeader(
   response.headers.set(`${REQUEST_HEADER_PREFIX}${name}`, value);
 }
 
+// `nextUrl.pathname` and every app path (callbackUrl included) leave out the
+// basePath ("/admin", see next.config.ts); only a redirect's absolute URL
+// needs it, which `new URL(path, request.url)` would drop
+function appUrl(request: NextRequest, path: string): URL {
+  return new URL(`${request.nextUrl.basePath}${path}`, request.url);
+}
+
 // next-intl picks the locale from the URL, then the admin_lang cookie, then
 // Accept-Language. Hiding the header from it makes Arabic the default for
 // everyone who hasn't chosen a language, whatever their browser says.
@@ -87,7 +94,7 @@ export default function proxy(request: NextRequest) {
       callbackSearch.delete(SESSION_PARAM);
       const query = callbackSearch.toString();
 
-      const url = new URL(localizePath(SIGN_IN_PATH, locale), request.url);
+      const url = appUrl(request, localizePath(SIGN_IN_PATH, locale));
       url.searchParams.set(
         CALLBACK_URL_PARAM,
         `${nextUrl.pathname}${query ? `?${query}` : ""}`,
@@ -98,7 +105,7 @@ export default function proxy(request: NextRequest) {
         nextUrl.searchParams.get(CALLBACK_URL_PARAM),
         localizePath(HOME_PATH, locale),
       );
-      response = NextResponse.redirect(new URL(target, request.url));
+      response = NextResponse.redirect(appUrl(request, target));
     } else {
       // Always overwritten, so clients can't spoof it
       forwardRequestHeader(
@@ -119,5 +126,7 @@ export const config = {
   // Match all pathnames except for
   // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
   // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
+  // - "/" on its own: with basePath the pattern below becomes "/admin/(...)",
+  //   which needs a trailing slash, so the bare "/admin" would skip the proxy
+  matcher: ["/", "/((?!api|trpc|_next|_vercel|.*\\..*).*)"],
 };
