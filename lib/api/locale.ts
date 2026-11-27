@@ -14,38 +14,12 @@ const INTL_LOCALE_HEADER = "x-next-intl-locale";
 const localeCookieName =
   typeof routing.localeCookie === "object" && routing.localeCookie.name
     ? routing.localeCookie.name
-    : "NEXT_LOCALE";
-
-// "ar-AE,ar;q=0.9,en;q=0.8" → best supported locale, matching the
-// base language too ("ar-AE" → "ar")
-function matchAcceptLanguage(value: string | null): Locale | undefined {
-  if (!value) return undefined;
-
-  const ranked = value
-    .split(",")
-    .map((part) => {
-      const [tag, ...params] = part.trim().split(";");
-      const q = params.find((param) => param.trim().startsWith("q="));
-      return { tag: tag.toLowerCase(), q: q ? Number(q.trim().slice(2)) : 1 };
-    })
-    .filter(({ tag, q }) => tag && tag !== "*" && q > 0)
-    .sort((a, b) => b.q - a.q);
-
-  for (const { tag } of ranked) {
-    const match =
-      routing.locales.find((locale) => locale.toLowerCase() === tag) ??
-      routing.locales.find(
-        (locale) => locale.toLowerCase() === tag.split("-")[0],
-      );
-    if (match) return match;
-  }
-
-  return undefined;
-}
+    : "admin_lang";
 
 // getLocale() relies on the request config, which reads `next/root-params`.
 // That throws in Route Handlers and Server Actions, so fall back to what
-// the request itself says about the locale
+// the request itself says about the locale. Like the proxy, this ignores
+// Accept-Language: without a chosen language the admin gets the default
 export async function resolveLocale(): Promise<Locale> {
   try {
     return await getLocale();
@@ -61,11 +35,6 @@ export async function resolveLocale(): Promise<Locale> {
 
     const fromCookie = (await cookies()).get(localeCookieName)?.value;
     if (hasLocale(routing.locales, fromCookie)) return fromCookie;
-
-    const fromAcceptLanguage = matchAcceptLanguage(
-      requestHeaders.get("accept-language"),
-    );
-    if (fromAcceptLanguage) return fromAcceptLanguage;
   } catch (error) {
     // No request scope (e.g. inside "use cache")
     unstable_rethrow(error);

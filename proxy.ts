@@ -1,4 +1,4 @@
-import { type NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import createMiddleware from "next-intl/middleware";
 
 import {
@@ -50,6 +50,22 @@ function forwardRequestHeader(
   response.headers.set(`${REQUEST_HEADER_PREFIX}${name}`, value);
 }
 
+// next-intl picks the locale from the URL, then the admin_lang cookie, then
+// Accept-Language. Hiding the header from it makes Arabic the default for
+// everyone who hasn't chosen a language, whatever their browser says.
+// Only next-intl sees this copy; the page still gets the original request
+function withoutAcceptLanguage(request: NextRequest): NextRequest {
+  if (!request.headers.has("accept-language")) return request;
+
+  const headers = new Headers(request.headers);
+  headers.delete("accept-language");
+
+  return new NextRequest(request.url, {
+    headers,
+    nextConfig: { basePath: request.nextUrl.basePath || undefined },
+  });
+}
+
 export default function proxy(request: NextRequest) {
   const { nextUrl } = request;
   const sessionExpired =
@@ -58,7 +74,7 @@ export default function proxy(request: NextRequest) {
   const isSignedIn =
     !sessionExpired && Boolean(request.cookies.get(AUTH_COOKIE_NAME)?.value);
 
-  let response = intlMiddleware(request);
+  let response = intlMiddleware(withoutAcceptLanguage(request));
   const isRedirect = response.headers.has("location");
 
   // Let next-intl's own redirects (e.g. adding the locale prefix) run first;
